@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400|Inconsolata:400");
 @import url("https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kolker+Brush&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,6 +10,7 @@
 :root {
   --headingFont: "Inconsolata", monospace;
   --bodyFont: "Montserrat", sans-serif;
+  --logoFont: "Dancing Script", cursive;
 }
 
 * {
@@ -21,9 +24,14 @@ html {
   min-height: 100vh;
 }
 
+.logoFont {
+  font-family: "Dancing Script", cursive;
+  letter-spacing: 2px;
+}
+
 .recipe {
-  width: 20vw;
-  height: 35vh;
+  width: 22vw;
+  /* height: 40vh; */
   border: 1px solid gray;
   border-radius: 10px;
   display: flex;

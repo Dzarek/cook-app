@@ -56,17 +56,21 @@ const RecipesList = () => {
               className="w-full h-4/6 object-cover recipe-img"
               alt={title}
             />
-            <h5 className="text-lg text-center font-bold mb-2">{title}</h5>
-            <p className="text-gray-600">
-              Przygotowanie:{" "}
-              <strong className="text-red-800">{prepTime} min</strong> |
-              Gotowanie:{" "}
-              <strong className="text-red-800">{cookTime} min</strong>
-            </p>
-            <p className="text-gray-600">
-              Tag: <strong className="text-red-800 capitalize">{tag}</strong> |
-              Autor: <strong className="text-red-800">{author}</strong>
-            </p>
+            <section className="flex flex-col items-center justify-center p-2">
+              <h5 className="text-base text-center font-bold mb-2 w-full">
+                {title}
+              </h5>
+              <p className="text-gray-600 text-sm">
+                Przygotowanie:{" "}
+                <strong className="text-red-800">{prepTime} min</strong> |
+                Gotowanie:{" "}
+                <strong className="text-red-800">{cookTime} min</strong>
+              </p>
+              <p className="text-gray-600 text-sm">
+                Tag: <strong className="text-red-800 capitalize">{tag}</strong>{" "}
+                | Autor: <strong className="text-red-800">{author}</strong>
+              </p>
+            </section>
           </Link>
         );
       })}

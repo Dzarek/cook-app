@@ -15,6 +15,7 @@ const config: Config = {
       fontFamily: {
         headingFont: "var(--headingFont)",
         bodyFont: "var(--bodyFont)",
+        logoFont: "var(--logoFont)",
       },
     },
   },
