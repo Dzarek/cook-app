@@ -9,7 +9,7 @@ const recipes = [
     image: "/assets/images/recipe1.jpeg",
     prepTime: 10,
     cookTime: 20,
-    tag: "śniadanie",
+    category: "śniadanie",
     author: "Jarek",
   },
   {
@@ -18,7 +18,7 @@ const recipes = [
     image: "/assets/images/recipe1.jpeg",
     prepTime: 10,
     cookTime: 20,
-    tag: "śniadanie",
+    category: "śniadanie",
     author: "Jarek",
   },
   {
@@ -27,7 +27,7 @@ const recipes = [
     image: "/assets/images/recipe1.jpeg",
     prepTime: 10,
     cookTime: 20,
-    tag: "śniadanie",
+    category: "śniadanie",
     author: "Jarek",
   },
   {
@@ -36,7 +36,7 @@ const recipes = [
     image: "/assets/images/recipe1.jpeg",
     prepTime: 10,
     cookTime: 20,
-    tag: "śniadanie",
+    category: "śniadanie",
     author: "Jarek",
   },
 ];
@@ -45,7 +45,8 @@ const RecipesList = () => {
   return (
     <div className="mx-auto my-[5vh] flex w-full items-center justify-center flex-wrap">
       {recipes.map((recipe) => {
-        const { id, title, image, prepTime, cookTime, author, tag } = recipe;
+        const { id, title, image, prepTime, cookTime, author, category } =
+          recipe;
         const slug = slugify(title, { lower: true });
         return (
           <Link
@@ -71,7 +72,8 @@ const RecipesList = () => {
                 <strong className="text-red-800">{cookTime} min</strong>
               </p>
               <p className="text-gray-600 text-sm">
-                Tag: <strong className="text-red-800 capitalize">{tag}</strong>{" "}
+                Tag:{" "}
+                <strong className="text-red-800 capitalize">{category}</strong>{" "}
                 | Autor: <strong className="text-red-800">{author}</strong>
               </p>
             </section>

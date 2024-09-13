@@ -3,7 +3,7 @@ const logoJarek = "/assets/images/logoJarek.png";
 const Footer = () => {
   return (
     <footer className="w-screen h-[10vh] bg-stone-900 flex items-center relative bottom-0 left-0">
-      <p className="mx-auto text-center text-white text-xl">
+      <p className="mx-auto text-center text-white text-lg">
         © {new Date().getFullYear()} Stępki Gotują
       </p>
       <span className="logoJarek">

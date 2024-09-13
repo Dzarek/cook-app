@@ -32,6 +32,11 @@ body {
   background-attachment: fixed;
 }
 
+.page {
+  min-height: 100vh;
+  margin-top: 12vh;
+}
+
 .logoFont {
   font-family: "Dancing Script", cursive;
   letter-spacing: 2px;
@@ -128,4 +133,27 @@ html::-webkit-scrollbar-thumb:hover {
 }
 .upBtnNone {
   opacity: 0;
+}
+
+.knifeRotate {
+  animation: knifeRotate 3s ease-out 1 forwards;
+}
+@keyframes knifeRotate {
+  0% {
+    transform: translateX(-60vw);
+  }
+  100% {
+    transform: rotate(225deg) translateX(0vw);
+  }
+}
+.knifeRotate2 {
+  animation: knifeRotate2 3s ease-out 1 forwards;
+}
+@keyframes knifeRotate2 {
+  0% {
+    transform: translateX(60vw);
+  }
+  100% {
+    transform: rotate(45deg) translateX(0vw);
+  }
 }

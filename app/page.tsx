@@ -1,6 +1,5 @@
 import RecipesList from "@/components/RecipesList";
 import { tags } from "@/constants";
-import Image from "next/image";
 import Link from "next/link";
 
 const welcomeVideo = "/assets/video/intro3.mp4";
@@ -23,9 +22,9 @@ export default function Home() {
 
         <div className="tags w-2/6 h-full bg-zinc-900 text-white p-5 flex flex-col items-center justify-center">
           <h3 className="text-center mb-10 text-2xl font-bold uppercase font-headingFont">
-            Tagi:
+            Kategorie:
           </h3>
-          <nav className="flex flex-wrap items-center justify-around  text-white text-md capitalize text-center">
+          <ul className="flex flex-wrap items-center justify-around  text-white text-md capitalize text-center">
             {tags.map((tag, index) => {
               return (
                 <>
@@ -49,12 +48,12 @@ export default function Home() {
                 </>
               );
             })}
-          </nav>
+          </ul>
         </div>
       </header>
-      <main className="mt-[10vh] w-3/4 mx-auto">
+      <main className="mt-[8vh] w-3/4 mx-auto">
         <section>
-          <p>
+          <p className="text-center text-lg">
             Szukasz nowych kulinarnych inspiracji? Nasza strona to kopalnia
             sprawdzonych przepisów rodzinnych, które pomogą Ci urozmaicić
             codzienne posiłki i zaskoczyć bliskich. Łatwe instrukcje i piękne

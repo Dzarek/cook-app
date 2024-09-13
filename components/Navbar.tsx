@@ -26,8 +26,8 @@ const links = [
   },
   {
     id: 3,
-    href: "/tags",
-    label: "tagi",
+    href: "/kategorie",
+    label: "kategorie",
     icon: <RiHashtag />,
   },
 
@@ -80,7 +80,7 @@ const Navbar = () => {
               );
             })
           : links
-              .filter((link) => link.label !== "tagi")
+              .filter((link) => link.label !== "kategorie")
               .map((link) => {
                 return (
                   <Link
