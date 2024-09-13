@@ -19,21 +19,10 @@ export default function Home() {
             // type="video/mp4"
             className="w-full h-full object-fill border-r-[1px] border-t-[1px] border-white"
           ></video>
-
-          {/* <h1 className="absolute  top-1/2 left-1/2 text-center text-white uppercase font-bold font-headingFont text-2xl -translate-x-2/4 -translate-y-2/4">
-            stępki gotują
-          </h1> */}
         </div>
 
-        {/* <Image
-          src="/assets/images/header.png"
-          width={2000}
-          height={2000}
-          alt="headerImg"
-          className="w-full h-full object-cover"
-        /> */}
         <div className="tags w-2/6 h-full bg-zinc-900 text-white p-5 flex flex-col items-center justify-center">
-          <h3 className="text-center mb-14 text-2xl font-bold uppercase font-headingFont">
+          <h3 className="text-center mb-10 text-2xl font-bold uppercase font-headingFont">
             Tagi:
           </h3>
           <nav className="flex flex-wrap items-center justify-around  text-white text-md capitalize text-center">
@@ -42,7 +31,7 @@ export default function Home() {
                 <>
                   {tag === "śniadanie" ? (
                     <Link
-                      className="mb-5 w-[35%] bg-red-900 p-2 rounded-md"
+                      className="mb-5 w-[35%] bg-red-950 p-2 rounded-md"
                       href={`/tags/sniadanie`}
                       key={index}
                     >
@@ -50,7 +39,7 @@ export default function Home() {
                     </Link>
                   ) : (
                     <Link
-                      className="mb-5 w-[35%] bg-red-900 p-2 rounded-md"
+                      className="mb-5 w-[35%] bg-red-950 p-2 rounded-md"
                       href={`/tags/${tag}`}
                       key={index}
                     >
@@ -64,7 +53,15 @@ export default function Home() {
         </div>
       </header>
       <main className="mt-[10vh] w-3/4 mx-auto">
-        <h3 className="text-2xl font-bold text-center font-headingFont">
+        <section>
+          <p>
+            Szukasz nowych kulinarnych inspiracji? Nasza strona to kopalnia
+            sprawdzonych przepisów rodzinnych, które pomogą Ci urozmaicić
+            codzienne posiłki i zaskoczyć bliskich. Łatwe instrukcje i piękne
+            zdjęcia sprawią, że gotowanie stanie się czystą przyjemnością.
+          </p>
+        </section>
+        <h3 className="text-2xl font-bold text-center font-headingFont mt-[10vh]">
           Ostatnio dodane przepisy
         </h3>
         <RecipesList />

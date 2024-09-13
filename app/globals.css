@@ -24,6 +24,14 @@ html {
   min-height: 100vh;
 }
 
+body {
+  background-image: url("/assets/images/bgIcons.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
 .logoFont {
   font-family: "Dancing Script", cursive;
   letter-spacing: 2px;
@@ -44,4 +52,80 @@ html {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   margin-bottom: 5px;
+}
+
+.logoJarek {
+  position: absolute;
+  bottom: 5%;
+  left: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logoJarek a {
+  width: 25px;
+  height: 25px;
+  margin-left: 10px;
+}
+.logoJarek a img {
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+  opacity: 0.8;
+}
+.logoJarek a img :hover {
+  filter: invert(100%);
+}
+
+.logoJarek p {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: white;
+}
+@media screen and (max-width: 800px) {
+  .logoJarek {
+    bottom: 2%;
+    left: 3%;
+  }
+}
+/* SCROOL BAR */
+
+html::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+html::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+html::-webkit-scrollbar-thumb {
+  background: #46110b;
+  border: 2px solid #f1f1f1;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+html::-webkit-scrollbar-thumb:hover {
+  background: #0d0801;
+}
+
+.upBtn {
+  position: fixed;
+  bottom: 3vh;
+  right: 3vw;
+  font-size: 2rem;
+  background: transparent;
+  border: none;
+  color: var(--secondaryColor);
+  transition: 0.5s;
+  cursor: pointer;
+  z-index: 9999;
+}
+.upBtn:hover {
+  color: var(--secondaryColor3);
+}
+.upBtnNone {
+  opacity: 0;
 }

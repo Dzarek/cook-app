@@ -48,7 +48,11 @@ const RecipesList = () => {
         const { id, title, image, prepTime, cookTime, author, tag } = recipe;
         const slug = slugify(title, { lower: true });
         return (
-          <Link href={`/${slug}`} className="recipe bg-stone-100" key={id}>
+          <Link
+            href={`/przepisy/${slug}`}
+            className="recipe bg-stone-100"
+            key={id}
+          >
             <Image
               src={image}
               width={1000}
@@ -60,7 +64,7 @@ const RecipesList = () => {
               <h5 className="text-base text-center font-bold mb-2 w-full">
                 {title}
               </h5>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-600 text-sm mb-1">
                 Przygotowanie:{" "}
                 <strong className="text-red-800">{prepTime} min</strong> |
                 Gotowanie:{" "}
