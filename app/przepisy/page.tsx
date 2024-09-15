@@ -24,8 +24,9 @@ const RecipesPage = () => {
         <h1 className="text-3xl font-bold font-bodyFont">Przepisy Kulinarne</h1>
         <PiKnifeFill className="text-5xl text-red-900 ml-5 knifeRotate2" />
       </header>
-      <main className="flex items-start w-[90vw] ml-[10vw]  my-[5vh] justify-between ">
-        <section className="w-1/5 border-2 border-red-950 rounded-l-md rounded-br-md bg-white">
+      <main className="flex items-start w-[100vw]  my-[5vh] justify-between ">
+        <div className="bg-red-900 border-red-950  w-[10vw] h-[45px] border-t-2"></div>
+        <section className="w-1/5 border-2 border-red-950 rounded-b-md rounded-br-md bg-white">
           <h3 className="uppercase text-xl font-semibold bg-red-900 text-white p-2 text-center">
             Szukaj
           </h3>

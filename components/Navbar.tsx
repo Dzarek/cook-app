@@ -34,7 +34,7 @@ const links = [
 
   {
     id: 4,
-    href: "/dodaj-przepis",
+    href: "/dodaj",
     label: "dodaj przepis",
     icon: <RiStickyNoteAddFill />,
   },

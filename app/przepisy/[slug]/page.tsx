@@ -1,6 +1,5 @@
 import { recipes } from "@/components/RecipesList";
 import Image from "next/image";
-import { PiKnifeFill } from "react-icons/pi";
 import { BsClockHistory } from "react-icons/bs";
 import { GiRiceCooker } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
@@ -65,7 +64,7 @@ const OneRecipePage = ({ params: { slug } }: { params: { slug: string } }) => {
                   ilość porcji
                 </p>
                 <span className="text-gray-500 font-bold text-lg">
-                  {portion}
+                  {portion} szt.
                 </span>
               </div>
             </div>

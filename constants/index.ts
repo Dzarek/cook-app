@@ -9,4 +9,5 @@ export const tags = [
   "owoce",
   "ryby",
   "fit",
+  "napoje",
 ];
