@@ -6,6 +6,7 @@ import {
   RiAdminFill,
   RiHashtag,
 } from "react-icons/ri";
+import { GiCook } from "react-icons/gi";
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -24,12 +25,12 @@ const links = [
     label: "przepisy",
     icon: <RiFileList3Fill />,
   },
-  {
-    id: 3,
-    href: "/kategorie",
-    label: "kategorie",
-    icon: <RiHashtag />,
-  },
+  // {
+  //   id: 3,
+  //   href: "/kategorie",
+  //   label: "kategorie",
+  //   icon: <RiHashtag />,
+  // },
 
   {
     id: 4,
@@ -41,7 +42,7 @@ const links = [
     id: 5,
     href: "/logowanie",
     label: "logowanie",
-    icon: <RiAdminFill />,
+    icon: <GiCook />,
   },
 ];
 
@@ -58,7 +59,7 @@ const Navbar = () => {
           className="h-4/6 w-14 mr-5"
         />
         <h1 className="text-4xl capitalize font-bold logoFont">
-          <span className="text-red-900">Stępki </span>Gotują
+          <span className="text-red-800">Stępki </span>Gotują
         </h1>
       </div>
       <nav className="flex justify-end items-center font-bodyFont font-bold">

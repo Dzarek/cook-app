@@ -1,8 +1,32 @@
 import RecipesList from "@/components/RecipesList";
 import { tags } from "@/constants";
+import Image from "next/image";
 import Link from "next/link";
 
 const welcomeVideo = "/assets/video/intro3.mp4";
+
+const authors = [
+  {
+    id: 1,
+    name: "Jarek",
+    avatar: "/assets/images/avatars/avatar1.webp",
+  },
+  {
+    id: 2,
+    name: "Kamil",
+    avatar: "/assets/images/avatars/avatar1.webp",
+  },
+  {
+    id: 3,
+    name: "Dorota",
+    avatar: "/assets/images/avatars/avatar1.webp",
+  },
+  {
+    id: 4,
+    name: "Ania",
+    avatar: "/assets/images/avatars/avatar1.webp",
+  },
+];
 
 export default function Home() {
   return (
@@ -30,7 +54,7 @@ export default function Home() {
                 <>
                   {tag === "śniadanie" ? (
                     <Link
-                      className="mb-5 w-[35%] bg-red-950 p-2 rounded-md"
+                      className="mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
                       href={`/tags/sniadanie`}
                       key={index}
                     >
@@ -38,7 +62,7 @@ export default function Home() {
                     </Link>
                   ) : (
                     <Link
-                      className="mb-5 w-[35%] bg-red-950 p-2 rounded-md"
+                      className="mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
                       href={`/tags/${tag}`}
                       key={index}
                     >
@@ -61,9 +85,36 @@ export default function Home() {
           </p>
         </section>
         <h3 className="text-2xl font-bold text-center font-headingFont mt-[10vh]">
-          Ostatnio dodane przepisy
+          Ostatnio dodane przepisy:
         </h3>
         <RecipesList />
+        <section className="my-[10vh] w-4/5 mx-auto">
+          <div className="bg-red-950 w-[35vw] h-[2px] mb-10 mx-auto"></div>
+          <h3 className="text-2xl font-bold text-center font-headingFont ">
+            Członkowie:
+          </h3>
+          <ul className="mt-5 flex flex-wrap justify-center items-center">
+            {authors.map((author) => {
+              return (
+                <li
+                  key={author.id}
+                  className="flex flex-col items-center justify-center m-2"
+                >
+                  <Image
+                    src={author.avatar}
+                    width={100}
+                    height={100}
+                    alt="avatar"
+                    className="rounded-full w-10 h-10 object-fill"
+                  />
+                  <span className="px-2 py-1 text-sm text-red-900 rounded-md font-semibold font-bodyFont">
+                    {author.name}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
       </main>
     </div>
   );
