@@ -58,6 +58,24 @@ const NewRecipePage = () => {
 
   const [newDescription, setNewDescription] = useState(description);
 
+  const [confirmation, setConfirmation] = useState(false);
+
+  const resetForm = () => {
+    setNewTitle("");
+    setNewShortInfo("");
+    setNewCategory([]);
+    setNewPrepTime(0);
+    setNewCookTime(0);
+    setNewPortion(0);
+    setNewIngredients([]);
+    setEditingIngredient(false);
+    setNewIgredient("");
+    setNewSteps([]);
+    setEditingStep(false);
+    setNewStep("");
+    setNewDescription("");
+  };
+
   const submitForm = () => {};
 
   return (
@@ -347,6 +365,12 @@ const NewRecipePage = () => {
             className="newRecipeInput w-full min-h-[20vh]"
           ></textarea>
         </div>
+        <button
+          type="submit"
+          className="mt-10 border-2 border-red-900 bg-[#fbf3f3] text-red-900 hover:bg-red-900 hover:text-white p-4 text-xl font-bodyFont  rounded-md font-semibold w-1/7 uppercase mx-auto transition-all"
+        >
+          Zapisz
+        </button>
       </form>
     </div>
   );
