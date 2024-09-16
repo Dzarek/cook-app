@@ -207,7 +207,7 @@ html::-webkit-scrollbar-thumb:hover {
   border-radius: 6px;
   font-size: 1.125rem /* 18px */;
   line-height: 1.75rem;
-  padding: 4px;
   flex-grow: 1;
   background-color: #fbf3f3;
+  padding: 4px 10px;
 }
