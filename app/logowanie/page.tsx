@@ -56,6 +56,7 @@ const LoginPage = () => {
   const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email) {
+      // react-alert
       setErrorLogin("Proszę podać adres email!");
       return;
     }
@@ -73,11 +74,8 @@ const LoginPage = () => {
       {openRegistration ? (
         <div className="wrapperLogin">
           <div className="containerLogin relative">
-            <Link href="/">
-              <MdKeyboardReturn className="absolute top-5 left-5 text-red-950 text-4xl" />
-            </Link>
             <h2 className="font-semibold">Rejestracja</h2>
-            <h4 className="errorInfo mb-5">
+            <h4 className="errorInfo mb-10">
               Chcesz do nas dołączyć? Podaj swój adres email, by admin mógł
               dodać Cię do naszej społeczności.
             </h4>
@@ -106,7 +104,7 @@ const LoginPage = () => {
               </form>
             </section>
             <p
-              className="font-semibold text-zinc-500 cursor-pointer absolute top-5 right-5 hover:text-red-900 transition-all"
+              className="font-semibold text-zinc-500 cursor-pointer absolute top-5 left-5 hover:text-red-900 transition-all"
               onClick={() => {
                 setForgotPassword(false);
                 setOpenRegistration(false);
@@ -120,9 +118,6 @@ const LoginPage = () => {
         <div className="wrapperLogin">
           {forgotPassword ? (
             <div className="containerLogin relative">
-              <Link href="/">
-                <MdKeyboardReturn className="absolute top-5 left-5 text-red-950 text-4xl" />
-              </Link>
               <h2 className="font-semibold">Resetowanie hasła</h2>
               {newPasswordSend ? (
                 <>
@@ -143,7 +138,7 @@ const LoginPage = () => {
                   {errorLogin ? (
                     <h4 className="errorInfo">{errorLogin}</h4>
                   ) : (
-                    <h4 className="errorInfo">
+                    <h4 className="errorInfo mb-5">
                       Podaj adres email na który zostanie przesłany link do
                       resetowania hasła.
                     </h4>
@@ -174,7 +169,7 @@ const LoginPage = () => {
                     </form>
                   </section>
                   <p
-                    className="font-semibold text-zinc-500 cursor-pointer absolute top-5 right-5 hover:text-red-900 transition-all"
+                    className="font-semibold text-zinc-500 cursor-pointer absolute top-5 left-5 hover:text-red-900 transition-all"
                     onClick={() => {
                       setForgotPassword(false);
                       setOpenRegistration(false);

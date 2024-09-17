@@ -8,23 +8,33 @@ const welcomeVideo = "/assets/video/intro3.mp4";
 const authors = [
   {
     id: 1,
-    name: "Jarek",
-    avatar: "/assets/images/avatars/avatarm1.jpg",
-  },
-  {
-    id: 2,
-    name: "Kamil",
-    avatar: "/assets/images/avatars/avatarm6.jpg",
-  },
-  {
-    id: 3,
     name: "Dorota",
     avatar: "/assets/images/avatars/avatark2.webp",
   },
   {
+    id: 2,
+    name: "Jarek",
+    avatar: "/assets/images/avatars/avatarm1.jpg",
+  },
+  {
+    id: 3,
+    name: "Kamil",
+    avatar: "/assets/images/avatars/avatarm6.jpg",
+  },
+  {
     id: 4,
+    name: "Ela",
+    avatar: "/assets/images/avatars/avatark3.webp",
+  },
+  {
+    id: 5,
     name: "Ania",
     avatar: "/assets/images/avatars/avatark1.webp",
+  },
+  {
+    id: 6,
+    name: "Agata",
+    avatar: "/assets/images/avatars/avatark4.webp",
   },
 ];
 
