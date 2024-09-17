@@ -9,22 +9,22 @@ const authors = [
   {
     id: 1,
     name: "Jarek",
-    avatar: "/assets/images/avatars/avatar1.webp",
+    avatar: "/assets/images/avatars/avatarm1.jpg",
   },
   {
     id: 2,
     name: "Kamil",
-    avatar: "/assets/images/avatars/avatar1.webp",
+    avatar: "/assets/images/avatars/avatarm6.jpg",
   },
   {
     id: 3,
     name: "Dorota",
-    avatar: "/assets/images/avatars/avatar1.webp",
+    avatar: "/assets/images/avatars/avatark2.webp",
   },
   {
     id: 4,
     name: "Ania",
-    avatar: "/assets/images/avatars/avatar1.webp",
+    avatar: "/assets/images/avatars/avatark1.webp",
   },
 ];
 
@@ -105,7 +105,7 @@ export default function Home() {
                     width={100}
                     height={100}
                     alt="avatar"
-                    className="rounded-full w-10 h-10 object-fill"
+                    className="rounded-full w-14 h-14 object-fill border-[2px] border-red-950"
                   />
                   <span className="px-2 py-1 text-sm text-red-900 rounded-md font-semibold font-bodyFont">
                     {author.name}

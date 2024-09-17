@@ -141,7 +141,7 @@ const OneRecipePage = ({ params: { slug } }: { params: { slug: string } }) => {
             width={100}
             height={100}
             alt="avatar"
-            className="rounded-full w-10 h-10 object-fill"
+            className="rounded-full w-14 h-14 object-fill"
           />
           <span className="px-2 py-1 text-xl text-red-900 rounded-md font-semibold font-bodyFont">
             {author.name}

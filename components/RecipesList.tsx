@@ -14,7 +14,7 @@ export const recipes = [
     category: ["śniadanie", "fit", "lunch"],
     author: {
       name: "Jarek",
-      avatar: "/assets/images/avatars/avatar1.webp",
+      avatar: "/assets/images/avatars/avatarm1.jpg",
     },
     shortInfo:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam enim, animi et nam, facere alias laudantium voluptatum aperiam, error temporibus ratione reiciendis optio sequi odio officiis explicabo maxime sit!",
@@ -51,7 +51,7 @@ export const recipes = [
     category: ["śniadanie", "fit", "lunch"],
     author: {
       name: "Jarek",
-      avatar: "/assets/images/avatars/avatar1.webp",
+      avatar: "/assets/images/avatars/avatarm2.jpg",
     },
     shortInfo:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam enim, animi et nam, facere alias laudantium voluptatum aperiam, error temporibus ratione reiciendis optio sequi odio officiis explicabo maxime sit!",
@@ -88,7 +88,7 @@ export const recipes = [
     category: ["śniadanie", "fit", "lunch"],
     author: {
       name: "Jarek",
-      avatar: "/assets/images/avatars/avatar1.webp",
+      avatar: "/assets/images/avatars/avatarm5.jpg",
     },
     shortInfo:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam enim, animi et nam, facere alias laudantium voluptatum aperiam, error temporibus ratione reiciendis optio sequi odio officiis explicabo maxime sit!",
@@ -125,7 +125,7 @@ export const recipes = [
     category: ["śniadanie", "fit", "lunch"],
     author: {
       name: "Jarek",
-      avatar: "/assets/images/avatars/avatar1.webp",
+      avatar: "/assets/images/avatars/avatarm6.jpg",
     },
     shortInfo:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam enim, animi et nam, facere alias laudantium voluptatum aperiam, error temporibus ratione reiciendis optio sequi odio officiis explicabo maxime sit!",
