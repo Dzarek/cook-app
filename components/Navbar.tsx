@@ -118,7 +118,7 @@ const Navbar = () => {
                   className="rounded-full h-[35px] w-[35px]"
                 />
               </span>{" "}
-              profil
+              Jarek
             </Link>
             <button className="border-l-2 border-white pl-4 ml-4 flex items-center text-md capitalize transition  hover:text-red-900">
               <RiLogoutCircleRLine className="mr-2 text-xl" /> Wyloguj
