@@ -7,6 +7,7 @@ import { MdChangeCircle } from "react-icons/md";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { useState } from "react";
+import AvatarModal from "@/components/AvatarModal";
 
 const Profil = () => {
   const [nick, setNick] = useState("Jarek");
@@ -16,6 +17,7 @@ const Profil = () => {
     level: 2,
   });
   const [showLvl, setShowLvl] = useState(false);
+  const [openAvatarModal, setOpenAvatarModal] = useState(false);
   return (
     <div className="page w-screen">
       <header className="text-center w-full py-[10vh] flex justify-center items-center">
@@ -37,7 +39,10 @@ const Profil = () => {
                 alt="avatar"
                 className="rounded-full w-full object-fill border-2 border-red-900 "
               />
-              <button className="bg-white mt-3 text-md flex items-center justify-center  p-2 px-3 font-semibold rounded-md hover:bg-red-900 hover:text-white transition-all changeAvatarBtn">
+              <button
+                onClick={() => setOpenAvatarModal(true)}
+                className="bg-white mt-3 text-md flex items-center justify-center  p-2 px-3 font-semibold rounded-md hover:bg-red-900 hover:text-white transition-all changeAvatarBtn"
+              >
                 zmień avatara{" "}
                 <MdChangeCircle className="text-xl ml-3 text-red-800" />
               </button>
@@ -168,6 +173,9 @@ const Profil = () => {
           </div>
         </section>
       </main>
+      {openAvatarModal && (
+        <AvatarModal setOpenAvatarModal={setOpenAvatarModal} />
+      )}
     </div>
   );
 };
