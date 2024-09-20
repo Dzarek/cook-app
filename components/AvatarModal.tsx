@@ -10,20 +10,32 @@ interface ModalProps {
   setOpenAvatarModal: (open: boolean) => void;
 }
 
-const currentUser = users.find((user) => user.id === 1);
-
-const userAvatars = users.map((user) => user.avatar);
-
-const notAvailableAvatars = avatars.map((category) => {
-  return category.images.filter((img) => userAvatars.includes(img));
-});
-const availableAvatars = avatars.map((category) => {
-  return category.images.filter((img) => !userAvatars.includes(img));
-});
-
 const AvatarModal = ({ setOpenAvatarModal }: ModalProps) => {
+  const currentUser = users.find((user) => user.id === 1);
+
   const [category, setCategory] = useState("wszystkie");
   const [activeAvatar, setActiveAvatar] = useState(currentUser?.avatar);
+
+  const userAvatars = users.map((user) => user.avatar);
+
+  const notAvailableAvatars = avatars.map((category) => {
+    return category.images.filter((img) => userAvatars.includes(img));
+  });
+  const availableAvatars = avatars.map((category) => {
+    return category.images.filter((img) => !userAvatars.includes(img));
+  });
+
+  const notAvailableAvatars2 = avatars
+    .filter((item) => item.name === category)
+    .map((c) => {
+      return c.images.filter((img) => userAvatars.includes(img));
+    });
+  const availableAvatars2 = avatars
+    .filter((item) => item.name === category)
+    .map((c) => {
+      return c.images.filter((img) => !userAvatars.includes(img));
+    });
+
   return (
     <div className="z-30 fixed w-screen h-screen bg-[rgba(0,0,0,0.8)] top-0 left-0">
       <div className="overflow-hidden w-[70vw] h-[80vh] bg-white rounded-md border-2 border-red-900 fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-30">
@@ -106,10 +118,9 @@ const AvatarModal = ({ setOpenAvatarModal }: ModalProps) => {
                 })}
               </>
             ) : (
-              avatars
-                .filter((avatar) => avatar.name === category)
-                .map((item) => {
-                  return item.images.map((img, index) => {
+              <>
+                {availableAvatars2.map((item) => {
+                  return item.map((img, index) => {
                     return (
                       <Image
                         key={index}
@@ -124,7 +135,24 @@ const AvatarModal = ({ setOpenAvatarModal }: ModalProps) => {
                       />
                     );
                   });
-                })
+                })}
+                {notAvailableAvatars2.map((item) => {
+                  return item.map((img, index) => {
+                    return (
+                      <Image
+                        key={index}
+                        src={img}
+                        width={150}
+                        height={150}
+                        alt="avatar"
+                        className={`rounded-full border-2 w-[9vw] h-[9vw] border-red-900 object-fill m-3 saturate-[0] opacity-50 brightness-[0.8]
+                            ${activeAvatar === img && "border-4"}
+                            `}
+                      />
+                    );
+                  });
+                })}
+              </>
             )}
           </section>
         </main>

@@ -8,6 +8,7 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { useState } from "react";
 import AvatarModal from "@/components/AvatarModal";
+import RecipesListProfile from "@/components/RecipeListProfile";
 
 const Profil = () => {
   const [nick, setNick] = useState("Jarek");
@@ -169,7 +170,7 @@ const Profil = () => {
             Moje przepisy:
           </h3>
           <div className="px-[5vw]">
-            <RecipesList />
+            <RecipesListProfile />
           </div>
         </section>
       </main>
