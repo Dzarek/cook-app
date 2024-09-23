@@ -1,6 +1,5 @@
 "use client";
 
-import RecipesList from "@/components/RecipesList";
 import Image from "next/image";
 import { GiChefToque } from "react-icons/gi";
 import { MdChangeCircle } from "react-icons/md";
