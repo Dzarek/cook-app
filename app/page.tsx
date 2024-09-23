@@ -41,6 +41,11 @@ const authors = [
     name: "Justyna",
     avatar: "/assets/images/avatars/avatark5.webp",
   },
+  {
+    id: 8,
+    name: "Paweł",
+    avatar: "/assets/images/avatars/avatarm9.jpg",
+  },
 ];
 
 export default function Home() {

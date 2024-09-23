@@ -101,7 +101,7 @@ const Navbar = () => {
         {isLogin && (
           <>
             <Link
-              href="profil"
+              href="/profil"
               className={`ml-12  flex items-center text-md capitalize transition  hover:text-red-900 
                 ${
                   pathname === "profil" &&

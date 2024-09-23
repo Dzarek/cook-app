@@ -1,6 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 // import slugify from "slugify";
+import { IoEnter } from "react-icons/io5";
+import { BiEdit } from "react-icons/bi";
+import { MdDeleteForever } from "react-icons/md";
+import { useState } from "react";
 
 export const recipes = [
   {
@@ -154,6 +160,10 @@ export const recipes = [
 ];
 
 const RecipesListProfile = () => {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleDelete = () => {};
+
   return (
     <div className="mx-auto my-[5vh] flex w-full items-center justify-center flex-wrap">
       {recipes.map((recipe) => {
@@ -161,18 +171,55 @@ const RecipesListProfile = () => {
           recipe;
         // const slug = slugify(title, { lower: true });
         return (
-          <div className="flex items-center w-[26vw] justify-between border-[1px] rounded-md m-[1vw]">
-            <div className="flex flex-col w-[5vw] bg-zinc-200 "></div>
-            <Link
-              href={`/przepisy/${slug}`}
-              className="recipeProfile bg-stone-100 hover:scale-105 transition-transform"
-              key={id}
-            >
+          <div
+            key={id}
+            className="flex items-strech w-[25vw] justify-between border-2 rounded-md m-[1.5vw]"
+          >
+            {confirmDelete && (
+              <div className="z-20 rounded-md border-2 border-white flex flex-col fixed w-[40vw] h-[50vh] bg-red-950 text-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] p-4 items-center justify-center">
+                <span className="mb-14 w-full text-center text-xl px-4 py-2 bg-white text-black uppercase font-bold">
+                  {title}
+                </span>
+                <h2 className="text-2xl text-center">
+                  Czy napewo chcesz usunąć ten przepis?
+                </h2>
+                <div className="flex items-center justify-center mt-10">
+                  <button
+                    onClick={() => setConfirmDelete(false)}
+                    className="p-5 bg-white text-red-900 uppercase rounded-md text-2xl mx-4 transition-all border-2 border-white hover:bg-black hover:text-white"
+                  >
+                    NIE
+                  </button>
+                  <button
+                    onClick={handleDelete}
+                    className="p-5 bg-white text-red-900 uppercase rounded-md text-2xl mx-4 transition-all border-2 border-white hover:bg-black hover:text-white"
+                  >
+                    TAK
+                  </button>
+                </div>
+              </div>
+            )}
+            <div className="flex flex-col w-[4vw]  bg-stone-100 items-center justify-around">
+              <Link href={`/przepisy/${slug}`}>
+                {" "}
+                <IoEnter className="cursor-pointer text-2xl text-cyan-950 transition-all hover:text-blue-700" />
+              </Link>
+              <Link href="/dodaj">
+                {" "}
+                <BiEdit className="cursor-pointer text-2xl text-green-900 transition-all hover:text-green-700" />
+              </Link>
+              <MdDeleteForever
+                onClick={() => setConfirmDelete(true)}
+                className="cursor-pointer text-2xl text-red-900 transition-all hover:text-red-700"
+              />
+            </div>
+
+            <div className="recipeProfile bg-stone-100  transition-transform">
               <Image
                 src={image}
                 width={1000}
                 height={1000}
-                className="w-full h-4/6 object-cover recipe-img"
+                className="w-full h-4/6 object-cover recipe-imgProfile"
                 alt={title}
               />
               <section className="flex flex-col items-center justify-center p-2">
@@ -196,7 +243,7 @@ const RecipesListProfile = () => {
                   <strong className="text-red-800">{author.name}</strong>
                 </p>
               </section>
-            </Link>
+            </div>
           </div>
         );
       })}

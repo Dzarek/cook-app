@@ -10,7 +10,6 @@ import { RiImageAddLine } from "react-icons/ri";
 import { BsClockHistory } from "react-icons/bs";
 import { GiRiceCooker } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
-import { FaLongArrowAltRight } from "react-icons/fa";
 import { BiEdit } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
 import { MdOutlineAddCircle } from "react-icons/md";

@@ -104,11 +104,11 @@ const Profil = () => {
                 zapisz zmiany
               </button>
             </form>
-            <div className="w-full bg-white p-5 rounded-md relative">
+            <div className="w-full bg-white p-5 rounded-md">
               {showLvl && (
-                <div className="rounded-md absolute z-10 -top-[150%] left-0 w-[100%] h-[200%] bg-zinc-100 border-2 border-black flex flex-col justify-center items-center text-center">
-                  <p className="mb-1">
-                    Poziom kucharza zależny jest od ilości polubionych
+                <div className="rounded-md fixed p-4 z-10 top-[50%] left-[50%] w-[30vw] h-[40vh] translate-x-[-50%] translate-y-[-50%] bg-zinc-100 border-2 border-red-900 flex flex-col justify-center items-center text-center">
+                  <p className="mb-4 text-center font-semibold">
+                    Poziom kucharza zależny jest <br /> od ilości polubionych
                     przepisów:
                   </p>
                   <ul>
