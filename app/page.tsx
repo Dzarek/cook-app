@@ -16,6 +16,28 @@ export default async function Home() {
     })
     .slice(0, 5);
 
+  const countCategoriesByTags = (recipes: Recipe[], tags: string[]) => {
+    const categoryCount: { [key: string]: number } = {};
+    tags.forEach((tag) => {
+      categoryCount[tag] = 0;
+    });
+    recipes.forEach((recipe) => {
+      recipe.category.forEach((cat) => {
+        if (tags.includes(cat)) {
+          categoryCount[cat]++;
+        }
+      });
+    });
+    const resultArray = Object.keys(categoryCount).map((tag) => ({
+      tag,
+      count: categoryCount[tag],
+    }));
+
+    return resultArray;
+  };
+
+  const categories = countCategoriesByTags(allRecipes, tags);
+
   return (
     <div className="main mx-auto w-screen">
       <header className="relative mx-auto flex justify-center items-center w-full h-[65vh] mt-[12vh]">
@@ -36,24 +58,24 @@ export default async function Home() {
             Kategorie:
           </h3>
           <ul className="flex flex-wrap items-center justify-around  text-white text-md capitalize text-center">
-            {tags.map((tag, index) => {
+            {categories.map((item, index) => {
               return (
                 <>
-                  {tag === "śniadanie" ? (
+                  {item.tag === "śniadanie" ? (
                     <Link
                       className="mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
                       href={`/tags/sniadanie`}
                       key={index}
                     >
-                      {tag} (0)
+                      {item.tag} ({item.count})
                     </Link>
                   ) : (
                     <Link
                       className="mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
-                      href={`/tags/${tag}`}
+                      href={`/tags/${item.tag}`}
                       key={index}
                     >
-                      {tag} (0)
+                      {item.tag} ({item.count})
                     </Link>
                   )}
                 </>

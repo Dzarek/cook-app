@@ -5,7 +5,6 @@ export const tags = [
   "impreza",
   "praca",
   "kurczak",
-  // "lunch",
   "owoce",
   "ryby",
   "fit",
