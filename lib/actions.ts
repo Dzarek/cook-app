@@ -41,6 +41,8 @@ export const getAllRecipes = async () => {
           const recipeData = doc.data();
           const recipe: Recipe = {
             id: doc.id,
+            createdTime: recipeData.createdTime,
+            author: el.userName,
             title: recipeData.title,
             slug: recipeData.slug,
             image: recipeData.image,

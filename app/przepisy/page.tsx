@@ -5,11 +5,13 @@ import { BiFork } from "react-icons/bi";
 import { GiCook } from "react-icons/gi";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { getAllUsers, getAllRecipes } from "@/lib/actions";
+import moment from "moment/min/moment-with-locales";
 
 const RecipesPage = async () => {
   const authors = await getAllUsers();
   const allRecipes = await getAllRecipes();
-  console.log(allRecipes);
+  // console.log(allRecipes);
+  console.log(moment().valueOf());
 
   return (
     <div className="page w-screen">
@@ -22,7 +24,7 @@ const RecipesPage = async () => {
         <div className="bg-red-900 border-red-950  w-[10vw] h-[45px] border-t-2"></div>
         <section className="w-1/5 border-2 border-red-950 rounded-b-md rounded-br-md bg-white">
           <h3 className="uppercase text-xl font-semibold bg-red-900 text-white p-2 text-center">
-            Szukaj
+            Filtruj
           </h3>
           <div className="filterBy">
             <h4 className="w-full bg-red-200 p-1 px-4 text-md font-semibold font-bodyFont uppercase tracking-wider">

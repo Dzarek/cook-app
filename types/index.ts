@@ -1,5 +1,7 @@
 type Recipe = {
   id: string;
+  createdTime: number;
+  author: string;
   title: string;
   slug: string;
   image: string;
