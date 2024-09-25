@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { AppProvider } from "@/components/context";
+// import { AppProvider } from "@/components/context";
 
 export const metadata: Metadata = {
   title: "Stępki Gotują",
@@ -16,14 +16,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
-      <AppProvider>
-        <body className="relative">
-          {" "}
-          <Navbar />
-          {children}
-          <Footer />
-        </body>
-      </AppProvider>
+      {/* <AppProvider> */}
+      <body className="relative">
+        {" "}
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
+      {/* </AppProvider> */}
     </html>
   );
 }

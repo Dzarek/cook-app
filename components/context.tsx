@@ -22,68 +22,10 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 import * as XLSX from "xlsx";
-// import * as moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { useRouter } from "next/navigation";
 
-// moment.locale("pl");
-
-type Recipe = {
-  id: string;
-  title: string;
-  // date: string;
-  // time: string;
-  // nameOfGuest: string;
-  // direction: string;
-  // people: number;
-  // details: string;
-  // flight: string;
-  // phone: string;
-  // price: number;
-  // provision: number;
-  // createdDate: number;
-  // specialTransfer: boolean;
-};
-
-type User = {
-  id: string;
-  userName: string;
-  activeAccount: boolean;
-};
-
-type ContextTypes = {
-  isAdmin: boolean;
-  allUsersList: User[];
-  recipes: Recipe[];
-  // name: string;
-  // currentUser: any;
-  // confirmDelete: boolean;
-  // modalName: boolean;
-  // activeUser: any;
-  // loading: boolean;
-  // file: any;
-  // lastAddedRecipes: Transfer[];
-  // setRecipes: (recipes: Transfer[]) => void;
-  // postProducts: (data: Transfer) => void;
-  // setConfirmDelete: (confirmDelete: boolean) => void;
-  // setDeleteId: (deleteId: string | null) => void;
-  // setLoading: (loading: boolean) => void;
-  // handleStatus: () => void;
-  // setActiveUser: (activeUser: any) => void;
-  // setName: (name: string) => void;
-  // setUserId: (userId: string) => void;
-  // logout: () => void;
-  // login: (email: string, password: string) => void;
-  // updateUser: (newName: string) => void;
-  // updateName: (newName: string) => void;
-  // changePassword: () => void;
-  // changePasswordWhenLogin: (email: string) => void;
-  // createNewUser: (email: string, password: string, newName: string) => void;
-  // disableUser: () => void;
-  // getAllUsers: () => void;
-  // uploadData: () => void;
-  // setFile: (file: any) => void;
-  // deleteData: () => void;
-};
+moment.locale("pl");
 
 const defaultValues: ContextTypes = {
   isAdmin: false,
@@ -127,7 +69,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [lastAddedRecipes, setLastAddedRecipes] = useState<Recipe[]>([]);
   const [allUsersList, setAllUsersList] = useState<User[]>([]);
-  const [allUsersRecipes, setAllUsersRecipes] = useState([]);
+  const [allUsersRecipes, setAllUsersRecipes] = useState<Recipe[]>([]);
   // END ARRAYS USESTATE
 
   // USER USESTATE
@@ -144,7 +86,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [modalName, setModalName] = useState(false);
   const [activeUser, setActiveUser] = useState<any>(null);
   const [file, setFile] = useState<any>(null);
-  const [downloadData, setDownloadData] = useState(null);
+  const [downloadData, setDownloadData] = useState<BackupData>([]);
 
   // END OTHER USESTATE
   const router = useRouter();
@@ -172,26 +114,25 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   //   logout();
   // };
 
-  const login = async (email: string, password: string) => {
-    // logout();
-    await signInWithEmailAndPassword(auth, email, password);
-    const getData = doc(db, `usersList/${getUser.currentUser!.uid}`);
-    const data2 = await getDoc(getData);
-    // console.log(data2);
+  // const login = async (email: string, password: string) => {
+  //   // logout();
+  //   await signInWithEmailAndPassword(auth, email, password);
+  //   const getData = doc(db, `usersList/${getUser.currentUser!.uid}`);
+  //   const data2 = await getDoc(getData);
+  //   if (data2.data()) {
+  //     const item = data2.data();
+  //     if (item!.activeAccount === false) {
+  //       // logout();
+  //       alert("Konto zostało usunięte!");
+  //     }
+  //   }
+  //   if (getUser!.currentUser!.displayName === null) {
+  //     setModalName(true);
+  //   }
+  //   // router.push("/");
+  // };
+  // login("jarek@user.com", "jarek@user.com");
 
-    if (data2.data()) {
-      const item = data2.data();
-      if (item!.activeAccount === false) {
-        // logout();
-        alert("Konto zostało usunięte!");
-      }
-    }
-    if (getUser!.currentUser!.displayName === null) {
-      setModalName(true);
-    }
-    // router.push("/");
-  };
-  login("jarek@user.com", "jarek@user.com");
   // const logout = async () => {
   //   setLoading(true);
   //   await signOut(auth);
@@ -208,33 +149,31 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   // };
 
   // UNSUBSCRIBE
-  useEffect(() => {
-    const authStateChanged = async () => {
-      const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        setCurrentUser(user);
-      });
-      if (currentUser) {
-        setUserID(currentUser.uid);
-        setName(currentUser.displayName);
-        const getData = doc(db, `usersList/${currentUser.uid}`);
-        const data2 = await getDoc(getData);
-        console.log(data2.data());
-
-        // if (data2.data()) {
-        //   const item = data2.data();
-        //   if (item!.activeAccount === false) {
-        //     logout();
-        //     alert("Konto zostało usunięte!");
-        //   }
-        // }
-      }
-      if (!currentUser) {
-        setLoading(true);
-      }
-      return unsubscribe;
-    };
-    authStateChanged();
-  }, [currentUser]);
+  // useEffect(() => {
+  //   const authStateChanged = async () => {
+  //     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+  //       setCurrentUser(user);
+  //     });
+  //     if (currentUser) {
+  //       setUserID(currentUser.uid);
+  //       setName(currentUser.displayName);
+  //       const getData = doc(db, `usersList/${currentUser.uid}`);
+  //       const data2 = await getDoc(getData);
+  //       if (data2.data()) {
+  //         const item = data2.data();
+  //         if (item!.activeAccount === false) {
+  //           // logout();
+  //           alert("Konto zostało usunięte!");
+  //         }
+  //       }
+  //     }
+  //     if (!currentUser) {
+  //       setLoading(true);
+  //     }
+  //     return unsubscribe;
+  //   };
+  //   authStateChanged();
+  // }, [currentUser]);
   // END UNSUBSCRIBE
 
   // END AUTH
@@ -304,50 +243,105 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   // END UPDATE USER
 
   // FETCH FROM FIREBASE
-
-  //   GET ALL USERS AND ALL-USERS-TRANSFERS FOR ADMIN
-  // const getAllUsers = async () => {
-  //   const allUsersCollectionRef = collection(db, "usersList");
-  //   const data = await getDocs(allUsersCollectionRef);
-  //   let items = data.docs
-  //   .filter((doc) => doc.id !== "0")
-  //   .map((doc) => ({ newId: doc.id, ...doc.data() as User }));
-
-  // items = items.filter((el) => el.activeAccount === true);
-  // setAllUsersList(items);
-
-  //   let backupArray = [];
-  //   let bigItemsArray = [];
-  //   items.map(async (el) => {
-  //     const allUsersCollectionData = collection(
-  //       db,
-  //       `usersList/${el.id}/recipes`
-  //     );
-  //     onSnapshot(allUsersCollectionData, (snapshot) => {
-  //       const itemsAllUsers = snapshot.docs.map((doc) => ({
-  //         ...doc.data(),
+  // const getRecipes = async (userID: string) => {
+  //   const getProductsCollectionRefOneUser = collection(
+  //     db,
+  //     `usersList/${userID}/recipes`
+  //   );
+  //   try {
+  //     const data = await getDocs(getProductsCollectionRefOneUser);
+  //     const items = data.docs.map((doc) => {
+  //       const recipeData = doc.data();
+  //       const recipe: Recipe = {
   //         id: doc.id,
-  //       }));
-  //       const itemsArray = [];
-  //       itemsAllUsers.map((item) => {
-  //         itemsArray.push(item);
-  //       });
-  //       bigItemsArray.push(...itemsArray);
-  //       backupArray.push({
-  //         id: el.id,
-  //         name: el.userName,
-  //         itemsArray,
-  //       });
-  //       setDownloadData(backupArray);
-  //       const uniqueitemsArray = [
-  //         ...new Map(bigItemsArray.map((item) => [item["id"], item])).values(),
-  //       ];
-  //       setAllUsersTransfers(uniqueitemsArray);
-  //       updateAdminHomePage(uniqueitemsArray);
+  //         title: recipeData.title,
+  //         slug: recipeData.slug,
+  //         image: recipeData.image,
+  //         prepTime: recipeData.prepTime,
+  //         cookTime: recipeData.cookTime,
+  //         portion: recipeData.portion,
+  //         category: recipeData.category,
+  //         shortInfo: recipeData.shortInfo,
+  //         ingredients: recipeData.ingredients,
+  //         steps: recipeData.steps,
+  //         description: recipeData.description || "",
+  //         likes: recipeData.likes,
+  //       };
+
+  //       return recipe;
   //     });
-  //   });
+  //     setRecipes(items);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
   // };
 
+  //   GET ALL USERS AND ALL-USERS-TRANSFERS FOR ADMIN
+  const getAllUsers = async () => {
+    const allUsersCollectionRef = collection(db, "usersList");
+    try {
+      const data = await getDocs(allUsersCollectionRef);
+      let items = data.docs
+        .filter((doc) => doc.id !== "0")
+        .map((doc) => ({ id: doc.id, ...(doc.data() as User) }));
+
+      items = items.filter((el) => el.activeUser === true);
+      setAllUsersList(items);
+      let backupArray = [];
+      let bigItemsArray: Recipe[] = [];
+      items.map(async (el) => {
+        const allUsersCollectionData = collection(
+          db,
+          `usersList/${el.id}/recipes`
+        );
+        const data = await getDocs(allUsersCollectionData);
+        const itemsAllUsers = data.docs.map((doc) => {
+          const recipeData = doc.data();
+          const recipe: Recipe = {
+            id: doc.id,
+            title: recipeData.title,
+            slug: recipeData.slug,
+            image: recipeData.image,
+            prepTime: recipeData.prepTime,
+            cookTime: recipeData.cookTime,
+            portion: recipeData.portion,
+            category: recipeData.category,
+            shortInfo: recipeData.shortInfo,
+            ingredients: recipeData.ingredients,
+            steps: recipeData.steps,
+            description: recipeData.description || "",
+            likes: recipeData.likes,
+          };
+
+          return recipe;
+        });
+        const itemsArray: any[] = [];
+        itemsAllUsers.map((item) => {
+          itemsArray.push(item);
+        });
+
+        bigItemsArray.push(...itemsArray);
+        console.log(bigItemsArray);
+        backupArray.push({
+          id: el.id,
+          name: el.userName,
+          itemsArray,
+        });
+        setDownloadData(backupArray);
+        // const uniqueitemsArray = [
+        //   ...new Map(bigItemsArray.map((item) => [item["id"], item])).values(),
+        // ];
+        setAllUsersRecipes(bigItemsArray);
+        //     // updateAdminHomePage(uniqueitemsArray);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
   // DOWNLOAD DATA
   // const exportData = () => {
   //   if (isAdmin) {
@@ -454,6 +448,12 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   // END UPLOAD DATA
 
   // useEffect(() => {
+  //   if (currentUser) {
+  //     getAllUsers();
+  //   }
+  // }, [loading, userID]);
+
+  // useEffect(() => {
   //   if (currentUser && currentUser.uid === process.env.NEXT_PUBLIC_ADMIN_ID) {
   //     setIsAdmin(true);
   //     getAllUsers();
@@ -463,7 +463,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   // }, [loading, userID]);
 
   //   GET ONE USER TRANSFERS
-  const getProducts = async () => {
+  const getRecipes = async (userID: string) => {
     const getProductsCollectionRefOneUser = collection(
       db,
       `usersList/${userID}/recipes`
@@ -472,28 +472,35 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       const data = await getDocs(getProductsCollectionRefOneUser);
       const items = data.docs.map((doc) => {
         const recipeData = doc.data();
-
         const recipe: Recipe = {
           id: doc.id,
           title: recipeData.title,
+          slug: recipeData.slug,
+          image: recipeData.image,
+          prepTime: recipeData.prepTime,
+          cookTime: recipeData.cookTime,
+          portion: recipeData.portion,
+          category: recipeData.category,
+          shortInfo: recipeData.shortInfo,
+          ingredients: recipeData.ingredients,
+          steps: recipeData.steps,
+          description: recipeData.description || "",
+          likes: recipeData.likes,
         };
 
         return recipe;
       });
-
-      console.log(items);
-
       setRecipes(items);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    if (currentUser) {
-      getProducts();
-    }
-  }, [loading, userID]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     getRecipes(userID);
+  //   }
+  // }, [loading, userID]);
 
   // END FETCH FROM FIREBASE
 

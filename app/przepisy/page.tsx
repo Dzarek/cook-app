@@ -1,22 +1,16 @@
 import RecipesList from "@/components/RecipesList";
-import { tags } from "@/constants";
+import { options, tags } from "@/constants";
 import { PiKnifeFill } from "react-icons/pi";
 import { BiFork } from "react-icons/bi";
 import { GiCook } from "react-icons/gi";
 import { BiSearchAlt2 } from "react-icons/bi";
+import { getAllUsers, getAllRecipes } from "@/lib/actions";
 
-const authors = ["Dorota", "Jarek", "Ania", "Kamil", "Agata", "Justyna"];
+const RecipesPage = async () => {
+  const authors = await getAllUsers();
+  const allRecipes = await getAllRecipes();
+  console.log(allRecipes);
 
-const options = [
-  "Najnowsze",
-  "Najstarsze",
-  "Nazwa: A-Z",
-  "Nazwa: Z-A",
-  "Czas przygotowania: rosnąco",
-  "Czas przygotowania: malejąco",
-];
-
-const RecipesPage = () => {
   return (
     <div className="page w-screen">
       <header className="text-center w-full py-[10vh] flex justify-center items-center">
@@ -52,19 +46,21 @@ const RecipesPage = () => {
             <h4 className="w-full bg-red-200 p-1 px-4 text-md font-semibold font-bodyFont uppercase tracking-wider">
               Autor:
             </h4>
-            <ul className="py-2">
-              {authors.map((author, index) => {
-                return (
-                  <li
-                    className="ml-4 my-2 cursor-pointer hover:translate-x-4 transition capitalize tracking-wider font-medium flex items-center"
-                    key={index}
-                  >
-                    <GiCook className="mr-2  text-red-900 text-xl" />
-                    {author}
-                  </li>
-                );
-              })}
-            </ul>
+            {authors && (
+              <ul className="py-2">
+                {authors.map((author) => {
+                  return (
+                    <li
+                      className="ml-4 my-2 cursor-pointer hover:translate-x-4 transition capitalize tracking-wider font-medium flex items-center"
+                      key={author.id}
+                    >
+                      <GiCook className="mr-2  text-red-900 text-xl" />
+                      {author.userName}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </div>
         </section>
         <section className="w-4/5 border-t-2 border-red-950">
