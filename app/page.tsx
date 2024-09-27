@@ -64,16 +64,22 @@ export default async function Home() {
                   {item.tag === "śniadanie" ? (
                     <Link
                       className="mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
-                      href={`/tags/sniadanie`}
                       key={index}
+                      href={{
+                        pathname: "/przepisy",
+                        query: { kategoria: "sniadanie" },
+                      }}
                     >
                       {item.tag} ({item.count})
                     </Link>
                   ) : (
                     <Link
                       className="mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
-                      href={`/tags/${item.tag}`}
                       key={index}
+                      href={{
+                        pathname: "/przepisy",
+                        query: { kategoria: item.tag },
+                      }}
                     >
                       {item.tag} ({item.count})
                     </Link>

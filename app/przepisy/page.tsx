@@ -7,11 +7,17 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { getAllUsers, getAllRecipes } from "@/lib/actions";
 import moment from "moment/min/moment-with-locales";
 
-const RecipesPage = async () => {
+const RecipesPage = async ({
+  searchParams,
+}: {
+  searchParams: { kategoria: string };
+}) => {
   const authors = await getAllUsers();
   const allRecipes = await getAllRecipes();
   // console.log(allRecipes);
-  console.log(moment().valueOf());
+  // console.log(moment().valueOf());
+  const { kategoria } = searchParams;
+  console.log(kategoria);
 
   return (
     <div className="page w-screen">
@@ -108,9 +114,7 @@ const RecipesPage = async () => {
             </section>
           </div>
 
-          <div className="px-[5vw]">
-            <RecipesList />
-          </div>
+          <div className="px-[5vw]">{/* <RecipesList /> */}</div>
         </section>
       </main>
     </div>
