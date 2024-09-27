@@ -139,12 +139,12 @@ export const users = [
 export const authors = ["Dorota", "Jarek", "Ania", "Kamil", "Agata", "Justyna"];
 
 export const options = [
-  "Najnowsze",
-  "Najstarsze",
-  "Nazwa: A-Z",
-  "Nazwa: Z-A",
-  "Czas przygotowania: rosnąco",
-  "Czas przygotowania: malejąco",
+  "najnowsze",
+  "najstarsze",
+  "nazwa: a-z",
+  "nazwa: z-a",
+  "czas przygotowania: rosnąco",
+  "czas przygotowania: malejąco",
 ];
 
 // export const recipes = [  {

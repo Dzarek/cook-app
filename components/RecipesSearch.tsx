@@ -5,7 +5,7 @@ import { options, tags } from "@/constants";
 import { BiFork } from "react-icons/bi";
 import { GiCook } from "react-icons/gi";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type RecipeSearchType = {
   allRecipes: Recipe[];
@@ -18,9 +18,16 @@ const RecipesSearch = ({
   kategoria,
   authors,
 }: RecipeSearchType) => {
+  const [activeRecipes, setActiveRecipes] = useState(allRecipes);
   const [activeCategory, setActiveKategory] = useState("");
   const [activeAuthor, setActiveAuthor] = useState("");
-  const [activeRecipes, setActiveRecipes] = useState(allRecipes);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    if (kategoria) {
+      handleCategory(kategoria);
+    }
+  }, [kategoria]);
 
   const handleCategory = (tag: string) => {
     setActiveAuthor("");
@@ -33,6 +40,55 @@ const RecipesSearch = ({
     setActiveKategory("");
     setActiveAuthor(name);
     setActiveRecipes(allRecipes.filter((recipe) => recipe.author === name));
+  };
+
+  const handleSearchTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const searchValue = e.target.value;
+    setSearchTerm(searchValue);
+
+    if (searchValue === "") {
+      setActiveRecipes(allRecipes);
+    } else {
+      const filteredRecipes = allRecipes.filter((recipe) =>
+        recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setActiveRecipes(filteredRecipes);
+    }
+  };
+
+  const handleSort = (option: string) => {
+    const sortedRecipes = [...activeRecipes];
+
+    if (option === "najnowsze") {
+      setActiveRecipes(
+        sortedRecipes.sort((a, b) => b.createdTime - a.createdTime)
+      );
+    } else if (option === "najstarsze") {
+      setActiveRecipes(
+        sortedRecipes.sort((a, b) => a.createdTime - b.createdTime)
+      );
+    } else if (option === "nazwa: a-z") {
+      setActiveRecipes(
+        sortedRecipes.sort((a, b) => a.title.localeCompare(b.title))
+      );
+    } else if (option === "nazwa: z-a") {
+      setActiveRecipes(
+        sortedRecipes.sort((a, b) => b.title.localeCompare(a.title))
+      );
+    } else if (option === "czas przygotowania: rosnąco") {
+      setActiveRecipes(
+        sortedRecipes.sort(
+          (a, b) => a.prepTime + a.cookTime - (b.prepTime + b.cookTime)
+        )
+      );
+    } else if (option === "czas przygotowania: malejąco") {
+      setActiveRecipes(
+        sortedRecipes.sort(
+          (a, b) => b.prepTime + b.cookTime - (a.prepTime + a.cookTime)
+        )
+      );
+    }
   };
 
   return (
@@ -113,7 +169,8 @@ const RecipesSearch = ({
             <select
               name="sort"
               id="sort"
-              className="text-lg p-1 px-3 lowercase rounded-md bg-stone-200"
+              className="text-lg p-2 px-3 lowercase rounded-md bg-zinc-700 text-white"
+              onChange={(e) => handleSort(e.target.value)}
             >
               {options.map((option, index) => {
                 return (
@@ -132,10 +189,12 @@ const RecipesSearch = ({
               type="text"
               id="search"
               name="search"
-              className="bg-stone-200 rounded-md lowercase p-1 px-3 text-lg w-[16vw]"
+              className="bg-zinc-700 text-white rounded-md lowercase p-2 px-3 text-lg w-[16vw]"
               placeholder="wpisz nazwę"
+              value={searchTerm}
+              onChange={(e) => handleSearchTitle(e)}
             />
-            <div className="text-xl text-black -ml-7">
+            <div className="text-xl text-white -ml-7">
               <BiSearchAlt2 />
             </div>
           </section>
