@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
+
 // import { AppProvider } from "@/components/context";
 
 export const metadata: Metadata = {
@@ -18,7 +20,12 @@ export default function RootLayout({
     <html lang="pl">
       {/* <AppProvider> */}
       <body className="relative">
-        {" "}
+        <Toaster
+          position="top-center"
+          containerStyle={{
+            top: 100,
+          }}
+        />
         <Navbar />
         {children}
         <Footer />

@@ -19,7 +19,7 @@ const RecipesSearch = ({
   authors,
 }: RecipeSearchType) => {
   const [activeRecipes, setActiveRecipes] = useState(allRecipes);
-  const [activeCategory, setActiveKategory] = useState("");
+  const [activeCategory, setActiveKategory] = useState("wszystkie");
   const [activeAuthor, setActiveAuthor] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -27,23 +27,37 @@ const RecipesSearch = ({
     if (kategoria) {
       handleCategory(kategoria);
     }
-  }, [kategoria]);
+  }, []);
 
   const handleCategory = (tag: string) => {
     setActiveAuthor("");
-    setActiveKategory(tag);
-    setActiveRecipes(
-      allRecipes.filter((recipe) => recipe.category.includes(tag))
-    );
+    if (tag === "wszystkie") {
+      setActiveRecipes(allRecipes);
+      setActiveKategory("wszystkie");
+    } else {
+      setActiveKategory(tag);
+      setActiveRecipes(
+        allRecipes.filter((recipe) => recipe.category.includes(tag))
+      );
+    }
   };
   const handleAuthor = (name: string) => {
     setActiveKategory("");
-    setActiveAuthor(name);
-    setActiveRecipes(allRecipes.filter((recipe) => recipe.author === name));
+    if (name === "wszyscy") {
+      setActiveRecipes(allRecipes);
+      setActiveAuthor("wszyscy");
+    } else {
+      setActiveAuthor(name);
+      setActiveRecipes(
+        allRecipes.filter((recipe) => recipe.author.authorName === name)
+      );
+    }
   };
 
   const handleSearchTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setActiveKategory("");
+    setActiveAuthor("");
     const searchValue = e.target.value;
     setSearchTerm(searchValue);
 
@@ -103,27 +117,45 @@ const RecipesSearch = ({
             Kategorie:
           </h4>
           <ul className="py-2 overflow-hidden">
-            {tags.map((tag, index) => {
-              return (
-                <li
-                  className={`ml-4 my-2 cursor-pointer hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
+            <>
+              <li
+                className={`ml-4 my-2 cursor-pointer hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
                  ${
-                   activeCategory === tag &&
-                   "bg-red-900 rounded-l-lg text-white py-1 ml-14 hover:translate-x-0 transition-all"
+                   activeCategory === "wszystkie" &&
+                   "bg-red-900 rounded-l-lg text-white py-1 ml-16 hover:translate-x-0 transition-all"
                  }
                   `}
-                  key={index}
-                  onClick={() => handleCategory(tag)}
-                >
-                  <BiFork
-                    className={`mr-2 rotate-45 text-red-900 text-xl  ${
-                      activeCategory === tag && " text-white"
-                    }`}
-                  />
-                  {tag}
-                </li>
-              );
-            })}
+                onClick={() => handleCategory("wszystkie")}
+              >
+                <BiFork
+                  className={`mr-2 rotate-45 text-red-900 text-xl  ${
+                    activeCategory === "wszystkie" && " text-white"
+                  }`}
+                />
+                wszystkie
+              </li>
+              {tags.map((tag, index) => {
+                return (
+                  <li
+                    className={`ml-4 my-2 cursor-pointer hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
+                 ${
+                   activeCategory === tag &&
+                   "bg-red-900 rounded-l-lg text-white py-1 ml-16 hover:translate-x-0 transition-all"
+                 }
+                  `}
+                    key={index}
+                    onClick={() => handleCategory(tag)}
+                  >
+                    <BiFork
+                      className={`mr-2 rotate-45 text-red-900 text-xl  ${
+                        activeCategory === tag && " text-white"
+                      }`}
+                    />
+                    {tag}
+                  </li>
+                );
+              })}
+            </>
           </ul>
         </div>
         <div className="filterBy">
@@ -131,28 +163,46 @@ const RecipesSearch = ({
             Autor:
           </h4>
           {authors && (
-            <ul className="py-2">
-              {authors.map((author) => {
-                return (
-                  <li
-                    className={`ml-4 my-2 cursor-pointer hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
+            <ul className="py-2 overflow-hidden">
+              <>
+                <li
+                  className={`ml-4 my-2 cursor-pointer hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
+                 ${
+                   activeAuthor === "wszyscy" &&
+                   "bg-red-900 rounded-l-lg text-white py-1 ml-16 hover:translate-x-0 transition-all"
+                 }
+                  `}
+                  onClick={() => handleAuthor("wszyscy")}
+                >
+                  <GiCook
+                    className={`mr-2 text-red-900 text-xl  ${
+                      activeAuthor === "wszyscy" && " text-white"
+                    }`}
+                  />
+                  wszyscy
+                </li>
+                {authors.map((author) => {
+                  return (
+                    <li
+                      className={`ml-4 my-2 cursor-pointer hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
                     ${
                       activeAuthor === author.userName &&
-                      "bg-red-900 rounded-l-lg text-white py-1 ml-14 hover:translate-x-0 transition-all"
+                      "bg-red-900 rounded-l-lg text-white py-1  ml-16  hover:translate-x-0 transition-all"
                     }
                      `}
-                    key={author.id}
-                    onClick={() => handleAuthor(author.userName)}
-                  >
-                    <GiCook
-                      className={`mr-2 text-red-900 text-xl  ${
-                        activeAuthor === author.userName && " text-white"
-                      }`}
-                    />
-                    {author.userName}
-                  </li>
-                );
-              })}
+                      key={author.id}
+                      onClick={() => handleAuthor(author.userName)}
+                    >
+                      <GiCook
+                        className={`mr-2 text-red-900 text-xl  ${
+                          activeAuthor === author.userName && " text-white"
+                        }`}
+                      />
+                      {author.userName}
+                    </li>
+                  );
+                })}
+              </>
             </ul>
           )}
         </div>

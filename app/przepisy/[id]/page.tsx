@@ -1,13 +1,22 @@
-import { recipes } from "@/components/RecipesList";
+// import { recipes } from "@/components/RecipesList";
 import Image from "next/image";
 import { BsClockHistory } from "react-icons/bs";
 import { GiRiceCooker } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
 import { FaSpoon } from "react-icons/fa6";
 import { BiFork } from "react-icons/bi";
+import { getAllRecipes } from "@/lib/actions";
+import LikeControl from "@/components/LikeControl";
 
-const OneRecipePage = ({ params: { slug } }: { params: { slug: string } }) => {
-  const oneRecipe = recipes.find((recipe) => recipe.slug === slug);
+const OneRecipePage = async ({
+  params: { id },
+}: {
+  params: { id: string };
+}) => {
+  const allRecipes = await getAllRecipes();
+
+  const oneRecipe = allRecipes.find((recipe) => recipe.id === id);
+
   if (oneRecipe) {
     const {
       title,
@@ -21,13 +30,17 @@ const OneRecipePage = ({ params: { slug } }: { params: { slug: string } }) => {
       ingredients,
       shortInfo,
       portion,
+      likes,
     } = oneRecipe;
     return (
       <div className="page w-screen">
-        <header className="text-center w-full py-[10vh] flex justify-center items-center">
-          <FaSpoon className="text-3xl text-red-900  mr-5 spoonRotate" />
-          <h1 className="text-3xl font-bold font-bodyFont">{title}</h1>
+        <header className="relative text-center bg-red-100 mb-[5vh] w-full py-[10vh] flex justify-center items-center">
+          <FaSpoon className="text-3xl text-red-900  mr-6 spoonRotate" />
+          <h1 className="text-3xl font-bold font-bodyFont uppercase">
+            {title}
+          </h1>
           <BiFork className="text-4xl text-red-900 ml-5 forkRotate" />
+          <LikeControl likes={likes} />
         </header>
         <main className="w-4/5 mx-auto flex justify-between items-center">
           <Image
@@ -137,14 +150,14 @@ const OneRecipePage = ({ params: { slug } }: { params: { slug: string } }) => {
             Autor:
           </h4>
           <Image
-            src={author.avatar}
+            src={author.authorAvatar}
             width={100}
             height={100}
             alt="avatar"
             className="rounded-full w-14 h-14 object-fill"
           />
           <span className="px-2 py-1 text-xl text-red-900 rounded-md font-semibold font-bodyFont">
-            {author.name}
+            {author.authorName}
           </span>
         </div>
       </div>

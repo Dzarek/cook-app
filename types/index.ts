@@ -1,7 +1,10 @@
 type Recipe = {
   id: string;
   createdTime: number;
-  author: string;
+  author: {
+    authorName: string;
+    authorAvatar: string;
+  };
   title: string;
   slug: string;
   image: string;

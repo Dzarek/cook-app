@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import LikeBtn from "./uiverse/LikeBtn";
 // import slugify from "slugify";
 import { FaHeart } from "react-icons/fa";
 
@@ -16,13 +15,13 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
           cookTime,
           author,
           category,
-          slug,
+          // slug,
           likes,
         } = recipe;
         // const slug = slugify(title, { lower: true });
         return (
           <Link
-            href={`/przepisy/${slug}`}
+            href={`/przepisy/${id}`}
             className="recipe  bg-neutral-50 
             cursor-pointer overflow-hidden relative transition-all duration-300 hover:-translate-y-2  rounded-lg shadow-xl flex flex-row items-center justify-center  before:absolute before:w-full hover:before:top-0 before:duration-300 before:-top-1 before:h-1 before:bg-red-900
             "
@@ -52,7 +51,8 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
                     ? category[0] + ", inne..."
                     : category[0]}
                 </strong>{" "}
-                | Autor: <strong className="text-red-800">{author}</strong>
+                | Autor:{" "}
+                <strong className="text-red-800">{author.authorName}</strong>
               </p>
               <p className="flex justify-center items-center">
                 <FaHeart className="mr-2 text-gray-500" />{" "}

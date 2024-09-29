@@ -115,65 +115,65 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   // };
 
   // const login = async (email: string, password: string) => {
-  //   // logout();
+  //   logout();
   //   await signInWithEmailAndPassword(auth, email, password);
   //   const getData = doc(db, `usersList/${getUser.currentUser!.uid}`);
   //   const data2 = await getDoc(getData);
   //   if (data2.data()) {
   //     const item = data2.data();
   //     if (item!.activeAccount === false) {
-  //       // logout();
+  //       logout();
   //       alert("Konto zostało usunięte!");
   //     }
   //   }
   //   if (getUser!.currentUser!.displayName === null) {
   //     setModalName(true);
   //   }
-  //   // router.push("/");
+  //   router.push("/");
   // };
-  // login("jarek@user.com", "jarek@user.com");
 
-  // const logout = async () => {
-  //   setLoading(true);
-  //   await signOut(auth);
-  //   setName("");
-  //   setUserID("0");
-  //   setIsAdmin(false);
-  //   setActiveUser(null);
-  //   setRecipes([]);
-  //   setLastAddedRecipes([]);
-  //   setAllUsersList([]);
-  //   setAllUsersRecipes([]);
-  //   setCurrentUser(null);
-  //   router.push("/logowanie");
-  // };
+  const logout = async () => {
+    setLoading(true);
+    await signOut(auth);
+    setName("");
+    setUserID("0");
+    setIsAdmin(false);
+    setActiveUser(null);
+    setRecipes([]);
+    setLastAddedRecipes([]);
+    setAllUsersList([]);
+    setAllUsersRecipes([]);
+    setCurrentUser(null);
+    router.push("/logowanie");
+  };
 
   // UNSUBSCRIBE
-  // useEffect(() => {
-  //   const authStateChanged = async () => {
-  //     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-  //       setCurrentUser(user);
-  //     });
-  //     if (currentUser) {
-  //       setUserID(currentUser.uid);
-  //       setName(currentUser.displayName);
-  //       const getData = doc(db, `usersList/${currentUser.uid}`);
-  //       const data2 = await getDoc(getData);
-  //       if (data2.data()) {
-  //         const item = data2.data();
-  //         if (item!.activeAccount === false) {
-  //           // logout();
-  //           alert("Konto zostało usunięte!");
-  //         }
-  //       }
-  //     }
-  //     if (!currentUser) {
-  //       setLoading(true);
-  //     }
-  //     return unsubscribe;
-  //   };
-  //   authStateChanged();
-  // }, [currentUser]);
+  useEffect(() => {
+    const authStateChanged = async () => {
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        setCurrentUser(user);
+        console.log(currentUser);
+      });
+      if (currentUser) {
+        setUserID(currentUser.uid);
+        setName(currentUser.displayName);
+        const getData = doc(db, `usersList/${currentUser.uid}`);
+        const data2 = await getDoc(getData);
+        if (data2.data()) {
+          const item = data2.data();
+          if (item!.activeAccount === false) {
+            // logout();
+            alert("Konto zostało usunięte!");
+          }
+        }
+      }
+      if (!currentUser) {
+        setLoading(true);
+      }
+      return unsubscribe;
+    };
+    authStateChanged();
+  }, [currentUser]);
   // END UNSUBSCRIBE
 
   // END AUTH
@@ -277,71 +277,71 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   // };
 
   //   GET ALL USERS AND ALL-USERS-TRANSFERS FOR ADMIN
-  const getAllUsers = async () => {
-    const allUsersCollectionRef = collection(db, "usersList");
-    try {
-      const data = await getDocs(allUsersCollectionRef);
-      let items = data.docs
-        .filter((doc) => doc.id !== "0")
-        .map((doc) => ({ id: doc.id, ...(doc.data() as User) }));
+  // const getAllUsers = async () => {
+  //   const allUsersCollectionRef = collection(db, "usersList");
+  //   try {
+  //     const data = await getDocs(allUsersCollectionRef);
+  //     let items = data.docs
+  //       .filter((doc) => doc.id !== "0")
+  //       .map((doc) => ({ id: doc.id, ...(doc.data() as User) }));
 
-      items = items.filter((el) => el.activeUser === true);
-      setAllUsersList(items);
-      let backupArray = [];
-      let bigItemsArray: Recipe[] = [];
-      items.map(async (el) => {
-        const allUsersCollectionData = collection(
-          db,
-          `usersList/${el.id}/recipes`
-        );
-        const data = await getDocs(allUsersCollectionData);
-        const itemsAllUsers = data.docs.map((doc) => {
-          const recipeData = doc.data();
-          const recipe: Recipe = {
-            id: doc.id,
-            title: recipeData.title,
-            slug: recipeData.slug,
-            image: recipeData.image,
-            prepTime: recipeData.prepTime,
-            cookTime: recipeData.cookTime,
-            portion: recipeData.portion,
-            category: recipeData.category,
-            shortInfo: recipeData.shortInfo,
-            ingredients: recipeData.ingredients,
-            steps: recipeData.steps,
-            description: recipeData.description || "",
-            likes: recipeData.likes,
-          };
+  //     items = items.filter((el) => el.activeUser === true);
+  //     setAllUsersList(items);
+  //     let backupArray = [];
+  //     let bigItemsArray: Recipe[] = [];
+  //     items.map(async (el) => {
+  //       const allUsersCollectionData = collection(
+  //         db,
+  //         `usersList/${el.id}/recipes`
+  //       );
+  //       const data = await getDocs(allUsersCollectionData);
+  //       const itemsAllUsers = data.docs.map((doc) => {
+  //         const recipeData = doc.data();
+  //         const recipe: Recipe = {
+  //           id: doc.id,
+  //           title: recipeData.title,
+  //           slug: recipeData.slug,
+  //           image: recipeData.image,
+  //           prepTime: recipeData.prepTime,
+  //           cookTime: recipeData.cookTime,
+  //           portion: recipeData.portion,
+  //           category: recipeData.category,
+  //           shortInfo: recipeData.shortInfo,
+  //           ingredients: recipeData.ingredients,
+  //           steps: recipeData.steps,
+  //           description: recipeData.description || "",
+  //           likes: recipeData.likes,
+  //         };
 
-          return recipe;
-        });
-        const itemsArray: any[] = [];
-        itemsAllUsers.map((item) => {
-          itemsArray.push(item);
-        });
+  //         return recipe;
+  //       });
+  //       const itemsArray: any[] = [];
+  //       itemsAllUsers.map((item) => {
+  //         itemsArray.push(item);
+  //       });
 
-        bigItemsArray.push(...itemsArray);
-        console.log(bigItemsArray);
-        backupArray.push({
-          id: el.id,
-          name: el.userName,
-          itemsArray,
-        });
-        setDownloadData(backupArray);
-        // const uniqueitemsArray = [
-        //   ...new Map(bigItemsArray.map((item) => [item["id"], item])).values(),
-        // ];
-        setAllUsersRecipes(bigItemsArray);
-        //     // updateAdminHomePage(uniqueitemsArray);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //       bigItemsArray.push(...itemsArray);
+  //       console.log(bigItemsArray);
+  //       backupArray.push({
+  //         id: el.id,
+  //         name: el.userName,
+  //         itemsArray,
+  //       });
+  //       setDownloadData(backupArray);
+  //       // const uniqueitemsArray = [
+  //       //   ...new Map(bigItemsArray.map((item) => [item["id"], item])).values(),
+  //       // ];
+  //       setAllUsersRecipes(bigItemsArray);
+  //       //     // updateAdminHomePage(uniqueitemsArray);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getAllUsers();
-  }, []);
+  // useEffect(() => {
+  //   getAllUsers();
+  // }, []);
   // DOWNLOAD DATA
   // const exportData = () => {
   //   if (isAdmin) {
@@ -463,38 +463,38 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   // }, [loading, userID]);
 
   //   GET ONE USER TRANSFERS
-  const getRecipes = async (userID: string) => {
-    const getProductsCollectionRefOneUser = collection(
-      db,
-      `usersList/${userID}/recipes`
-    );
-    try {
-      const data = await getDocs(getProductsCollectionRefOneUser);
-      const items = data.docs.map((doc) => {
-        const recipeData = doc.data();
-        const recipe: Recipe = {
-          id: doc.id,
-          title: recipeData.title,
-          slug: recipeData.slug,
-          image: recipeData.image,
-          prepTime: recipeData.prepTime,
-          cookTime: recipeData.cookTime,
-          portion: recipeData.portion,
-          category: recipeData.category,
-          shortInfo: recipeData.shortInfo,
-          ingredients: recipeData.ingredients,
-          steps: recipeData.steps,
-          description: recipeData.description || "",
-          likes: recipeData.likes,
-        };
+  // const getRecipes = async (userID: string) => {
+  //   const getProductsCollectionRefOneUser = collection(
+  //     db,
+  //     `usersList/${userID}/recipes`
+  //   );
+  //   try {
+  //     const data = await getDocs(getProductsCollectionRefOneUser);
+  //     const items = data.docs.map((doc) => {
+  //       const recipeData = doc.data();
+  //       const recipe: Recipe = {
+  //         id: doc.id,
+  //         title: recipeData.title,
+  //         slug: recipeData.slug,
+  //         image: recipeData.image,
+  //         prepTime: recipeData.prepTime,
+  //         cookTime: recipeData.cookTime,
+  //         portion: recipeData.portion,
+  //         category: recipeData.category,
+  //         shortInfo: recipeData.shortInfo,
+  //         ingredients: recipeData.ingredients,
+  //         steps: recipeData.steps,
+  //         description: recipeData.description || "",
+  //         likes: recipeData.likes,
+  //       };
 
-        return recipe;
-      });
-      setRecipes(items);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //       return recipe;
+  //     });
+  //     setRecipes(items);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // useEffect(() => {
   //   if (currentUser) {

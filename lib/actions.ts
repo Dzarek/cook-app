@@ -42,7 +42,10 @@ export const getAllRecipes = async () => {
           const recipe: Recipe = {
             id: doc.id,
             createdTime: recipeData.createdTime,
-            author: el.userName,
+            author: {
+              authorName: el.userName,
+              authorAvatar: el.avatar,
+            },
             title: recipeData.title,
             slug: recipeData.slug,
             image: recipeData.image,

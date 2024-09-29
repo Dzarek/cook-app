@@ -1,11 +1,14 @@
 "use client";
 
+import { changePasswordWhenLogin, login } from "@/lib/user.actions";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { MdKeyboardReturn } from "react-icons/md";
-
-// import { useGlobalContext } from "../components/context";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+// import { signInWithEmailAndPassword } from "firebase/auth";
+// import { auth } from "../firebase/clientApp";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +18,7 @@ const LoginPage = () => {
   const [newPasswordSend, setNewPasswordSend] = useState(false);
   const [openRegistration, setOpenRegistration] = useState(false);
 
-  // const { login, changePasswordWhenLogin } = useGlobalContext();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,8 +27,10 @@ const LoginPage = () => {
       return;
     }
     try {
-      // await login(email, password);
+      await login(email, password);
+      // await signInWithEmailAndPassword(auth, email, password);
       setErrorLogin("");
+      router.push("/");
     } catch (err) {
       setErrorLogin("Nieprawidłowy email lub hasło!");
     }
@@ -38,7 +43,7 @@ const LoginPage = () => {
       return;
     }
     try {
-      // await changePasswordWhenLogin(email);
+      await changePasswordWhenLogin(email);
       setErrorLogin("");
       setNewPasswordSend(true);
       setEmail("");
