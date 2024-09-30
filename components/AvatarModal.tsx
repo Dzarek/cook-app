@@ -1,20 +1,34 @@
 "use client";
 
 import { avatars } from "@/constants";
-import { users } from "@/constants";
+import { getAllUsers } from "@/lib/actions";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 
 interface ModalProps {
   setOpenAvatarModal: (open: boolean) => void;
+  activeAvatar: string;
+  setActiveAvatar: (avatar: string) => void;
 }
 
-const AvatarModal = ({ setOpenAvatarModal }: ModalProps) => {
-  const currentUser = users.find((user) => user.id === 1);
-
+const AvatarModal = ({
+  setOpenAvatarModal,
+  activeAvatar,
+  setActiveAvatar,
+}: ModalProps) => {
+  const [users, setUsers] = useState<User[]>([]);
   const [category, setCategory] = useState("wszystkie");
-  const [activeAvatar, setActiveAvatar] = useState(currentUser?.avatar);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const allUsers = await getAllUsers();
+      if (allUsers) {
+        setUsers(allUsers);
+      }
+    };
+    getUsers();
+  }, []);
 
   const userAvatars = users.map((user) => user.avatar);
 

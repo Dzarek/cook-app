@@ -56,17 +56,28 @@ const links = [
 const Navbar = () => {
   const pathname = usePathname();
   const [isLogin, setIsLogin] = useState(false);
-  const [activeUser, setActiveUser] = useState<User | null>(null);
+  const [activeUser, setActiveUser] = useState<any>(null);
   const [modalName, setModalName] = useState(false);
   const [name, setName] = useState<string>("");
-
-  const getUser = getAuth();
+  const [email, setEmail] = useState("");
+  const [avatar, setAvatar] = useState("/assets/images/avatars/avatar0.webp");
+  // const getUser = getAuth();
+  // console.log(getUser);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setActiveUser(user);
         setIsLogin(true);
+        if (user.displayName) {
+          setName(user.displayName);
+        }
+        if (user.email) {
+          setEmail(user.email);
+        }
+        if (user.photoURL) {
+          setAvatar(user.photoURL);
+        }
         if (user.displayName === null) {
           setModalName(true);
         }
@@ -78,15 +89,8 @@ const Navbar = () => {
     return unsubscribe;
   }, []);
 
-  console.log(activeUser);
-
   const handleLogout = async () => {
     await logout();
-    // try {
-    //   await signOut(auth);
-    // } catch (error) {
-    //   console.error("Błąd podczas wylogowywania", error);
-    // }
     setIsLogin(false);
     toast("Poprawnie wylogowano", {
       icon: "👋",
@@ -166,7 +170,7 @@ const Navbar = () => {
               >
                 <span className="mr-2 text-xl">
                   <Image
-                    src="/assets/images/avatars/avatarm1.jpg"
+                    src={avatar}
                     width={40}
                     height={40}
                     alt="avatar"
@@ -185,8 +189,15 @@ const Navbar = () => {
           )}
         </nav>
       </div>
-      {modalName && (
-        <ModalName name={name} setName={setName} setModalName={setModalName} />
+      {modalName && activeUser && (
+        <ModalName
+          email={email}
+          name={name}
+          setName={setName}
+          setModalName={setModalName}
+          avatar={avatar}
+          setAvatar={setAvatar}
+        />
       )}
     </>
   );

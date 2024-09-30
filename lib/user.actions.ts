@@ -32,7 +32,6 @@ export const login = async (email: string, password: string) => {
     const item = data2.data();
     if (item!.activeAccount === false) {
       logout();
-      // alert("Konto zostało usunięte!");
       toast("Konto zostało usunięte!", {
         icon: "✖",
         style: {
@@ -43,9 +42,6 @@ export const login = async (email: string, password: string) => {
       });
     }
   }
-  // if (getUser!.currentUser!.displayName === null) {
-  //   setModalName(true);
-  // }
 };
 
 export const logout = async () => {
@@ -56,24 +52,10 @@ export const logout = async () => {
   }
 };
 
-export const changePasswordWhenLogin = async (email: string) => {
-  await sendPasswordResetEmail(getUser, email)
-    .then(() => {
-      // Password reset email sent!
-      // ..
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
-};
-
 export const updateName = async (newName: string) => {
   await updateProfile(getUser.currentUser!, {
     displayName: newName,
   });
-  // setName(getUser.currentUser!.displayName);
   const userRef = doc(db, "usersList", getUser.currentUser!.uid);
   setDoc(
     userRef,
@@ -85,24 +67,41 @@ export const updateName = async (newName: string) => {
     }
   );
 };
-
-export const updateUser = async (newName: string) => {
-  if (getUser.currentUser!.displayName === null) {
-    updateName(newName);
-    // changePassword();
-  }
-  // setModalName(false);
+export const updateAvatar = async (avatar: string) => {
+  await updateProfile(getUser.currentUser!, {
+    photoURL: avatar,
+  });
+  const userRef = doc(db, "usersList", getUser.currentUser!.uid);
+  setDoc(
+    userRef,
+    {
+      avatar: avatar,
+    },
+    {
+      merge: true,
+    }
+  );
 };
 
-//   const changePassword = async () => {
-//   await sendPasswordResetEmail(getUser, getUser.currentUser.email)
-//     .then(() => {
-//       // Password reset email sent!
-//       // ..
-//     })
-//     .catch((error) => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//       // ..
-//     });
-// };
+export const updateUser = async (newName: string, avatar: string) => {
+  // if (getUser.currentUser!.displayName === null) {
+  await updateName(newName);
+  await updateAvatar(avatar);
+  if (getUser.currentUser!.email) {
+    changePassword(getUser.currentUser!.email);
+  }
+  // }
+};
+
+export const changePassword = async (email: string) => {
+  await sendPasswordResetEmail(getUser, email)
+    .then(() => {
+      // Password reset email sent!
+      // ..
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+};
