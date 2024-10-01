@@ -362,7 +362,7 @@ html::-webkit-scrollbar-thumb:hover {
   color: var(--secondaryColor);
   font-size: 2rem;
   margin-top: 3vh;
-  margin-bottom: 7vh;
+  margin-bottom: 3vh;
   letter-spacing: 2px;
   text-align: center;
 }

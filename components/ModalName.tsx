@@ -98,7 +98,7 @@ const ModalName = ({
           Na adres <span className="text-red-900 font-medium">{email}</span>{" "}
           zostanie przesłany link do zmiany hasła. <br /> (sprawdź również spam)
         </p>
-        <ConfirmBtn />
+        <ConfirmBtn text="Potwierdź" />
       </form>
       {openAvatarModal && (
         <AvatarModal

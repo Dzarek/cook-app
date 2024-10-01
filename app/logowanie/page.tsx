@@ -7,13 +7,12 @@ import { useState } from "react";
 import { MdKeyboardReturn } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-// import { signInWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "../firebase/clientApp";
+import ConfirmBtn from "@/components/uiverse/ConfirmBtn";
+import { sendNewUserRequest } from "@/lib/api";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorLogin, setErrorLogin] = useState("");
   const [forgotPassword, setForgotPassword] = useState(false);
   const [newPasswordSend, setNewPasswordSend] = useState(false);
   const [openRegistration, setOpenRegistration] = useState(false);
@@ -23,32 +22,57 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || !password) {
-      setErrorLogin("Proszę uzupełnić pola logowania!");
+      toast("Proszę uzupełnić pola logowania!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#5b0f0f",
+          color: "#fff",
+        },
+      });
       return;
     }
     try {
       await login(email, password);
-      // await signInWithEmailAndPassword(auth, email, password);
-      setErrorLogin("");
       router.push("/");
     } catch (err) {
-      setErrorLogin("Nieprawidłowy email lub hasło!");
+      toast("Nieprawidłowy email lub hasło!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#5b0f0f",
+          color: "#fff",
+        },
+      });
     }
   };
 
   const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email) {
-      setErrorLogin("Proszę podać adres email!");
+      toast("Proszę podać adres email!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#5b0f0f",
+          color: "#fff",
+        },
+      });
       return;
     }
     try {
       await changePassword(email);
-      setErrorLogin("");
       setNewPasswordSend(true);
       setEmail("");
     } catch (error) {
-      setErrorLogin("Nieprawidłowy email!");
+      toast("Nieprawidłowy email!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#5b0f0f",
+          color: "#fff",
+        },
+      });
       setNewPasswordSend(false);
     }
   };
@@ -61,12 +85,18 @@ const LoginPage = () => {
   const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email) {
-      // react-alert
-      setErrorLogin("Proszę podać adres email!");
+      toast("Proszę podać adres email!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#5b0f0f",
+          color: "#fff",
+        },
+      });
       return;
     }
     try {
-      setErrorLogin("");
+      await sendNewUserRequest(email);
       setOpenRegistration(false);
       setEmail("");
     } catch (error) {
@@ -105,17 +135,17 @@ const LoginPage = () => {
                   value={email}
                   required
                 />
-                <button type="submit">wyślij</button>
+                <ConfirmBtn text="wyślij" />
               </form>
             </section>
             <p
-              className="font-semibold text-zinc-500 cursor-pointer absolute top-5 left-5 hover:text-red-900 transition-all"
+              className="font-semibold flex items-center justify-center text-zinc-500 cursor-pointer absolute top-5 left-5 hover:text-red-900 transition-all"
               onClick={() => {
                 setForgotPassword(false);
                 setOpenRegistration(false);
               }}
             >
-              Panel Logowania
+              <MdKeyboardReturn className="mr-1" /> Panel Logowania
             </p>
           </div>
         </div>
@@ -140,14 +170,11 @@ const LoginPage = () => {
                 </>
               ) : (
                 <>
-                  {errorLogin ? (
-                    <h4 className="errorInfo">{errorLogin}</h4>
-                  ) : (
-                    <h4 className="errorInfo mb-5">
-                      Podaj adres email na który zostanie przesłany link do
-                      resetowania hasła.
-                    </h4>
-                  )}
+                  <h4 className="errorInfo mb-5">
+                    Podaj adres email na który zostanie przesłany link do
+                    resetowania hasła.
+                  </h4>
+
                   <section className="mt-5">
                     <div className="flex flex-col items-center w-1/2 mb-10">
                       <Image
@@ -170,17 +197,17 @@ const LoginPage = () => {
                         required
                       />
 
-                      <button type="submit">wyślij nowe</button>
+                      <ConfirmBtn text="wyślij nowe" />
                     </form>
                   </section>
                   <p
-                    className="font-semibold text-zinc-500 cursor-pointer absolute top-5 left-5 hover:text-red-900 transition-all"
+                    className="font-semibold flex items-center justify-center text-zinc-500 cursor-pointer absolute top-5 left-5 hover:text-red-900 transition-all"
                     onClick={() => {
                       setForgotPassword(false);
                       setOpenRegistration(false);
                     }}
                   >
-                    Panel Logowania
+                    <MdKeyboardReturn className="mr-1" /> Panel Logowania
                   </p>
                 </>
               )}
@@ -191,7 +218,6 @@ const LoginPage = () => {
                 <MdKeyboardReturn className="absolute top-5 left-5 text-red-950 text-4xl" />
               </Link>
               <h2 className="font-semibold">Logowanie</h2>
-              {errorLogin && <h4 className="errorInfo">{errorLogin}</h4>}
               <section>
                 <div className="flex flex-col items-center w-1/2 mb-10">
                   <Image
@@ -223,7 +249,7 @@ const LoginPage = () => {
                   <p className="forgotPasswordLink" onClick={handleChangeStart}>
                     Nie pamiętam hasła...
                   </p>
-                  <button type="submit">zaloguj się</button>
+                  <ConfirmBtn text="zaloguj się" />
                 </form>
               </section>
               <div className="flex items-center  border-t-2 pt-7 border-red-900">

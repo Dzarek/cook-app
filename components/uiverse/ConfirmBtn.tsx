@@ -1,17 +1,19 @@
 import styled from "styled-components";
 
-const ConfirmBtn = () => {
+const ConfirmBtn = ({ text }: { text: string }) => {
   return (
     <StyledWrapper>
       <button className="button" type="submit">
-        Potwierdź{" "}
-        <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
-          <path
-            fillRule="evenodd"
-            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
-            clipRule="evenodd"
-          />
-        </svg>
+        {text}
+        {text !== "wyślij nowe" && (
+          <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              fillRule="evenodd"
+              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+              clipRule="evenodd"
+            />
+          </svg>
+        )}
       </button>
     </StyledWrapper>
   );
@@ -21,10 +23,10 @@ const StyledWrapper = styled.div`
   .button {
     position: relative;
     transition: all 0.3s ease-in-out;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
     padding-block: 0.5rem;
     padding-inline: 1.25rem;
-    background-color: rgb(83, 4, 4);
+    background-color: rgb(110, 6, 6);
     border-radius: 9999px;
     display: flex;
     align-items: center;
@@ -32,6 +34,8 @@ const StyledWrapper = styled.div`
     color: #ffff;
     gap: 10px;
     font-weight: bold;
+    font-family: var(--bodyFont);
+    letter-spacing: 1px;
     border: 3px solid #ffffff4d;
     outline: none;
     overflow: hidden;

@@ -84,11 +84,10 @@ const Navbar = () => {
         if (user.displayName === null) {
           setModalName(true);
         }
-        // setLoading(false)
       } else {
         setActiveUser(null);
       }
-      // setLoading(false);
+      setLoading(false);
     });
 
     return unsubscribe;
@@ -101,7 +100,7 @@ const Navbar = () => {
       icon: "👋",
       style: {
         borderRadius: "10px",
-        background: "#333",
+        background: "#000",
         color: "#fff",
       },
     });

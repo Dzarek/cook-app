@@ -1,4 +1,4 @@
-export const sendConfirmation = async (data: string) =>
+export const sendNewUserRequest = async (data: string) =>
   fetch("/api/send", {
     method: "POST",
     body: JSON.stringify(data),
