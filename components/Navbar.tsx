@@ -24,6 +24,7 @@ import { db, auth } from "@/app/firebase/clientApp";
 import { setDoc, doc } from "firebase/firestore";
 import { logout, updateName } from "@/lib/user.actions";
 import ModalName from "./ModalName";
+import Loading from "./Loading";
 
 const links = [
   {
@@ -61,10 +62,12 @@ const Navbar = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("/assets/images/avatars/avatar0.webp");
+  const [loading, setLoading] = useState(true);
   // const getUser = getAuth();
   // console.log(getUser);
 
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setActiveUser(user);
@@ -81,9 +84,11 @@ const Navbar = () => {
         if (user.displayName === null) {
           setModalName(true);
         }
+        // setLoading(false)
       } else {
         setActiveUser(null);
       }
+      // setLoading(false);
     });
 
     return unsubscribe;
@@ -101,6 +106,10 @@ const Navbar = () => {
       },
     });
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
