@@ -1,12 +1,10 @@
 import { mailOptions, transporter } from "../../../config/nodemailer";
-// import type { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   if (req.method === "POST") {
     const body = await req.json();
-    const data = body.email;
-    console.log(data);
+    const data = body;
 
     if (!data) {
       return NextResponse.json({ message: "Bad request" });

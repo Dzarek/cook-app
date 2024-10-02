@@ -15,6 +15,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [forgotPassword, setForgotPassword] = useState(false);
   const [newPasswordSend, setNewPasswordSend] = useState(false);
+  const [newRegistrationSend, setNewRegistrationSend] = useState(false);
   const [openRegistration, setOpenRegistration] = useState(false);
 
   const router = useRouter();
@@ -97,7 +98,7 @@ const LoginPage = () => {
     }
     try {
       await sendNewUserRequest(email);
-      setOpenRegistration(false);
+      setNewRegistrationSend(true);
       setEmail("");
     } catch (error) {
       console.log(error);
@@ -110,43 +111,65 @@ const LoginPage = () => {
         <div className="wrapperLogin">
           <div className="containerLogin relative">
             <h2 className="font-semibold">Rejestracja</h2>
-            <h4 className="errorInfo mb-10">
-              Chcesz do nas dołączyć? Podaj swój adres email, by admin mógł
-              dodać Cię do naszej społeczności.
-            </h4>
-            <section>
-              <div className="flex flex-col items-center w-1/2 mb-10">
-                <Image
-                  src="/assets/images/logo.png"
-                  width={500}
-                  height={500}
-                  alt="logo"
-                  className="w-1/3"
-                />
-                <h1 className="text-4xl flex items-center justify-center capitalize font-bold logoFont text-center w-90%">
-                  <span className="text-red-800 mr-2">Stępki </span>Gotują
-                </h1>
-              </div>
-              <form onSubmit={(e) => handleRegistration(e)}>
-                <input
-                  type="email"
-                  placeholder="Adres Email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                  required
-                />
-                <ConfirmBtn text="wyślij" />
-              </form>
-            </section>
-            <p
-              className="font-semibold flex items-center justify-center text-zinc-500 cursor-pointer absolute top-5 left-5 hover:text-red-900 transition-all"
-              onClick={() => {
-                setForgotPassword(false);
-                setOpenRegistration(false);
-              }}
-            >
-              <MdKeyboardReturn className="mr-1" /> Panel Logowania
-            </p>
+            {newRegistrationSend ? (
+              <>
+                <h4 className="errorInfo">
+                  Prośba o dodanie konta do aplikacji STĘPKI GOTUJĄ została
+                  przesłana do administratora. <br /> Niedługo otrzymasz
+                  odpowiedź na podanego maila.
+                </h4>
+                <button
+                  type="button"
+                  className="forgotPasswordLinkBtn"
+                  onClick={() => {
+                    setNewRegistrationSend(false);
+                    setOpenRegistration(false);
+                  }}
+                >
+                  Panel Logowania
+                </button>
+              </>
+            ) : (
+              <>
+                <h4 className="errorInfo mb-10">
+                  Chcesz do nas dołączyć? Podaj swój adres email, by admin mógł
+                  dodać Cię do naszej społeczności.
+                </h4>
+                <section>
+                  <div className="flex flex-col items-center w-1/2 mb-10">
+                    <Image
+                      src="/assets/images/logo.png"
+                      width={500}
+                      height={500}
+                      alt="logo"
+                      className="w-1/3"
+                    />
+                    <h1 className="text-4xl flex items-center justify-center capitalize font-bold logoFont text-center w-90%">
+                      <span className="text-red-800 mr-2">Stępki </span>Gotują
+                    </h1>
+                  </div>
+                  <form onSubmit={(e) => handleRegistration(e)}>
+                    <input
+                      type="email"
+                      placeholder="Adres Email"
+                      onChange={(e) => setEmail(e.target.value)}
+                      value={email}
+                      required
+                    />
+                    <ConfirmBtn text="wyślij" />
+                  </form>
+                </section>
+                <p
+                  className="font-semibold flex items-center justify-center text-zinc-500 cursor-pointer absolute top-5 left-5 hover:text-red-900 transition-all"
+                  onClick={() => {
+                    setForgotPassword(false);
+                    setOpenRegistration(false);
+                  }}
+                >
+                  <MdKeyboardReturn className="mr-1" /> Panel Logowania
+                </p>
+              </>
+            )}
           </div>
         </div>
       ) : (
