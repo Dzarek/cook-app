@@ -17,14 +17,17 @@ import {
   User,
   getAuth,
   onAuthStateChanged,
-  signOut,
+  // signOut,
   updateProfile,
 } from "firebase/auth";
-import { db, auth } from "@/app/firebase/clientApp";
+import { db, auth } from "@/firebase/clientApp";
 import { setDoc, doc } from "firebase/firestore";
 import { logout, updateName } from "@/lib/user.actions";
 import ModalName from "./ModalName";
 import Loading from "./Loading";
+import { useGlobalContext } from "./authContext";
+
+import { signOut } from "next-auth/react";
 
 const links = [
   {
@@ -55,46 +58,60 @@ const links = [
 ];
 
 const Navbar = () => {
+  const {
+    isLogin,
+    activeUser,
+    modalName,
+    name,
+    email,
+    avatar,
+    loading,
+    setIsLogin,
+    setName,
+    setAvatar,
+    setModalName,
+  } = useGlobalContext();
   const pathname = usePathname();
-  const [isLogin, setIsLogin] = useState(false);
-  const [activeUser, setActiveUser] = useState<any>(null);
-  const [modalName, setModalName] = useState(false);
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState("");
-  const [avatar, setAvatar] = useState("/assets/images/avatars/avatar0.webp");
-  const [loading, setLoading] = useState(true);
+  // const [isLogin, setIsLogin] = useState(false);
+  // const [activeUser, setActiveUser] = useState<any>(null);
+  // const [modalName, setModalName] = useState(false);
+  // const [name, setName] = useState<string>("");
+  // const [email, setEmail] = useState("");
+  // const [avatar, setAvatar] = useState("/assets/images/avatars/avatar0.webp");
+  // const [loading, setLoading] = useState(true);
   // const getUser = getAuth();
   // console.log(getUser);
 
-  useEffect(() => {
-    setLoading(true);
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setActiveUser(user);
-        setIsLogin(true);
-        if (user.displayName) {
-          setName(user.displayName);
-        }
-        if (user.email) {
-          setEmail(user.email);
-        }
-        if (user.photoURL) {
-          setAvatar(user.photoURL);
-        }
-        if (user.displayName === null) {
-          setModalName(true);
-        }
-      } else {
-        setActiveUser(null);
-      }
-      setLoading(false);
-    });
+  // useEffect(() => {
+  //   setLoading(true);
+  //   const unsubscribe = onAuthStateChanged(auth, async (user) => {
+  //     if (user) {
+  //       setActiveUser(user);
+  //       setIsLogin(true);
+  //       if (user.displayName) {
+  //         setName(user.displayName);
+  //       }
+  //       if (user.email) {
+  //         setEmail(user.email);
+  //       }
+  //       if (user.photoURL) {
+  //         setAvatar(user.photoURL);
+  //       }
+  //       if (user.displayName === null) {
+  //         setModalName(true);
+  //       }
+  //     } else {
+  //       setActiveUser(null);
+  //     }
+  //     setLoading(false);
+  //   });
 
-    return unsubscribe;
-  }, []);
+  //   return unsubscribe;
+  // }, []);
 
   const handleLogout = async () => {
     await logout();
+    await signOut({ callbackUrl: "/" });
     setIsLogin(false);
     toast("Poprawnie wylogowano", {
       icon: "👋",

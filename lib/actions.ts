@@ -1,6 +1,6 @@
 "use server";
 
-import { db } from "@/app/firebase/clientApp";
+import { db } from "@/firebase/clientApp";
 import { collection, getDocs } from "firebase/firestore";
 
 export const getAllUsers = async () => {

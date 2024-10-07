@@ -11,6 +11,15 @@ export const tags = [
   "napoje",
 ];
 
+export const options = [
+  "najnowsze",
+  "najstarsze",
+  "nazwa: a-z",
+  "nazwa: z-a",
+  "czas przygotowania: rosnąco",
+  "czas przygotowania: malejąco",
+];
+
 export const avatars = [
   {
     id: 1,
@@ -136,16 +145,7 @@ export const users = [
   },
 ];
 
-export const authors = ["Dorota", "Jarek", "Ania", "Kamil", "Agata", "Justyna"];
-
-export const options = [
-  "najnowsze",
-  "najstarsze",
-  "nazwa: a-z",
-  "nazwa: z-a",
-  "czas przygotowania: rosnąco",
-  "czas przygotowania: malejąco",
-];
+// export const authors = ["Dorota", "Jarek", "Ania", "Kamil", "Agata", "Justyna"];
 
 // export const recipes = [  {
 //     id: 1,

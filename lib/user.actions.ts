@@ -1,6 +1,6 @@
 "use client";
 
-import { db, auth } from "@/app/firebase/clientApp";
+import { auth, db } from "@/firebase/clientApp";
 import {
   collection,
   getDocs,

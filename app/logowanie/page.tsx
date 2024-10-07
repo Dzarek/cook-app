@@ -10,6 +10,8 @@ import toast from "react-hot-toast";
 import ConfirmBtn from "@/components/uiverse/ConfirmBtn";
 import { sendNewUserRequest } from "@/lib/api";
 
+import { signIn } from "next-auth/react";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,8 +36,24 @@ const LoginPage = () => {
       return;
     }
     try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
       await login(email, password);
-      router.push("/");
+      if (result?.error) {
+        toast("Nieprawidłowy email lub hasło!", {
+          icon: "✖",
+          style: {
+            borderRadius: "10px",
+            background: "#5b0f0f",
+            color: "#fff",
+          },
+        });
+      } else {
+        router.push("/");
+      }
     } catch (err) {
       toast("Nieprawidłowy email lub hasło!", {
         icon: "✖",
