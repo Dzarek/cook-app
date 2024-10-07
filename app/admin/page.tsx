@@ -1,37 +1,14 @@
-import AdminComponent from "@/components/AdminComponent";
-import { getAllUsers } from "@/lib/actions";
-
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import Link from "next/link";
-
-// import { useGlobalContext } from "@/components/authContext";
-// import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
+import AdminComponent from "@/components/AdminComponent";
+import { getAllUsers } from "@/lib/actions";
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
   const allowedUID = process.env.NEXT_PUBLIC_ADMIN_ID;
 
   const users = await getAllUsers();
-  // const [users, setUsers] = useState<User[]>([]);
-  // const { activeUser } = useGlobalContext();
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   const getUsers = async () => {
-  //     const users = await getAllUsers();
-  //     if (users) {
-  //       setUsers(users);
-  //     }
-  //   };
-  //   getUsers();
-  // }, []);
-
-  // if (activeUser && activeUser.uid === "c1FiOkr5JhXxEJrc3WFtWwcgWza2") {
-  //   router.replace("/");
-  //   return;
-  // } else {
 
   if (!session) {
     return (
@@ -51,7 +28,7 @@ const AdminPage = async () => {
     return (
       <div className="page flex flex-col items-center justify-center">
         <p className="text-2xl">
-          You do not have permission to access this page.
+          Nie masz uprawnień aby zobaczyć panel admina.
         </p>
       </div>
     );
@@ -67,5 +44,5 @@ const AdminPage = async () => {
     </div>
   );
 };
-// };
+
 export default AdminPage;

@@ -143,7 +143,7 @@ const AvatarModal = ({
                         height={150}
                         alt="avatar"
                         onClick={() => setActiveAvatar(img)}
-                        className={`rounded-full border-2 w-[9vw] h-[9vw] border-red-900 object-fill m-3 ${
+                        className={`rounded-full cursor-pointer border-2 w-[9vw] h-[9vw] border-red-900 object-fill m-3 ${
                           activeAvatar === img && "border-4"
                         } `}
                       />

@@ -7,159 +7,9 @@ import { IoEnter } from "react-icons/io5";
 import { BiEdit } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
+import { FaHeart } from "react-icons/fa";
 
-export const recipes = [
-  {
-    id: 1,
-    title: "Placuszki Twarogowe",
-    slug: "placuszki-twarogowe",
-    image: "/assets/images/recipe1.jpeg",
-    prepTime: 10,
-    cookTime: 20,
-    portion: 4,
-    category: ["śniadanie", "fit", "lunch"],
-    author: {
-      name: "Jarek",
-      avatar: "/assets/images/avatars/avatarm1.jpg",
-    },
-    shortInfo:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam enim, animi et nam, facere alias laudantium voluptatum aperiam, error temporibus ratione reiciendis optio sequi odio officiis explicabo maxime sit!",
-    ingredients: [
-      "ketchup",
-      "3 szklanki mąki",
-      "1 szklanka mleka",
-      "50g drożdzy",
-      "1 łyżeczka soli",
-      "1 łyżeczka cukru",
-      "4 łyżki oleju",
-      "grzyby",
-      "szynka drobiowa lub salami",
-      "ser żółty",
-    ],
-    steps: [
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-    ],
-    description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel ipsa obcaecati alias quos delectus suscipit ab. Nam voluptas, facere mollitia sapiente nihil rerum ipsum minima, neque aliquam debitis temporibus quis eligendi rem consectetur porro, aliquid voluptates magnam sed omnis? Eligendi fugit porro facere officia aspernatur officiis placeat fuga mollitia maxime?",
-  },
-  {
-    id: 2,
-    title: "Placuszki Twarogowe",
-    slug: "placuszki-twarogowe",
-    image: "/assets/images/recipe1.jpeg",
-    prepTime: 10,
-    cookTime: 20,
-    portion: 4,
-    category: ["śniadanie", "fit", "lunch"],
-    author: {
-      name: "Jarek",
-      avatar: "/assets/images/avatars/avatarm2.jpg",
-    },
-    shortInfo:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam enim, animi et nam, facere alias laudantium voluptatum aperiam, error temporibus ratione reiciendis optio sequi odio officiis explicabo maxime sit!",
-    ingredients: [
-      "ketchup",
-      "3 szklanki mąki",
-      "1 szklanka mleka",
-      "50g drożdzy",
-      "1 łyżeczka soli",
-      "1 łyżeczka cukru",
-      "4 łyżki oleju",
-      "grzyby",
-      "szynka drobiowa lub salami",
-      "ser żółty",
-    ],
-    steps: [
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-    ],
-    description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel ipsa obcaecati alias quos delectus suscipit ab. Nam voluptas, facere mollitia sapiente nihil rerum ipsum minima, neque aliquam debitis temporibus quis eligendi rem consectetur porro, aliquid voluptates magnam sed omnis? Eligendi fugit porro facere officia aspernatur officiis placeat fuga mollitia maxime?",
-  },
-  {
-    id: 3,
-    title: "Placuszki Twarogowe",
-    slug: "placuszki-twarogowe",
-    image: "/assets/images/recipe1.jpeg",
-    prepTime: 10,
-    cookTime: 20,
-    portion: 4,
-    category: ["śniadanie", "fit", "lunch"],
-    author: {
-      name: "Jarek",
-      avatar: "/assets/images/avatars/avatarm5.jpg",
-    },
-    shortInfo:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam enim, animi et nam, facere alias laudantium voluptatum aperiam, error temporibus ratione reiciendis optio sequi odio officiis explicabo maxime sit!",
-    ingredients: [
-      "ketchup",
-      "3 szklanki mąki",
-      "1 szklanka mleka",
-      "50g drożdzy",
-      "1 łyżeczka soli",
-      "1 łyżeczka cukru",
-      "4 łyżki oleju",
-      "grzyby",
-      "szynka drobiowa lub salami",
-      "ser żółty",
-    ],
-    steps: [
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-    ],
-    description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel ipsa obcaecati alias quos delectus suscipit ab. Nam voluptas, facere mollitia sapiente nihil rerum ipsum minima, neque aliquam debitis temporibus quis eligendi rem consectetur porro, aliquid voluptates magnam sed omnis? Eligendi fugit porro facere officia aspernatur officiis placeat fuga mollitia maxime?",
-  },
-  {
-    id: 4,
-    title: "Placuszki Twarogowe",
-    slug: "placuszki-twarogowe",
-    image: "/assets/images/recipe1.jpeg",
-    prepTime: 10,
-    cookTime: 20,
-    portion: 4,
-    category: ["śniadanie", "fit", "lunch"],
-    author: {
-      name: "Jarek",
-      avatar: "/assets/images/avatars/avatarm6.jpg",
-    },
-    shortInfo:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam enim, animi et nam, facere alias laudantium voluptatum aperiam, error temporibus ratione reiciendis optio sequi odio officiis explicabo maxime sit!",
-    ingredients: [
-      "ketchup",
-      "3 szklanki mąki",
-      "1 szklanka mleka",
-      "50g drożdzy",
-      "1 łyżeczka soli",
-      "1 łyżeczka cukru",
-      "4 łyżki oleju",
-      "grzyby",
-      "szynka drobiowa lub salami",
-      "ser żółty",
-    ],
-    steps: [
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-    ],
-    description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel ipsa obcaecati alias quos delectus suscipit ab. Nam voluptas, facere mollitia sapiente nihil rerum ipsum minima, neque aliquam debitis temporibus quis eligendi rem consectetur porro, aliquid voluptates magnam sed omnis? Eligendi fugit porro facere officia aspernatur officiis placeat fuga mollitia maxime?",
-  },
-];
-
-const RecipesListProfile = () => {
+const RecipesListProfile = ({ recipes }: { recipes: Recipe[] }) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const handleDelete = () => {};
@@ -167,13 +17,22 @@ const RecipesListProfile = () => {
   return (
     <div className="mx-auto my-[5vh] flex w-full items-center justify-center flex-wrap">
       {recipes.map((recipe) => {
-        const { id, title, image, prepTime, cookTime, author, category, slug } =
-          recipe;
+        const {
+          id,
+          title,
+          image,
+          prepTime,
+          cookTime,
+          author,
+          category,
+          // slug,
+          likes,
+        } = recipe;
         // const slug = slugify(title, { lower: true });
         return (
           <div
             key={id}
-            className="flex items-strech w-[25vw] justify-between border-2 rounded-md m-[1.5vw]"
+            className="flex items-strech w-[25vw] justify-between border-2 border-gray-600 shadow-xl rounded-md m-[1.5vw]"
           >
             {confirmDelete && (
               <div className="z-20 rounded-md border-2 border-white flex flex-col fixed w-[40vw] h-[50vh] bg-red-950 text-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] p-4 items-center justify-center">
@@ -199,8 +58,8 @@ const RecipesListProfile = () => {
                 </div>
               </div>
             )}
-            <div className="flex flex-col w-[4vw]  bg-stone-100 items-center justify-around">
-              <Link href={`/przepisy/${slug}`}>
+            <div className="flex flex-col w-[4vw]  bg-neutral-50 items-center  justify-around ">
+              <Link href={`/przepisy/${id}`}>
                 {" "}
                 <IoEnter className="cursor-pointer text-2xl text-cyan-950 transition-all hover:text-blue-700" />
               </Link>
@@ -214,33 +73,37 @@ const RecipesListProfile = () => {
               />
             </div>
 
-            <div className="recipeProfile bg-stone-100  transition-transform">
+            <div className="recipeProfile bg-neutral-50   transition-transform">
               <Image
                 src={image}
-                width={1000}
-                height={1000}
-                className="w-full h-4/6 object-cover recipe-imgProfile"
+                width={500}
+                height={500}
+                className="w-full h-4/6 object-fill recipe-imgProfile"
                 alt={title}
               />
-              <section className="flex flex-col items-center justify-center p-2">
+              <section className="h-2/6 flex flex-col items-center justify-center p-2 my-2">
                 <h5 className="text-base text-center font-bold mb-2 w-full">
-                  {title}
+                  {title.toUpperCase()}
                 </h5>
-                <p className="text-gray-600 text-sm mb-1">
+                <p className="text-gray-600 text-sm mb-2">
                   Przygotowanie:{" "}
                   <strong className="text-red-800">{prepTime} min</strong> |
                   Gotowanie:{" "}
                   <strong className="text-red-800">{cookTime} min</strong>
                 </p>
-                <p className="text-gray-600 text-sm">
-                  Tag:{" "}
+                <p className="text-gray-600 text-sm mb-2">
+                  Kategorie:{" "}
                   <strong className="text-red-800 capitalize">
                     {category.length > 1
                       ? category[0] + ", inne..."
                       : category[0]}
                   </strong>{" "}
                   | Autor:{" "}
-                  <strong className="text-red-800">{author.name}</strong>
+                  <strong className="text-red-800">{author.authorName}</strong>
+                </p>
+                <p className="flex justify-center items-center">
+                  <FaHeart className="mr-2 text-gray-500" />{" "}
+                  <strong className="text-red-800">{likes}</strong>
                 </p>
               </section>
             </div>

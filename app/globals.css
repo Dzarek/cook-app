@@ -964,3 +964,16 @@ svg:not(.starRotate) + .starRotate {
     transform: rotateY(0deg);
   }
 }
+
+.profileBtnSaveChanges {
+  animation: scaleBtn 1s ease infinite alternate;
+}
+
+@keyframes scaleBtn {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}

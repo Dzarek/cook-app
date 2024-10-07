@@ -33,7 +33,12 @@ export const authOptions: NextAuthOptions = {
           const user = userCredential.user;
 
           // Return user data to NextAuth
-          return { id: user.uid, email: user.email, name: user.displayName };
+          return {
+            id: user.uid,
+            email: user.email,
+            name: user.displayName,
+            image: user.photoURL,
+          };
         } catch (error) {
           console.error("Firebase sign-in error:", error);
           return null;
