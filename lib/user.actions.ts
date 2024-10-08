@@ -67,6 +67,12 @@ export const updateName = async (newName: string) => {
     }
   );
 };
+export const updateEmail = async (newEmail: string) => {
+  await updateProfile(getUser.currentUser!, {
+    email: newEmail,
+  });
+};
+
 export const updateAvatar = async (avatar: string) => {
   await updateProfile(getUser.currentUser!, {
     photoURL: avatar,
@@ -83,14 +89,22 @@ export const updateAvatar = async (avatar: string) => {
   );
 };
 
+export const updateUserProfile = async (
+  newName: string,
+  newEmail: string,
+  avatar: string
+) => {
+  await updateName(newName);
+  await updateEmail(newEmail);
+  await updateAvatar(avatar);
+};
+
 export const updateUser = async (newName: string, avatar: string) => {
-  // if (getUser.currentUser!.displayName === null) {
   await updateName(newName);
   await updateAvatar(avatar);
   if (getUser.currentUser!.email) {
     changePassword(getUser.currentUser!.email);
   }
-  // }
 };
 
 export const changePassword = async (email: string) => {

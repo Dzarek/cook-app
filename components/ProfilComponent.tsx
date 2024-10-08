@@ -9,6 +9,9 @@ import { useState, useEffect } from "react";
 import AvatarModal from "@/components/AvatarModal";
 import RecipesListProfile from "@/components/RecipeListProfile";
 
+import { updateUserProfile, changePassword } from "@/lib/user.actions";
+import toast from "react-hot-toast";
+
 type ProfilTypes = {
   currentUser: {
     id: string;
@@ -56,6 +59,29 @@ const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
     level = 1;
   }
 
+  const handleUpdateProfile = async () => {
+    await updateUserProfile(nick, email, avatar);
+    toast("Profil został edytowany!", {
+      icon: "✖",
+      style: {
+        borderRadius: "10px",
+        background: "#052814",
+        color: "#fff",
+      },
+    });
+  };
+  const handleUpdatePassword = async () => {
+    await changePassword(email);
+    toast("Hasło zostało zmienione!", {
+      icon: "✖",
+      style: {
+        borderRadius: "10px",
+        background: "#052814",
+        color: "#fff",
+      },
+    });
+  };
+
   return (
     <>
       <main className="flex justify-between items-strech w-full mx-auto">
@@ -80,7 +106,10 @@ const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
                 <MdChangeCircle className="text-xl ml-3 text-red-800" />
               </button>
             </div>
-            <form className="w-full flex flex-col items-center justify-center">
+            <form
+              onSubmit={handleUpdateProfile}
+              className="w-full flex flex-col items-center justify-center"
+            >
               <div className="w-full flex justify-center items-center my-3">
                 <label
                   htmlFor="nick"
@@ -114,17 +143,6 @@ const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
                 />
               </div>
 
-              <div className="w-full flex justify-start items-center my-3">
-                <p className="font-bold uppercase text-lg mr-3 text-red-900">
-                  Hasło:
-                </p>
-                <button
-                  type="button"
-                  className="bg-white uppercase p-2 px-3 font-semibold rounded-md hover:bg-red-900 hover:text-white transition-all text-md"
-                >
-                  Zmiana hasła
-                </button>
-              </div>
               <button
                 type="submit"
                 disabled={disabledBtn}
@@ -137,6 +155,18 @@ const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
                 zapisz zmiany
               </button>
             </form>
+            <div className="w-full flex justify-start items-center mb-10">
+              <p className="font-bold uppercase text-lg mr-3 text-red-900">
+                Hasło:
+              </p>
+              <button
+                onClick={handleUpdatePassword}
+                type="button"
+                className="bg-white uppercase p-2 px-3 font-semibold rounded-md hover:bg-red-900 hover:text-white transition-all text-md"
+              >
+                Wyślij link do zmiany hasła
+              </button>
+            </div>
             <div className="w-full bg-white p-5 rounded-md">
               {showLvl && (
                 <div className="rounded-md fixed p-4 z-10 top-[50%] left-[50%] w-[30vw] h-[40vh] translate-x-[-50%] translate-y-[-50%] bg-zinc-100 border-2 border-red-900 flex flex-col justify-center items-center text-center">
