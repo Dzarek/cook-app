@@ -21,6 +21,8 @@ const NewRecipePage = async () => {
     );
   }
 
+  const userID = session.uid;
+
   return (
     <div className="page w-screen">
       <header className="text-center w-full py-[10vh] flex justify-center items-center">
@@ -30,7 +32,7 @@ const NewRecipePage = async () => {
         </h1>
         <GiNotebook className="text-4xl text-red-900 ml-5 recipeRotate2" />
       </header>
-      <AddRecipeComponent />
+      <AddRecipeComponent userID={userID} />
     </div>
   );
 };

@@ -12,6 +12,7 @@ import { BiEdit } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
 import { MdOutlineAddCircle } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
+import { postRecipe } from "@/lib/user.actions";
 
 const ingredientsTest = [
   "ketchup",
@@ -37,10 +38,10 @@ const steps = [
 const description =
   "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex, placeat reiciendis magni ut distinctio quo dolore quia sit maiores atque molestiae provident accusamus quis rem facilis, accusantium earum eligendi quam autem molestias? A, veniam! Labore quas alias nulla dolor? Non nemo est voluptatem blanditiis, quis impedit vel? Harum, quaerat hic.";
 
-const AddRecipeComponent = () => {
+const AddRecipeComponent = ({ userID }: { userID: string }) => {
   const [newTitle, setNewTitle] = useState("");
   const [newShortInfo, setNewShortInfo] = useState("");
-  const [newCategory, setNewCategory] = useState([]);
+  const [newCategory, setNewCategory] = useState<string[]>([]);
   const [newPrepTime, setNewPrepTime] = useState(0);
   const [newCookTime, setNewCookTime] = useState(0);
   const [newPortion, setNewPortion] = useState(0);
@@ -55,7 +56,15 @@ const AddRecipeComponent = () => {
 
   const [newDescription, setNewDescription] = useState(description);
 
-  const [confirmation, setConfirmation] = useState(false);
+  //   const [confirmation, setConfirmation] = useState(false);
+
+  const handleNewCategory = (tag: string) => {
+    if (newCategory.includes(tag)) {
+      setNewCategory(newCategory.filter((category) => category !== tag));
+    } else {
+      setNewCategory([...newCategory, tag]);
+    }
+  };
 
   const resetForm = () => {
     setNewTitle("");
@@ -73,7 +82,24 @@ const AddRecipeComponent = () => {
     setNewDescription("");
   };
 
-  const submitForm = () => {};
+  const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const image = "/assets/images/avatars/avatar0.webp";
+    await postRecipe(
+      userID,
+      image,
+      newTitle,
+      newShortInfo,
+      newCategory,
+      newPrepTime,
+      newCookTime,
+      newPortion,
+      newIngredients,
+      newSteps,
+      newDescription
+    );
+    resetForm();
+  };
 
   return (
     <form
@@ -130,8 +156,13 @@ const AddRecipeComponent = () => {
               {tags.map((tag, index) => {
                 return (
                   <li
+                    onClick={() => handleNewCategory(tag)}
                     key={index}
-                    className="border-red-900 bg-[#fbf3f3] border-2 p-2 m-2 rounded-md cursor-pointer hover:bg-red-900 hover:text-white transition-all"
+                    className={
+                      newCategory.includes(tag)
+                        ? "bg-red-900 text-white transition-all border-red-900 border-2 p-2 m-2 rounded-md cursor-pointer"
+                        : "border-red-900 bg-[#fbf3f3] border-2 p-2 m-2 rounded-md cursor-pointer hover:bg-red-900 hover:text-white transition-all"
+                    }
                   >
                     {tag}
                   </li>

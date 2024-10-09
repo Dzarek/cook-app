@@ -217,3 +217,56 @@ export const changePassword = async () => {
       // ..
     });
 };
+
+export const postRecipe = async (
+  userID: string,
+  image: string,
+  newTitle: string,
+  newShortInfo: string,
+  newCategory: string[],
+  newPrepTime: number,
+  newCookTime: number,
+  newPortion: number,
+  newIngredients: string[],
+  newSteps: string[],
+  newDescription: string
+) => {
+  const setDocRecipeCollectionRef = doc(
+    collection(db, `usersList/${userID}/recipes`)
+  );
+  await setDoc(setDocRecipeCollectionRef, {
+    createdTime: new Date(),
+    image,
+    title: newTitle,
+    shortInfo: newShortInfo,
+    category: newCategory,
+    prepTime: newPrepTime,
+    cookTime: newCookTime,
+    portion: newPortion,
+    ingredients: newIngredients,
+    steps: newSteps,
+    description: newDescription,
+    likes: 0,
+  })
+    .then(() => {
+      toast("Przepis został dodany!", {
+        icon: "✔",
+        style: {
+          borderRadius: "10px",
+          background: "#052814",
+          color: "#fff",
+        },
+      });
+    })
+    .catch((error) => {
+      console.error("Error writing document: ", error);
+      toast("Coś poszło nie tak!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+        },
+      });
+    });
+};

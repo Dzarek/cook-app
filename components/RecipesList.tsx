@@ -35,8 +35,8 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
               alt={title}
             />
             <section className="h-2/6 flex flex-col items-center justify-center p-2">
-              <h5 className="text-base text-center font-bold mb-2 w-full">
-                {title.toUpperCase()}
+              <h5 className="text-base text-center font-bold mb-2 w-full uppercase">
+                {title}
               </h5>
               <p className="text-gray-600 text-sm mb-2">
                 Przygotowanie:{" "}
