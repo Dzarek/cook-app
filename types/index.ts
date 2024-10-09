@@ -40,4 +40,5 @@ type ContextTypes = {
   setName: (name: string) => void;
   setModalName: (modalName: boolean) => void;
   setAvatar: (avatar: string) => void;
+  setLoading: (loading: boolean) => void;
 };

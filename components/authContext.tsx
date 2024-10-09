@@ -16,6 +16,7 @@ const defaultValues: ContextTypes = {
   setName: () => "",
   setModalName: () => false,
   setAvatar: () => "",
+  setLoading: () => true,
 };
 
 const AppContext = createContext<ContextTypes>(defaultValues);
@@ -70,6 +71,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
         setName,
         setModalName,
         setAvatar,
+        setLoading,
       }}
     >
       {children}

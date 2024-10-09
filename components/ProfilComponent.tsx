@@ -9,34 +9,43 @@ import { useState, useEffect } from "react";
 import AvatarModal from "@/components/AvatarModal";
 import RecipesListProfile from "@/components/RecipeListProfile";
 
-import { updateUserProfile, changePassword } from "@/lib/user.actions";
+import {
+  updateAvatar,
+  updateName,
+  changePassword,
+  checkPassword,
+} from "@/lib/user.actions";
 import toast from "react-hot-toast";
+import { useGlobalContext } from "./authContext";
+import { ImCross } from "react-icons/im";
 
 type ProfilTypes = {
   currentUser: {
-    id: string;
-    name?: string | null;
+    userName?: string | null;
     email?: string | null;
-    image?: string | null;
+    avatar?: string | null;
   };
   userRecipes: Recipe[];
 };
 
 const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
-  const [nick, setNick] = useState(currentUser.name || "");
+  const [nick, setNick] = useState(currentUser.userName || "");
   const [email, setEmail] = useState(currentUser.email || "");
   const [avatar, setAvatar] = useState(
-    currentUser.image || "/assets/images/avatars/avatar0.webp"
+    currentUser.avatar || "/assets/images/avatars/avatar0.webp"
   );
   const [disabledBtn, setDisabledBtn] = useState(true);
   const [showLvl, setShowLvl] = useState(false);
   const [openAvatarModal, setOpenAvatarModal] = useState(false);
+  const [openPasswordModal, setOpenPasswordModal] = useState(false);
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
+  const { setName, setAvatar: setAvatarContext } = useGlobalContext();
 
   useEffect(() => {
     if (
-      nick !== currentUser.name ||
+      nick !== currentUser.userName ||
       email !== currentUser.email ||
-      avatar !== currentUser.image
+      avatar !== currentUser.avatar
     ) {
       setDisabledBtn(false);
     } else {
@@ -59,21 +68,31 @@ const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
     level = 1;
   }
 
-  const handleUpdateProfile = async () => {
-    await updateUserProfile(nick, email, avatar);
-    toast("Profil został edytowany!", {
-      icon: "✖",
-      style: {
-        borderRadius: "10px",
-        background: "#052814",
-        color: "#fff",
-      },
-    });
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (nick !== currentUser.userName) {
+      await updateName(nick);
+      setName(nick);
+    }
+    if (avatar !== currentUser.avatar) {
+      await updateAvatar(avatar);
+      setAvatarContext(avatar);
+    }
+    if (email !== currentUser.email) {
+      setOpenPasswordModal(true);
+    }
   };
+
+  const handleCheckPassword = async () => {
+    await checkPassword(confirmPasswordInput, email);
+    setOpenPasswordModal(false);
+    setConfirmPasswordInput("");
+  };
+
   const handleUpdatePassword = async () => {
-    await changePassword(email);
-    toast("Hasło zostało zmienione!", {
-      icon: "✖",
+    await changePassword();
+    toast("Link do zmiany hasła został wysłany!", {
+      icon: "✔",
       style: {
         borderRadius: "10px",
         background: "#052814",
@@ -96,7 +115,7 @@ const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
                 width={400}
                 height={400}
                 alt="avatar"
-                className="rounded-full w-full object-fill border-2 border-red-900 "
+                className="rounded-full w-full h-[21vw] object-fill border-2 border-red-900 "
               />
               <button
                 onClick={() => setOpenAvatarModal(true)}
@@ -243,6 +262,35 @@ const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
           activeAvatar={avatar}
           setActiveAvatar={setAvatar}
         />
+      )}
+      {openPasswordModal && (
+        <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[40vw] h-[50vh] bg-white rounded-md border-2 border-red-900 flex flex-col items-center justify-center p-4 text-center">
+          <ImCross
+            className="absolute top-5 right-5 text-red-900 text-2xl cursor-pointer hover:text-red-950"
+            onClick={() => setOpenPasswordModal(false)}
+          />
+          <h3 className="uppercase mb-10 font-semibold text-red-900 text-2xl">
+            Zmiana hasła
+          </h3>
+          <p className="text-lg">
+            Aby zmienić adres email wymagane jest potwierdzenie konta hasłem.
+          </p>
+          <input
+            type="password"
+            className=" text-black border-2 border-red-900 text-center rounded-md p-1 my-3 w-2/4"
+            value={confirmPasswordInput}
+            onChange={(e) => setConfirmPasswordInput(e.target.value)}
+            required
+            placeholder="wpisz hasło"
+          />
+          <button
+            type="button"
+            onClick={() => handleCheckPassword()}
+            className="bg-red-900 mb-10 mt-5 text-white w-1/3  block p-1 px-2 font-semibold rounded-md  transition-all duration-300 cursor-pointer uppercase"
+          >
+            Potwierdź
+          </button>
+        </div>
       )}
     </>
   );

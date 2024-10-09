@@ -18,15 +18,15 @@ export const getAllUsers = async () => {
     console.log(error);
   }
 };
-// export const getOneUser = async (id: string) => {
-//   const docRef = doc(db, "usersList", id);
-//   try {
-//     const docSnap = await getDoc(docRef);
-//     return docSnap.data();
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+export const getOneUser = async (id: string) => {
+  const docRef = doc(db, "usersList", id);
+  try {
+    const docSnap = await getDoc(docRef);
+    return docSnap.data();
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const getRecipes = async (userID: string) => {
   const getProductsCollectionRefOneUser = collection(
     db,

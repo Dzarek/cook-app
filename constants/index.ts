@@ -54,7 +54,7 @@ export const avatars = [
   {
     id: 3,
     name: "dzieciuchy",
-    images: ["/assets/images/avatars/avatark0.png"],
+    images: ["/assets/images/avatars/avatard1.png"],
   },
 ];
 

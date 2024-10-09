@@ -18,6 +18,10 @@ import {
   updateProfile,
   getAuth,
   sendPasswordResetEmail,
+  updateEmail,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  sendEmailVerification,
 } from "firebase/auth";
 import toast from "react-hot-toast";
 
@@ -66,11 +70,107 @@ export const updateName = async (newName: string) => {
       merge: true,
     }
   );
-};
-export const updateEmail = async (newEmail: string) => {
-  await updateProfile(getUser.currentUser!, {
-    email: newEmail,
+  toast("Nick został zmieniony!", {
+    icon: "✔",
+    style: {
+      borderRadius: "10px",
+      background: "#052814",
+      color: "#fff",
+    },
   });
+};
+
+export const checkPassword = async (password: string, email: string) => {
+  const credential = EmailAuthProvider.credential(
+    getUser.currentUser!.email!,
+    password
+  );
+  // if (getUser.currentUser?.emailVerified === false) {
+  //   sendEmailVerification(getUser.currentUser!)
+  //     .then(() => {
+  //       // console.log("Verification email sent to the old email!");
+  //       toast(
+  //         `Poprzedni adres email nie został zweryfikowany! Sprawdź swoją skrzynke pocztową ${getUser.currentUser?.email}.`,
+  //         {
+  //           icon: "✖",
+  //           style: {
+  //             borderRadius: "10px",
+  //             background: "#052814",
+  //             color: "#fff",
+  //           },
+  //         }
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       // console.error("Error sending verification email:", error);
+  //     });
+  // } else {
+  reauthenticateWithCredential(getUser.currentUser!, credential)
+    .then(() => {
+      // console.log("User re-authenticated successfully");
+      // Proceed with updating the email
+      updateProfileEmail(email);
+    })
+    .catch((error) => {
+      // console.error("Error re-authenticating:", error);
+      toast("Nieprawidłowe hasło!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+        },
+      });
+    });
+};
+// };
+
+export const updateProfileEmail = async (newEmail: string) => {
+  await updateEmail(getUser.currentUser!, newEmail)
+    .then(() => {
+      // console.log("Email updated successfully!");
+      sendEmailVerification(getUser.currentUser!);
+      toast("Adres email został zmieniony!", {
+        icon: "✔",
+        style: {
+          borderRadius: "10px",
+          background: "#052814",
+          color: "#fff",
+        },
+      });
+    })
+    .catch((error) => {
+      if (error.code === "auth/email-already-in-use") {
+        toast("Ten adres email jest już używany przez innego użytkownika!", {
+          icon: "✖",
+          style: {
+            borderRadius: "10px",
+            background: "#280505",
+            color: "#fff",
+          },
+        });
+      } else {
+        // console.error("Error updating email:", error);
+        toast("Coś poszło nie tak!", {
+          icon: "✖",
+          style: {
+            borderRadius: "10px",
+            background: "#280505",
+            color: "#fff",
+          },
+        });
+      }
+    });
+  const userRef = doc(db, "usersList", getUser.currentUser!.uid);
+  setDoc(
+    userRef,
+    {
+      email: newEmail,
+    },
+    {
+      merge: true,
+    }
+  );
 };
 
 export const updateAvatar = async (avatar: string) => {
@@ -87,28 +187,26 @@ export const updateAvatar = async (avatar: string) => {
       merge: true,
     }
   );
-};
-
-export const updateUserProfile = async (
-  newName: string,
-  newEmail: string,
-  avatar: string
-) => {
-  await updateName(newName);
-  await updateEmail(newEmail);
-  await updateAvatar(avatar);
+  toast("Avatar został zmieniony!", {
+    icon: "✔",
+    style: {
+      borderRadius: "10px",
+      background: "#052814",
+      color: "#fff",
+    },
+  });
 };
 
 export const updateUser = async (newName: string, avatar: string) => {
   await updateName(newName);
   await updateAvatar(avatar);
   if (getUser.currentUser!.email) {
-    changePassword(getUser.currentUser!.email);
+    changePassword();
   }
 };
 
-export const changePassword = async (email: string) => {
-  await sendPasswordResetEmail(getUser, email)
+export const changePassword = async () => {
+  await sendPasswordResetEmail(getUser, getUser.currentUser!.email!)
     .then(() => {
       // Password reset email sent!
       // ..
