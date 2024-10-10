@@ -14,6 +14,7 @@ import { MdOutlineAddCircle } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
 import { postRecipe } from "@/lib/user.actions";
 import toast from "react-hot-toast";
+import UploadImage from "./cloudinary/UploadImage";
 
 const ingredientsTest = [
   "ketchup",
@@ -46,18 +47,16 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
   const [newPrepTime, setNewPrepTime] = useState(0);
   const [newCookTime, setNewCookTime] = useState(0);
   const [newPortion, setNewPortion] = useState(0);
-
   const [newIngredients, setNewIngredients] = useState(ingredientsTest);
   const [editingIngredient, setEditingIngredient] = useState<number | null>(
     null
   );
   const [newIngredient, setNewIgredient] = useState("");
-
   const [newSteps, setNewSteps] = useState(steps);
   const [editingStep, setEditingStep] = useState<number | null>(null);
   const [newStep, setNewStep] = useState("");
-
   const [newDescription, setNewDescription] = useState(description);
+  const [newImage, setNewImage] = useState<string>("");
 
   const handleNewCategory = (tag: string) => {
     if (newCategory.includes(tag)) {
@@ -168,10 +167,11 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
       className="flex flex-col w-4/5 mx-auto mb-[10vh]"
     >
       <section className="flex justify-between w-full">
-        <button className="flex flex-col items-center justify-center w-2/5 h-[50vh] border-red-900 border-dashed border-2 rounded-md">
+        {/* <button className="flex flex-col items-center justify-center w-2/5 h-[50vh] border-red-900 border-dashed border-2 rounded-md">
           <RiImageAddLine className="text-6xl text-zinc-400" />
           <p className="mt-5 text-xl">dodaj zdjęcie</p>
-        </button>
+        </button> */}
+        <UploadImage setNewImage={setNewImage} />
         <div className="w-[55%] flex flex-col">
           <div className="w-full flex justify-center items-center">
             <label

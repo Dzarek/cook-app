@@ -42,3 +42,7 @@ type ContextTypes = {
   setAvatar: (avatar: string) => void;
   setLoading: (loading: boolean) => void;
 };
+
+type CloudinaryContextTypes = {
+  loaded: boolean;
+};
