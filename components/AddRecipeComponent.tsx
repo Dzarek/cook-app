@@ -13,6 +13,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { MdOutlineAddCircle } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
 import { postRecipe } from "@/lib/user.actions";
+import toast from "react-hot-toast";
 
 const ingredientsTest = [
   "ketchup",
@@ -28,11 +29,11 @@ const ingredientsTest = [
 ];
 
 const steps = [
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
+  "1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
+  "2Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
+  "3Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
+  "4Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
+  "5Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
 ];
 
 const description =
@@ -47,16 +48,16 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
   const [newPortion, setNewPortion] = useState(0);
 
   const [newIngredients, setNewIngredients] = useState(ingredientsTest);
-  const [editingIngredient, setEditingIngredient] = useState(false);
+  const [editingIngredient, setEditingIngredient] = useState<number | null>(
+    null
+  );
   const [newIngredient, setNewIgredient] = useState("");
 
   const [newSteps, setNewSteps] = useState(steps);
-  const [editingStep, setEditingStep] = useState(false);
+  const [editingStep, setEditingStep] = useState<number | null>(null);
   const [newStep, setNewStep] = useState("");
 
   const [newDescription, setNewDescription] = useState(description);
-
-  //   const [confirmation, setConfirmation] = useState(false);
 
   const handleNewCategory = (tag: string) => {
     if (newCategory.includes(tag)) {
@@ -64,6 +65,43 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
     } else {
       setNewCategory([...newCategory, tag]);
     }
+  };
+
+  const handleAddIngredient = () => {
+    const updatedItems = [...newIngredients];
+    setNewIngredients([...updatedItems, newIngredient]);
+    setNewIgredient("");
+  };
+  const handleAddStep = () => {
+    const updatedItems = [...newSteps];
+    setNewSteps([...updatedItems, newStep]);
+    setNewStep("");
+  };
+
+  const handleEditIngredient = (index: number) => {
+    const updatedItems = [...newIngredients];
+    updatedItems[index] = newIngredient;
+    setNewIngredients(updatedItems);
+    setNewIgredient("");
+    setEditingIngredient(null);
+  };
+  const handleEditStep = (index: number) => {
+    const updatedItems = [...newSteps];
+    updatedItems[index] = newStep;
+    setNewSteps(updatedItems);
+    setNewStep("");
+    setEditingStep(null);
+  };
+
+  const handleDeleteIngedient = (index: number) => {
+    const updatedItems = [...newIngredients];
+    updatedItems.splice(index, 1);
+    setNewIngredients(updatedItems);
+  };
+  const handleDeleteStep = (index: number) => {
+    const updatedItems = [...newSteps];
+    updatedItems.splice(index, 1);
+    setNewSteps(updatedItems);
   };
 
   const resetForm = () => {
@@ -74,31 +112,54 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
     setNewCookTime(0);
     setNewPortion(0);
     setNewIngredients([]);
-    setEditingIngredient(false);
+    setEditingIngredient(null);
     setNewIgredient("");
     setNewSteps([]);
-    setEditingStep(false);
+    setEditingStep(null);
     setNewStep("");
     setNewDescription("");
   };
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const image = "/assets/images/avatars/avatar0.webp";
-    await postRecipe(
-      userID,
-      image,
-      newTitle,
-      newShortInfo,
-      newCategory,
-      newPrepTime,
-      newCookTime,
-      newPortion,
-      newIngredients,
-      newSteps,
-      newDescription
-    );
-    resetForm();
+    let image = "/assets/images/avatars/avatar0.webp";
+    if (
+      userID !== "" &&
+      image !== "" &&
+      newTitle !== "" &&
+      newShortInfo !== "" &&
+      newCategory.length > 0 &&
+      newPrepTime > 0 &&
+      newCookTime > 0 &&
+      newPortion > 0 &&
+      newIngredients.length > 0 &&
+      newSteps.length > 0 &&
+      newDescription !== ""
+    ) {
+      await postRecipe(
+        userID,
+        image,
+        newTitle,
+        newShortInfo,
+        newCategory,
+        newPrepTime,
+        newCookTime,
+        newPortion,
+        newIngredients,
+        newSteps,
+        newDescription
+      );
+      resetForm();
+    } else {
+      toast("Uzupełnij wszystkie pola!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+        },
+      });
+    }
   };
 
   return (
@@ -188,6 +249,7 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
               id="prepTime"
               className="newRecipeInput w-20 mx-3 text-center"
               required
+              min={0}
               value={newPrepTime}
               onChange={(e) => setNewPrepTime(Number(e.target.value))}
             />
@@ -209,6 +271,7 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
               id="cookTime"
               className="newRecipeInput w-20 mx-3 text-center"
               required
+              min={0}
               value={newCookTime}
               onChange={(e) => setNewCookTime(Number(e.target.value))}
             />
@@ -230,6 +293,7 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
               id="portion"
               className="newRecipeInput w-20 mx-3 text-center"
               required
+              min={0}
               value={newPortion}
               onChange={(e) => setNewPortion(Number(e.target.value))}
             />
@@ -247,7 +311,11 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
               newIngredients.map((item, index) => {
                 return (
                   <li
-                    className="text-lg font-bodyFont mb-4 border-b-2 pb-2 flex items-center justify-between"
+                    className={
+                      index === editingIngredient
+                        ? "text-lg font-bodyFont mb-2 border-b-2 py-2 flex items-center justify-between editAddRecipeItem rounded-md"
+                        : "text-lg font-bodyFont mb-2 border-b-2 py-2 flex items-center justify-between"
+                    }
                     key={index}
                   >
                     {item}
@@ -260,11 +328,17 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
                       >
                         <BiEdit
                           className="mr-3 text-green-900 cursor-pointer"
-                          onClick={() => setEditingIngredient(true)}
+                          onClick={() => {
+                            setEditingIngredient(index);
+                            setNewIgredient(item);
+                          }}
                         />
                       </Link>
 
-                      <MdDeleteForever className="text-red-900 cursor-pointer" />
+                      <MdDeleteForever
+                        onClick={() => handleDeleteIngedient(index)}
+                        className="text-red-900 cursor-pointer"
+                      />
                     </div>
                   </li>
                 );
@@ -283,7 +357,7 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
                   />
                   <GiConfirmed
                     className="ml-3 text-green-900 cursor-pointer text-2xl"
-                    onClick={() => setEditingIngredient(false)}
+                    onClick={() => handleEditIngredient(editingIngredient)}
                   />
                 </div>
               </Element>
@@ -297,7 +371,10 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
                     onChange={(e) => setNewIgredient(e.target.value)}
                     className="newRecipeInput flex-grow text-center "
                   />
-                  <MdOutlineAddCircle className="ml-3 text-green-900 cursor-pointer text-2xl" />
+                  <MdOutlineAddCircle
+                    className="ml-3 text-green-900 cursor-pointer text-2xl"
+                    onClick={handleAddIngredient}
+                  />
                 </div>
               </Element>
             )}
@@ -311,7 +388,14 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
             {newSteps.length > 1 &&
               newSteps.map((item, index) => {
                 return (
-                  <div key={index} className="flex flex-col w-full mb-6">
+                  <div
+                    key={index}
+                    className={
+                      index === editingStep
+                        ? "flex flex-col w-full mb-6 editAddRecipeItem"
+                        : "flex flex-col w-full mb-6"
+                    }
+                  >
                     <div className="flex flex-nowrap items-center justify-between mb-2">
                       <p className="uppercase text-red-900 text-2xl font-semibold font-headingFont mr-4">
                         krok {index + 1}
@@ -326,11 +410,17 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
                         >
                           <BiEdit
                             className="mr-3 text-green-900 cursor-pointer"
-                            onClick={() => setEditingStep(true)}
+                            onClick={() => {
+                              setEditingStep(index);
+                              setNewStep(item);
+                            }}
                           />
                         </Link>
 
-                        <MdDeleteForever className="text-red-900 cursor-pointer" />
+                        <MdDeleteForever
+                          onClick={() => handleDeleteStep(index)}
+                          className="text-red-900 cursor-pointer"
+                        />
                       </div>
                     </div>
                     <p className="text-lg font-bodyFont">{item}</p>
@@ -351,7 +441,7 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
                   />
                   <GiConfirmed
                     className="ml-3 text-green-900 cursor-pointer text-2xl"
-                    onClick={() => setEditingStep(false)}
+                    onClick={() => handleEditStep(editingStep)}
                   />
                 </div>
               </Element>
@@ -361,11 +451,14 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
                   <input
                     type="text"
                     placeholder="dodaj nowy krok"
-                    value={newIngredient}
+                    value={newStep}
                     onChange={(e) => setNewStep(e.target.value)}
                     className="newRecipeInput flex-grow text-center "
                   />
-                  <MdOutlineAddCircle className="ml-3 text-green-900 cursor-pointer text-2xl" />
+                  <MdOutlineAddCircle
+                    className="ml-3 text-green-900 cursor-pointer text-2xl"
+                    onClick={handleAddStep}
+                  />
                 </div>
               </Element>
             )}

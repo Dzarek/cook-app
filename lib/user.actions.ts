@@ -235,7 +235,7 @@ export const postRecipe = async (
     collection(db, `usersList/${userID}/recipes`)
   );
   await setDoc(setDocRecipeCollectionRef, {
-    createdTime: new Date(),
+    createdTime: new Date().getTime(),
     image,
     title: newTitle,
     shortInfo: newShortInfo,

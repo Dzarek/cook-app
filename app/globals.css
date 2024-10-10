@@ -45,7 +45,7 @@ body {
 
 .recipe {
   width: 21vw;
-  /* height: 40vh; */
+  height: 50vh;
   border: 2px solid gray;
   border-radius: 10px;
   display: flex;
@@ -975,5 +975,18 @@ svg:not(.starRotate) + .starRotate {
   }
   100% {
     transform: scale(1.05);
+  }
+}
+
+.editAddRecipeItem {
+  animation: editAddRecipeItem 1s ease infinite alternate;
+}
+
+@keyframes editAddRecipeItem {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: #fef9c3;
   }
 }

@@ -23,7 +23,7 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
           <Link
             href={`/przepisy/${id}`}
             className="recipe  bg-neutral-50 
-            cursor-pointer overflow-hidden relative transition-all duration-300 hover:-translate-y-2  rounded-lg shadow-xl flex flex-row items-center justify-center  before:absolute before:w-full hover:before:top-0 before:duration-300 before:-top-1 before:h-1 before:bg-red-900
+            cursor-pointer overflow-hidden relative transition-all duration-300 hover:-translate-y-2  rounded-lg shadow-xl flex flex-row items-center justify-between  before:absolute before:w-full hover:before:top-0 before:duration-300 before:-top-1 before:h-1 before:bg-red-900 pb-2
             "
             key={id}
           >
@@ -31,11 +31,11 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
               src={image}
               width={500}
               height={500}
-              className="w-full h-4/6 object-fill recipe-img"
+              className="w-full h-3/5 object-fill recipe-img"
               alt={title}
             />
             <section className="h-2/6 flex flex-col items-center justify-center p-2">
-              <h5 className="text-base text-center font-bold mb-2 w-full uppercase">
+              <h5 className="text-base text-center font-bold mb-4 w-full uppercase">
                 {title}
               </h5>
               <p className="text-gray-600 text-sm mb-2">
