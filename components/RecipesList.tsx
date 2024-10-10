@@ -31,7 +31,7 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
               src={image}
               width={500}
               height={500}
-              className="w-full h-3/5 object-fill recipe-img"
+              className="w-full h-3/5 object-cover recipe-img"
               alt={title}
             />
             <section className="h-2/6 flex flex-col items-center justify-center p-2">

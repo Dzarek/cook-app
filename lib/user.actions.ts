@@ -270,3 +270,17 @@ export const postRecipe = async (
       });
     });
 };
+
+export const deleteRecipe = async (userID: string, id: string) => {
+  const productDoc = doc(db, `usersList/${userID}/recipes`, id);
+
+  await deleteDoc(productDoc);
+  toast("Przepis został usunięty!", {
+    icon: "✔",
+    style: {
+      borderRadius: "10px",
+      background: "#280505",
+      color: "#fff",
+    },
+  });
+};

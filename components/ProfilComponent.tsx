@@ -26,9 +26,10 @@ type ProfilTypes = {
     avatar?: string | null;
   };
   userRecipes: Recipe[];
+  userID: string;
 };
 
-const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
+const ProfilComponent = ({ currentUser, userRecipes, userID }: ProfilTypes) => {
   const [nick, setNick] = useState(currentUser.userName || "");
   const [email, setEmail] = useState(currentUser.email || "");
   const [avatar, setAvatar] = useState(
@@ -39,6 +40,7 @@ const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
   const [openAvatarModal, setOpenAvatarModal] = useState(false);
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
+
   const { setName, setAvatar: setAvatarContext } = useGlobalContext();
 
   useEffect(() => {
@@ -252,7 +254,7 @@ const ProfilComponent = ({ currentUser, userRecipes }: ProfilTypes) => {
             Moje przepisy:
           </h3>
           <div className="px-[5vw]">
-            <RecipesListProfile recipes={userRecipes} />
+            <RecipesListProfile recipes={userRecipes} userID={userID} />
           </div>
         </section>
       </main>

@@ -45,8 +45,8 @@ const OneRecipePage = async ({
         <main className="w-4/5 mx-auto flex justify-between items-start">
           <Image
             src={image}
-            width={1000}
-            height={1000}
+            width={500}
+            height={500}
             alt={title}
             className="w-2/5 h-[50vh] object-fill rounded-md"
           />

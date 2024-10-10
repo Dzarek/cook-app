@@ -4,7 +4,6 @@ import { tags } from "@/constants";
 import Image from "next/image";
 import { Link, Element } from "react-scroll";
 import { useState } from "react";
-import { RiImageAddLine } from "react-icons/ri";
 import { BsClockHistory } from "react-icons/bs";
 import { GiRiceCooker } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";

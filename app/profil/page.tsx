@@ -28,6 +28,7 @@ const Profil = async () => {
 
   // console.log(currentUser);
   // console.log(session.user);
+  const userID = session.uid;
 
   return (
     <div className="page w-screen">
@@ -39,7 +40,11 @@ const Profil = async () => {
         <GiChefToque className="text-5xl text-red-900 ml-5 recipeRotate2" />
       </header>
       {currentUser && userRecipes && (
-        <ProfilComponent currentUser={currentUser} userRecipes={userRecipes} />
+        <ProfilComponent
+          userID={userID}
+          currentUser={currentUser}
+          userRecipes={userRecipes}
+        />
       )}
     </div>
   );
