@@ -1,8 +1,7 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
-import { RiUpload2Fill } from "react-icons/ri";
-import styled from "styled-components";
+import { RiImageAddLine } from "react-icons/ri";
 
 declare global {
   interface Window {
@@ -77,41 +76,16 @@ function CloudinaryUploadWidget({
 
   return (
     <CloudinaryScriptContext.Provider value={{ loaded }}>
-      <StyledBtn onClick={initializeCloudinaryWidget}>
-        Dodaj nowy obraz <br />
-        <RiUpload2Fill />
-      </StyledBtn>
+      <button
+        onClick={initializeCloudinaryWidget}
+        className="flex flex-col items-center justify-center w-2/5 h-[50vh] border-red-900 border-dashed border-2 rounded-md"
+      >
+        <RiImageAddLine className="text-6xl text-zinc-400" />
+        <p className="mt-5 text-xl">dodaj zdjęcie</p>
+      </button>
     </CloudinaryScriptContext.Provider>
   );
 }
-
-const StyledBtn = styled.button`
-  text-decoration: none;
-  background: var(--secondaryColor3);
-  padding: 10px 20px;
-  text-align: center;
-  color: white;
-  font-family: var(--titleFont);
-  border-radius: 10px;
-  font-size: 1.4rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  margin-top: 3vh;
-  transition: 0.4s;
-  border: none;
-  cursor: pointer;
-  @media screen and (max-width: 800px) {
-    font-size: 1.2rem;
-  }
-  svg {
-    color: white !important;
-    font-size: 2rem !important;
-    margin: 10px auto !important;
-  }
-  :hover {
-    background: var(--secondaryColor);
-  }
-`;
 
 export default CloudinaryUploadWidget;
 export { CloudinaryScriptContext };

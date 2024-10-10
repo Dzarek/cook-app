@@ -34,7 +34,7 @@ const OneRecipePage = async ({
     } = oneRecipe;
     return (
       <div className="page w-screen">
-        <header className="relative text-center bg-red-100 mb-[5vh] w-full py-[10vh] flex justify-center items-center">
+        <header className="relative text-center bg-red-100 mb-[10vh] w-full py-[10vh] flex justify-center items-center">
           <FaSpoon className="text-3xl text-red-900  mr-6 spoonRotate" />
           <h1 className="text-3xl font-bold font-bodyFont uppercase">
             {title}
@@ -42,7 +42,7 @@ const OneRecipePage = async ({
           <BiFork className="text-4xl text-red-900 ml-5 forkRotate" />
           <LikeControl likes={likes} />
         </header>
-        <main className="w-4/5 mx-auto flex justify-between items-center">
+        <main className="w-4/5 mx-auto flex justify-between items-start">
           <Image
             src={image}
             width={1000}
@@ -51,7 +51,9 @@ const OneRecipePage = async ({
             className="w-2/5 h-[50vh] object-fill rounded-md"
           />
           <section className="w-[55%]">
-            <p className="text-lg font-bodyFont mb-10">{shortInfo}</p>
+            <p className="text-lg font-bodyFont mb-10 pb-5 border-b-2 ">
+              {shortInfo}
+            </p>
             <div className="w-4/5 mx-auto flex justify-between items-center">
               <div className="flex flex-col items-center justify-center">
                 <BsClockHistory className="text-5xl text-red-900" />
@@ -137,7 +139,7 @@ const OneRecipePage = async ({
             </ul>
           </section>
         </div>
-        {description && (
+        {description && description !== "" && (
           <div className="w-4/5 flex justify-start items-start mx-auto my-[10vh] flex-col">
             <h2 className="text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
               Opis:

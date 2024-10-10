@@ -10,6 +10,11 @@ const RecipesPage = async ({
 }) => {
   const authors = await getAllUsers();
   const allRecipes = await getAllRecipes();
+
+  const sortedRecipes = allRecipes.sort(
+    (a, b) => b.createdTime - a.createdTime
+  );
+
   // console.log(allRecipes);
   // console.log(moment().valueOf());
   const { kategoria } = searchParams;
@@ -26,7 +31,7 @@ const RecipesPage = async ({
       <RecipesSearch
         kategoria={kategoria}
         authors={authors}
-        allRecipes={allRecipes}
+        allRecipes={sortedRecipes}
       />
     </div>
   );

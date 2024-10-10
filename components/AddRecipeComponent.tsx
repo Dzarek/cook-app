@@ -16,29 +16,29 @@ import { postRecipe } from "@/lib/user.actions";
 import toast from "react-hot-toast";
 import UploadImage from "./cloudinary/UploadImage";
 
-const ingredientsTest = [
-  "ketchup",
-  "3 szklanki mąki",
-  "1 szklanka mleka",
-  "50g drożdzy",
-  "1 łyżeczka soli",
-  "1 łyżeczka cukru",
-  "4 łyżki oleju",
-  "grzyby",
-  "szynka drobiowa lub salami lub jakakolwiek inna byle było dobre",
-  "ser żółty",
-];
+// const ingredientsTest = [
+//   "ketchup",
+//   "3 szklanki mąki",
+//   "1 szklanka mleka",
+//   "50g drożdzy",
+//   "1 łyżeczka soli",
+//   "1 łyżeczka cukru",
+//   "4 łyżki oleju",
+//   "grzyby",
+//   "szynka drobiowa lub salami lub jakakolwiek inna byle było dobre",
+//   "ser żółty",
+// ];
 
-const steps = [
-  "1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-  "2Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-  "3Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-  "4Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-  "5Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-];
+// const steps = [
+//   "1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
+//   "2Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
+//   "3Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
+//   "4Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
+//   "5Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
+// ];
 
-const description =
-  "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex, placeat reiciendis magni ut distinctio quo dolore quia sit maiores atque molestiae provident accusamus quis rem facilis, accusantium earum eligendi quam autem molestias? A, veniam! Labore quas alias nulla dolor? Non nemo est voluptatem blanditiis, quis impedit vel? Harum, quaerat hic.";
+// const description =
+//   "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex, placeat reiciendis magni ut distinctio quo dolore quia sit maiores atque molestiae provident accusamus quis rem facilis, accusantium earum eligendi quam autem molestias? A, veniam! Labore quas alias nulla dolor? Non nemo est voluptatem blanditiis, quis impedit vel? Harum, quaerat hic.";
 
 const AddRecipeComponent = ({ userID }: { userID: string }) => {
   const [newTitle, setNewTitle] = useState("");
@@ -47,15 +47,15 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
   const [newPrepTime, setNewPrepTime] = useState(0);
   const [newCookTime, setNewCookTime] = useState(0);
   const [newPortion, setNewPortion] = useState(0);
-  const [newIngredients, setNewIngredients] = useState(ingredientsTest);
+  const [newIngredients, setNewIngredients] = useState<string[]>([]);
   const [editingIngredient, setEditingIngredient] = useState<number | null>(
     null
   );
   const [newIngredient, setNewIgredient] = useState("");
-  const [newSteps, setNewSteps] = useState(steps);
+  const [newSteps, setNewSteps] = useState<string[]>([]);
   const [editingStep, setEditingStep] = useState<number | null>(null);
   const [newStep, setNewStep] = useState("");
-  const [newDescription, setNewDescription] = useState(description);
+  const [newDescription, setNewDescription] = useState<string>("");
   const [newImage, setNewImage] = useState<string>("");
 
   const handleNewCategory = (tag: string) => {
@@ -104,6 +104,7 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
   };
 
   const resetForm = () => {
+    setNewImage("");
     setNewTitle("");
     setNewShortInfo("");
     setNewCategory([]);
@@ -121,10 +122,10 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let image = "/assets/images/avatars/avatar0.webp";
+
     if (
       userID !== "" &&
-      image !== "" &&
+      newImage !== "" &&
       newTitle !== "" &&
       newShortInfo !== "" &&
       newCategory.length > 0 &&
@@ -132,12 +133,12 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
       newCookTime > 0 &&
       newPortion > 0 &&
       newIngredients.length > 0 &&
-      newSteps.length > 0 &&
-      newDescription !== ""
+      newSteps.length > 0
+      // newDescription !== ""
     ) {
       await postRecipe(
         userID,
-        image,
+        newImage,
         newTitle,
         newShortInfo,
         newCategory,
@@ -167,11 +168,28 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
       className="flex flex-col w-4/5 mx-auto mb-[10vh]"
     >
       <section className="flex justify-between w-full">
-        {/* <button className="flex flex-col items-center justify-center w-2/5 h-[50vh] border-red-900 border-dashed border-2 rounded-md">
-          <RiImageAddLine className="text-6xl text-zinc-400" />
-          <p className="mt-5 text-xl">dodaj zdjęcie</p>
-        </button> */}
-        <UploadImage setNewImage={setNewImage} />
+        {newImage === "" ? (
+          <UploadImage setNewImage={setNewImage} />
+        ) : (
+          <div className="flex flex-col items-center justify-center w-2/5">
+            <div className="flex flex-col items-center justify-center w-full h-[50vh] border-red-900 border-dashed border-2 rounded-md relative">
+              <Image
+                src={newImage}
+                width={500}
+                height={500}
+                alt="recipeImg"
+                className="w-full h-full object-cover rounded-md "
+              />
+            </div>
+            <button
+              type="button"
+              className="p-2 bg-red-900 text-white uppercase text-md font-semibold rounded-md hover:bg-red-950 duration-500 mt-2"
+              onClick={() => setNewImage("")}
+            >
+              Zmień obraz
+            </button>
+          </div>
+        )}
         <div className="w-[55%] flex flex-col">
           <div className="w-full flex justify-center items-center">
             <label
@@ -307,7 +325,7 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
             Składniki:
           </h2>
           <ul>
-            {newIngredients.length > 1 &&
+            {newIngredients.length > 0 &&
               newIngredients.map((item, index) => {
                 return (
                   <li
@@ -385,7 +403,7 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
             Instrukcje:
           </h2>
           <ul>
-            {newSteps.length > 1 &&
+            {newSteps.length > 0 &&
               newSteps.map((item, index) => {
                 return (
                   <div
@@ -472,7 +490,6 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
         <textarea
           name="newDesription"
           id="newDesription"
-          required
           value={newDescription}
           onChange={(e) => setNewDescription(e.target.value)}
           className="newRecipeInput w-full min-h-[20vh]"
