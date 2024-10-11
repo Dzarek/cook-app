@@ -17,13 +17,13 @@ const LikeControl = ({
   const [activeLikes, setActiveLikes] = useState(likes);
 
   const handleDislike = async () => {
-    let currentLikes = [...likes];
+    let currentLikes = [...activeLikes];
     currentLikes = currentLikes.filter((like) => like !== activeUser.uid);
     setActiveLikes(currentLikes);
     editLike(userID, recipeID, currentLikes);
   };
   const handleLike = async () => {
-    let currentLikes = [...likes];
+    let currentLikes = [...activeLikes];
     currentLikes = [...currentLikes, activeUser.uid];
     setActiveLikes(currentLikes);
     editLike(userID, recipeID, currentLikes);
@@ -37,15 +37,15 @@ const LikeControl = ({
         <h2 className="ml-3 text-2xl font-bold">{activeLikes.length}</h2>
       </div>
     );
+  } else {
+    return (
+      <div className="absolute bottom-[10%] right-[10%] flex items-center justify-center">
+        <p className="mr-3 text-xl">Smaczne?</p>
+        <FaRegHeart onClick={handleLike} className="likeBtn" />
+        <h2 className="ml-3 text-2xl font-bold">{activeLikes.length}</h2>
+      </div>
+    );
   }
-
-  return (
-    <div className="absolute bottom-[10%] right-[10%] flex items-center justify-center">
-      <p className="mr-3 text-xl">Smaczne?</p>
-      <FaRegHeart onClick={handleLike} className="likeBtn" />
-      <h2 className="ml-3 text-2xl font-bold">{activeLikes.length}</h2>
-    </div>
-  );
 };
 
 export default LikeControl;
