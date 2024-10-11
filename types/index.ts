@@ -19,6 +19,20 @@ type Recipe = {
   likes: number;
 };
 
+type RecipeTypeList = {
+  id: string;
+  title: string;
+  image: string;
+  prepTime: number;
+  cookTime: number;
+  author: {
+    authorName: string;
+    authorAvatar: string;
+  };
+  category: string[];
+  likes: number;
+};
+
 type User = {
   userName: string;
   activeUser: boolean;
@@ -36,6 +50,8 @@ type ContextTypes = {
   email: string;
   avatar: string;
   modalName: boolean;
+  editRecipe: any;
+  setEditRecipe: (editRecipe: any) => void;
   setIsLogin: (isLogin: boolean) => void;
   setName: (name: string) => void;
   setModalName: (modalName: boolean) => void;

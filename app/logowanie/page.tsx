@@ -1,6 +1,6 @@
 "use client";
 
-import { changePassword, login } from "@/lib/user.actions";
+import { changePasswordWhenLogin, login } from "@/lib/user.actions";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -80,7 +80,7 @@ const LoginPage = () => {
       return;
     }
     try {
-      await changePassword(email);
+      await changePasswordWhenLogin(email);
       setNewPasswordSend(true);
       setEmail("");
     } catch (error) {

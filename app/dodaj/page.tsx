@@ -4,7 +4,11 @@ import Link from "next/link";
 import AddRecipeComponent from "@/components/AddRecipeComponent";
 import { GiNotebook } from "react-icons/gi";
 
-const NewRecipePage = async () => {
+const NewRecipePage = async ({
+  searchParams,
+}: {
+  searchParams: { edycja: string };
+}) => {
   const session = await getServerSession(authOptions);
   if (!session) {
     return (
@@ -22,17 +26,20 @@ const NewRecipePage = async () => {
   }
 
   const userID = session.uid;
+  const { edycja } = searchParams;
 
   return (
     <div className="page w-screen">
       <header className="text-center w-full py-[10vh] flex justify-center items-center">
         <GiNotebook className="text-4xl text-red-900  mr-5 recipeRotate" />
         <h1 className="text-3xl font-bold font-bodyFont">
-          Tworzenie Nowego Przepisu
+          {edycja
+            ? "Edycja Istniejącego Przepisu"
+            : "Tworzenie Nowego Przepisu"}
         </h1>
         <GiNotebook className="text-4xl text-red-900 ml-5 recipeRotate2" />
       </header>
-      <AddRecipeComponent userID={userID} />
+      <AddRecipeComponent edycja={edycja} userID={userID} />
     </div>
   );
 };

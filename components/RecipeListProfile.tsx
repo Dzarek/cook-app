@@ -8,20 +8,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { deleteRecipe } from "@/lib/user.actions";
-
-type RecipeType = {
-  id: string;
-  title: string;
-  image: string;
-  prepTime: number;
-  cookTime: number;
-  author: {
-    authorName: string;
-    authorAvatar: string;
-  };
-  category: string[];
-  likes: number;
-};
+import { useGlobalContext } from "./authContext";
 
 const RecipesListProfile = ({
   recipes,
@@ -30,8 +17,11 @@ const RecipesListProfile = ({
   recipes: Recipe[];
   userID: string;
 }) => {
-  const [confirmDelete, setConfirmDelete] = useState<RecipeType | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<RecipeTypeList | null>(
+    null
+  );
   const [recipesList, setRecipesList] = useState(recipes);
+  const { setEditRecipe } = useGlobalContext();
 
   const handleDelete = (id: string) => {
     const updateProducts = recipesList.filter((item) => item.id !== id);
@@ -60,7 +50,7 @@ const RecipesListProfile = ({
             className="flex items-strech w-[25vw] justify-between border-2 border-gray-600 shadow-xl rounded-md m-[1.5vw]"
           >
             {confirmDelete && (
-              <div className="z-20 rounded-md border-2 border-white flex flex-col fixed w-[40vw] h-[50vh] bg-red-800 text-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] p-4 items-center justify-center">
+              <div className="z-20 rounded-md border-2 border-white flex flex-col fixed w-[40vw] h-[50vh] bg-red-900 text-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] p-4 items-center justify-center">
                 <span className="mb-8 w-full text-center text-xl px-4 py-2 bg-white text-black uppercase font-bold">
                   {confirmDelete.title}
                 </span>
@@ -89,7 +79,13 @@ const RecipesListProfile = ({
                 {" "}
                 <IoEnter className="cursor-pointer text-2xl text-cyan-950 transition-all hover:text-blue-700" />
               </Link>
-              <Link href="/dodaj">
+              <Link
+                href={{
+                  pathname: "/dodaj",
+                  query: { edycja: id },
+                }}
+                onClick={() => setEditRecipe(recipe)}
+              >
                 {" "}
                 <BiEdit className="cursor-pointer text-2xl text-green-900 transition-all hover:text-green-700" />
               </Link>

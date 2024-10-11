@@ -3,7 +3,7 @@
 import { tags } from "@/constants";
 import Image from "next/image";
 import { Link, Element } from "react-scroll";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BsClockHistory } from "react-icons/bs";
 import { GiRiceCooker } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
@@ -14,6 +14,7 @@ import { GiConfirmed } from "react-icons/gi";
 import { postRecipe } from "@/lib/user.actions";
 import toast from "react-hot-toast";
 import UploadImage from "./cloudinary/UploadImage";
+import { useGlobalContext } from "./authContext";
 
 // const ingredientsTest = [
 //   "ketchup",
@@ -39,7 +40,13 @@ import UploadImage from "./cloudinary/UploadImage";
 // const description =
 //   "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex, placeat reiciendis magni ut distinctio quo dolore quia sit maiores atque molestiae provident accusamus quis rem facilis, accusantium earum eligendi quam autem molestias? A, veniam! Labore quas alias nulla dolor? Non nemo est voluptatem blanditiis, quis impedit vel? Harum, quaerat hic.";
 
-const AddRecipeComponent = ({ userID }: { userID: string }) => {
+const AddRecipeComponent = ({
+  edycja,
+  userID,
+}: {
+  edycja: string;
+  userID: string;
+}) => {
   const [newTitle, setNewTitle] = useState("");
   const [newShortInfo, setNewShortInfo] = useState("");
   const [newCategory, setNewCategory] = useState<string[]>([]);
@@ -47,15 +54,30 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
   const [newCookTime, setNewCookTime] = useState(0);
   const [newPortion, setNewPortion] = useState(0);
   const [newIngredients, setNewIngredients] = useState<string[]>([]);
-  const [editingIngredient, setEditingIngredient] = useState<number | null>(
-    null
-  );
+  const [editingIngredient, setEditingIngredient] = useState<number>(-1);
   const [newIngredient, setNewIgredient] = useState("");
   const [newSteps, setNewSteps] = useState<string[]>([]);
-  const [editingStep, setEditingStep] = useState<number | null>(null);
+  const [editingStep, setEditingStep] = useState<number>(-1);
   const [newStep, setNewStep] = useState("");
   const [newDescription, setNewDescription] = useState<string>("");
   const [newImage, setNewImage] = useState<string>("");
+
+  const { editRecipe, setEditRecipe } = useGlobalContext();
+
+  useEffect(() => {
+    if (edycja) {
+      setNewImage(editRecipe.image);
+      setNewTitle(editRecipe.title);
+      setNewShortInfo(editRecipe.shortInfo);
+      setNewCategory(editRecipe.category);
+      setNewPrepTime(editRecipe.prepTime);
+      setNewCookTime(editRecipe.cookTime);
+      setNewPortion(editRecipe.portion);
+      setNewIngredients(editRecipe.ingredients);
+      setNewSteps(editRecipe.steps);
+      setNewDescription(editRecipe.description);
+    }
+  }, []);
 
   const handleNewCategory = (tag: string) => {
     if (newCategory.includes(tag)) {
@@ -81,14 +103,14 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
     updatedItems[index] = newIngredient;
     setNewIngredients(updatedItems);
     setNewIgredient("");
-    setEditingIngredient(null);
+    setEditingIngredient(-1);
   };
   const handleEditStep = (index: number) => {
     const updatedItems = [...newSteps];
     updatedItems[index] = newStep;
     setNewSteps(updatedItems);
     setNewStep("");
-    setEditingStep(null);
+    setEditingStep(-1);
   };
 
   const handleDeleteIngedient = (index: number) => {
@@ -111,17 +133,19 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
     setNewCookTime(0);
     setNewPortion(0);
     setNewIngredients([]);
-    setEditingIngredient(null);
+    setEditingIngredient(-1);
     setNewIgredient("");
     setNewSteps([]);
-    setEditingStep(null);
+    setEditingStep(-1);
     setNewStep("");
     setNewDescription("");
+    setEditRecipe(null);
   };
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    let editing = edycja ? true : false;
+    let recipeID = edycja;
     if (
       userID !== "" &&
       newImage !== "" &&
@@ -136,6 +160,8 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
       // newDescription !== ""
     ) {
       await postRecipe(
+        editing,
+        recipeID,
         userID,
         newImage,
         newTitle,
@@ -360,7 +386,7 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
                   </li>
                 );
               })}
-            {editingIngredient ? (
+            {editingIngredient >= 0 ? (
               <Element name="editIgredient">
                 <h3 className="text-center w-full uppercase text-xl mt-8 font-semibold">
                   Edycja:
@@ -444,7 +470,7 @@ const AddRecipeComponent = ({ userID }: { userID: string }) => {
                   </div>
                 );
               })}
-            {editingStep ? (
+            {editingStep >= 0 ? (
               <Element name="editIgredient">
                 <h3 className="text-center w-full uppercase text-xl mt-8 font-semibold">
                   Edycja:

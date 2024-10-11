@@ -188,8 +188,8 @@ const Navbar = () => {
                 href="/profil"
                 className={`ml-12  flex items-center text-md capitalize transition  hover:text-red-900 
                 ${
-                  pathname === "profil" &&
-                  "text-red-900 p-2 bg-zinc-100 rounded-md"
+                  pathname === "/profil" &&
+                  "text-red-900 pr-2 py-1 bg-zinc-100 rounded-e-lg rounded-s-2xl "
                 }
               `}
               >

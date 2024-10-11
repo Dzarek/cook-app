@@ -217,8 +217,22 @@ export const changePassword = async () => {
       // ..
     });
 };
+export const changePasswordWhenLogin = async (email: string) => {
+  await sendPasswordResetEmail(getUser, email)
+    .then(() => {
+      // Password reset email sent!
+      // ..
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+};
 
 export const postRecipe = async (
+  editing: boolean,
+  recipeID: string,
   userID: string,
   image: string,
   newTitle: string,
@@ -231,44 +245,83 @@ export const postRecipe = async (
   newSteps: string[],
   newDescription: string
 ) => {
-  const setDocRecipeCollectionRef = doc(
-    collection(db, `usersList/${userID}/recipes`)
-  );
-  await setDoc(setDocRecipeCollectionRef, {
-    createdTime: new Date().getTime(),
-    image,
-    title: newTitle,
-    shortInfo: newShortInfo,
-    category: newCategory,
-    prepTime: newPrepTime,
-    cookTime: newCookTime,
-    portion: newPortion,
-    ingredients: newIngredients,
-    steps: newSteps,
-    description: newDescription,
-    likes: 0,
-  })
-    .then(() => {
-      toast("Przepis został dodany!", {
-        icon: "✔",
-        style: {
-          borderRadius: "10px",
-          background: "#052814",
-          color: "#fff",
-        },
+  if (editing) {
+    const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
+    const updatedRecipe = {
+      image,
+      title: newTitle,
+      shortInfo: newShortInfo,
+      category: newCategory,
+      prepTime: newPrepTime,
+      cookTime: newCookTime,
+      portion: newPortion,
+      ingredients: newIngredients,
+      steps: newSteps,
+      description: newDescription,
+    };
+    await updateDoc(recipeDoc, updatedRecipe)
+      .then(() => {
+        toast("Edycja zakończona sukcesem!", {
+          icon: "✔",
+          style: {
+            borderRadius: "10px",
+            background: "#052814",
+            color: "#fff",
+          },
+        });
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+        toast("Coś poszło nie tak!", {
+          icon: "✖",
+          style: {
+            borderRadius: "10px",
+            background: "#280505",
+            color: "#fff",
+          },
+        });
       });
+    window.location.href = "/profil";
+  } else {
+    const setDocRecipeCollectionRef = doc(
+      collection(db, `usersList/${userID}/recipes`)
+    );
+    await setDoc(setDocRecipeCollectionRef, {
+      createdTime: new Date().getTime(),
+      image,
+      title: newTitle,
+      shortInfo: newShortInfo,
+      category: newCategory,
+      prepTime: newPrepTime,
+      cookTime: newCookTime,
+      portion: newPortion,
+      ingredients: newIngredients,
+      steps: newSteps,
+      description: newDescription,
+      likes: 0,
     })
-    .catch((error) => {
-      console.error("Error writing document: ", error);
-      toast("Coś poszło nie tak!", {
-        icon: "✖",
-        style: {
-          borderRadius: "10px",
-          background: "#280505",
-          color: "#fff",
-        },
+      .then(() => {
+        toast("Przepis został dodany!", {
+          icon: "✔",
+          style: {
+            borderRadius: "10px",
+            background: "#052814",
+            color: "#fff",
+          },
+        });
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+        toast("Coś poszło nie tak!", {
+          icon: "✖",
+          style: {
+            borderRadius: "10px",
+            background: "#280505",
+            color: "#fff",
+          },
+        });
       });
-    });
+  }
 };
 
 export const deleteRecipe = async (userID: string, id: string) => {

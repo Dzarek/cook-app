@@ -25,6 +25,9 @@ const Profil = async () => {
   // const currentUser = session.user;
   const currentUser = await getOneUser(session.uid);
   const userRecipes = await getRecipes(session.uid);
+  const sortedRecipes = userRecipes?.sort(
+    (a, b) => b.createdTime - a.createdTime
+  );
 
   // console.log(currentUser);
   // console.log(session.user);
@@ -39,11 +42,11 @@ const Profil = async () => {
         </h1>
         <GiChefToque className="text-5xl text-red-900 ml-5 recipeRotate2" />
       </header>
-      {currentUser && userRecipes && (
+      {currentUser && sortedRecipes && (
         <ProfilComponent
           userID={userID}
           currentUser={currentUser}
-          userRecipes={userRecipes}
+          userRecipes={sortedRecipes}
         />
       )}
     </div>
