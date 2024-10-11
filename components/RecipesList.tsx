@@ -1,11 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-// import slugify from "slugify";
 import { FaHeart } from "react-icons/fa";
 
 const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
   return (
-    <div className="mx-auto my-[5vh] flex w-full items-center justify-center flex-wrap">
+    <div className="mx-auto my-[5vh] flex flex-col xl:flex-row w-full items-center justify-center flex-wrap">
       {recipes.map((recipe) => {
         const {
           id,
@@ -15,10 +14,8 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
           cookTime,
           author,
           category,
-          // slug,
           likes,
         } = recipe;
-        // const slug = slugify(title, { lower: true });
         return (
           <Link
             href={`/przepisy/${id}`}
@@ -31,28 +28,41 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
               src={image}
               width={500}
               height={500}
-              className="w-full h-3/5 object-cover recipe-img"
+              className="w-full h-2/4 2xl:h-3/5 object-cover recipe-img"
               alt={title}
             />
-            <section className="h-2/6 flex flex-col items-center justify-center p-2">
-              <h5 className="text-base text-center font-bold mb-4 w-full uppercase">
+            <section className="h-1/2 2xl:h-2/6 flex flex-col items-center justify-center p-2">
+              <h5 className="text-base text-center font-bold mb-2 2xl:mb-4 w-full uppercase">
                 {title}
               </h5>
-              <p className="text-gray-600 text-sm mb-2">
-                Przygotowanie:{" "}
-                <strong className="text-red-800">{prepTime} min</strong> |
-                Gotowanie:{" "}
-                <strong className="text-red-800">{cookTime} min</strong>
+              <p className="text-gray-600 text-sm mb-2 text-center flex flex-col  2xl:inline">
+                <span>
+                  Przygotowanie:{" "}
+                  <strong className="text-red-800">{prepTime} min</strong>
+                </span>{" "}
+                <span className="hidden 2xl:inline">|</span>
+                <span>
+                  {" "}
+                  Gotowanie:{" "}
+                  <strong className="text-red-800">{cookTime} min</strong>
+                </span>
               </p>
-              <p className="text-gray-600 text-sm mb-2">
-                Kategorie:{" "}
-                <strong className="text-red-800 capitalize">
-                  {category.length > 1
-                    ? category[0] + ", inne..."
-                    : category[0]}
-                </strong>{" "}
-                | Autor:{" "}
-                <strong className="text-red-800">{author.authorName}</strong>
+              <p className="text-gray-600 text-sm mb-2 text-center flex flex-col  2xl:inline">
+                <span>
+                  {" "}
+                  Kategorie:{" "}
+                  <strong className="text-red-800 capitalize">
+                    {category.length > 1
+                      ? category[0] + ", inne..."
+                      : category[0]}
+                  </strong>{" "}
+                </span>
+
+                <span className="hidden 2xl:inline">|</span>
+                <span>
+                  Autor:{" "}
+                  <strong className="text-red-800">{author.authorName}</strong>
+                </span>
               </p>
               <p className="flex justify-center items-center">
                 <FaHeart className="mr-2 text-gray-500" />{" "}

@@ -40,8 +40,8 @@ export default async function Home() {
 
   return (
     <div className="main mx-auto w-screen">
-      <header className="relative mx-auto flex justify-center items-center w-full h-[65vh] mt-[12vh]">
-        <div className="w-4/6 h-full relative">
+      <header className="relative mx-auto flex justify-center items-center w-full  mt-[12vh] flex-col xl:flex-row xl:h-[65vh]">
+        <div className="w-full xl:w-4/6 h-full relative">
           <video
             src={welcomeVideo}
             autoPlay
@@ -53,7 +53,7 @@ export default async function Home() {
           ></video>
         </div>
 
-        <div className="tags w-2/6 h-full bg-zinc-900 text-white p-5 flex flex-col items-center justify-center">
+        <div className="tags w-full xl:w-2/6 h-full bg-zinc-900 text-white p-5 flex flex-col items-center justify-center">
           <h3 className="text-center mb-10 text-2xl font-bold uppercase font-headingFont">
             Kategorie:
           </h3>
@@ -105,7 +105,7 @@ export default async function Home() {
         <RecipesList recipes={lastFiveRecipes} />
         {authors && (
           <section className="my-[10vh] w-4/5 mx-auto">
-            <div className="bg-red-950 w-[35vw] h-[2px] mb-10 mx-auto"></div>
+            <div className="bg-red-950 w-[45vw] xl:w-[35vw] h-[2px] mb-10 mx-auto"></div>
             <h3 className="text-2xl font-bold text-center font-headingFont ">
               Członkowie:
             </h3>

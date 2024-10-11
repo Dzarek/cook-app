@@ -28,6 +28,8 @@ import Loading from "./Loading";
 import { useGlobalContext } from "./authContext";
 
 import { signOut } from "next-auth/react";
+import { CgMenuGridR } from "react-icons/cg";
+import { FaRegArrowAltCircleUp } from "react-icons/fa";
 
 const links = [
   {
@@ -72,6 +74,7 @@ const Navbar = () => {
     setModalName,
   } = useGlobalContext();
   const pathname = usePathname();
+  const [showMenu, setShowMenu] = useState(false);
   // const [isLogin, setIsLogin] = useState(false);
   // const [activeUser, setActiveUser] = useState<any>(null);
   // const [modalName, setModalName] = useState(false);
@@ -129,7 +132,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="bg-zinc-900 text-white w-screen h-[12vh] fixed top-0 left-0 z-10 flex items-center justify-between px-[8vw]">
+      <div className="bg-zinc-900 text-white w-screen h-[12vh] fixed top-0 left-0 z-10  items-center justify-between px-[8vw] hidden xl:flex">
         <div className="flex items-center">
           <Image
             src="/assets/images/logo.png"
@@ -212,6 +215,136 @@ const Navbar = () => {
               </button>
             </>
           )}
+        </nav>
+      </div>
+      <div className="bg-zinc-900 text-white w-screen h-[12vh] fixed top-0 left-0 z-10  items-center justify-between px-[5vw] flex xl:hidden">
+        <div className="flex items-center">
+          <Image
+            src="/assets/images/logo.png"
+            width={80}
+            height={80}
+            alt="logo"
+            className="h-4/6 w-10 mr-3"
+          />
+          <h1 className="text-3xl capitalize font-bold logoFont">
+            <span className="text-red-800">Stępki </span>Gotują
+          </h1>
+        </div>
+        {!showMenu && (
+          <button
+            onClick={() => setShowMenu(!showMenu)}
+            className="navHamburger"
+          >
+            <CgMenuGridR />
+          </button>
+        )}
+        <nav
+          className={
+            showMenu
+              ? "fixed h-[100dvh] w-screen top-0 left-0 p-4 flex flex-col justify-between items-center z-50 bg-zinc-900 duration-1000  transition-all"
+              : "fixed h-[100dvh] w-screen top-0 left-0 p-4 flex flex-col justify-between items-center z-50 bg-zinc-900 duration-1000  transition-all translate-y-[-115dvh]"
+          }
+        >
+          <div className="flex flex-col items-center justify-center mt-10">
+            <Image
+              src="/assets/images/logo.png"
+              width={80}
+              height={80}
+              alt="logo"
+              className="h-4/6 w-14 mb-3"
+            />
+            <h1 className="text-4xl capitalize font-bold logoFont">
+              <span className="text-red-800">Stępki </span>Gotują
+            </h1>
+          </div>
+          <div className="flex flex-wrap items-center justify-around">
+            {isLogin
+              ? links
+                  .filter((link) => link.href !== "/logowanie")
+                  .map((link) => {
+                    return (
+                      <Link
+                        href={link.href}
+                        key={link.id}
+                        className={`w-1/2 h-[20vh] flex flex-col items-center justify-center font-semibold text-red-800 text-md uppercase transition  hover:text-red-900 
+                ${
+                  pathname === link.href &&
+                  "text-zinc-800 p-2 bg-zinc-100 rounded-md font-bold"
+                }
+              `}
+                      >
+                        <span
+                          className={`mb-3 text-5xl  ${
+                            pathname === link.href
+                              ? "text-red-900"
+                              : "text-white"
+                          }`}
+                        >
+                          {link.icon}
+                        </span>{" "}
+                        {link.label}
+                      </Link>
+                    );
+                  })
+              : links
+                  .filter((link) => link.href !== "/dodaj")
+                  .map((link) => {
+                    return (
+                      <Link
+                        href={link.href}
+                        key={link.id}
+                        className={`ml-12 flex items-center text-md capitalize transition  hover:text-red-900 
+              ${
+                pathname === link.href &&
+                "text-red-900 p-2 bg-zinc-100 rounded-md"
+              }
+            `}
+                      >
+                        <span className="mr-2 text-xl">{link.icon}</span>{" "}
+                        {link.label}
+                      </Link>
+                    );
+                  })}
+            {isLogin && (
+              <>
+                <Link
+                  href="/profil"
+                  className={`w-1/2 h-[20vh] flex flex-col items-center justify-center font-semibold text-red-800 text-md uppercase transition  hover:text-red-900 
+                    ${
+                      pathname === "/profil" &&
+                      "text-zinc-800 p-2 bg-zinc-100 rounded-md font-bold"
+                    }
+                  `}
+                >
+                  <span className="mb-3 ">
+                    <Image
+                      src={avatar}
+                      width={40}
+                      height={40}
+                      alt="avatar"
+                      className="rounded-full h-[45px] w-[45px]"
+                    />
+                  </span>{" "}
+                  {name}
+                </Link>
+              </>
+            )}
+          </div>
+          <div className="flex items-center justify-between w-full">
+            <button
+              onClick={handleLogout}
+              className="ml-4 flex items-center justify-center  capitalize transition  hover:text-red-900"
+            >
+              <RiLogoutCircleRLine className="mr-2 text-3xl text-red-800" />{" "}
+              <p className="text-xl">Wyloguj</p>
+            </button>
+            <button
+              onClick={() => setShowMenu(!showMenu)}
+              className="navHamburger2 mr-2"
+            >
+              <FaRegArrowAltCircleUp />
+            </button>
+          </div>
         </nav>
       </div>
       {modalName && activeUser && (
