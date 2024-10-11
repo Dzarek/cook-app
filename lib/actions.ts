@@ -45,6 +45,7 @@ export const getRecipes = async (userID: string) => {
         author: {
           authorName: user!.userName,
           authorAvatar: user!.avatar,
+          authorID: userID,
         },
         title: recipeData.title,
         slug: recipeData.slug,
@@ -94,6 +95,7 @@ export const getAllRecipes = async () => {
             author: {
               authorName: el.userName,
               authorAvatar: el.avatar,
+              authorID: el.id,
             },
             title: recipeData.title,
             slug: recipeData.slug,

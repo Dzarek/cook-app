@@ -56,7 +56,7 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
               </p>
               <p className="flex justify-center items-center">
                 <FaHeart className="mr-2 text-gray-500" />{" "}
-                <strong className="text-red-800">{likes}</strong>
+                <strong className="text-red-800">{likes.length}</strong>
               </p>
             </section>
           </Link>

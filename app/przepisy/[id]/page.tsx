@@ -1,4 +1,3 @@
-// import { recipes } from "@/components/RecipesList";
 import Image from "next/image";
 import { BsClockHistory } from "react-icons/bs";
 import { GiRiceCooker } from "react-icons/gi";
@@ -19,6 +18,7 @@ const OneRecipePage = async ({
 
   if (oneRecipe) {
     const {
+      id,
       title,
       image,
       prepTime,
@@ -40,7 +40,7 @@ const OneRecipePage = async ({
             {title}
           </h1>
           <BiFork className="text-4xl text-red-900 ml-5 forkRotate" />
-          <LikeControl likes={likes} />
+          <LikeControl likes={likes} userID={author.authorID} recipeID={id} />
         </header>
         <main className="w-4/5 mx-auto flex justify-between items-start">
           <Image

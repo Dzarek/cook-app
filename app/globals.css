@@ -790,6 +790,22 @@ svg:not(.starRotate) + .starRotate {
     transform: scale(1.05);
   }
 }
+@keyframes scaleLikeBtn {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+@keyframes scaleLikeBtn2 {
+  0% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
 .editAddRecipeItem {
   animation: editAddRecipeItem 1s ease infinite alternate;
@@ -802,4 +818,15 @@ svg:not(.starRotate) + .starRotate {
   100% {
     background-color: #fef9c3;
   }
+}
+
+.likeBtn {
+  font-size: 3rem;
+  color: rgb(114, 0, 0);
+  animation: scaleLikeBtn2 1s 1 ease;
+}
+.dislikeBtn {
+  font-size: 3rem;
+  color: rgb(114, 0, 0);
+  animation: scaleLikeBtn 1s 1 ease;
 }

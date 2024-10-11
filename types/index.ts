@@ -4,6 +4,7 @@ type Recipe = {
   author: {
     authorName: string;
     authorAvatar: string;
+    authorID: string;
   };
   title: string;
   slug: string;
@@ -16,7 +17,7 @@ type Recipe = {
   ingredients: string[];
   steps: string[];
   description?: string;
-  likes: number;
+  likes: string[];
 };
 
 type RecipeTypeList = {
@@ -28,9 +29,10 @@ type RecipeTypeList = {
   author: {
     authorName: string;
     authorAvatar: string;
+    authorID: string;
   };
   category: string[];
-  likes: number;
+  likes: string[];
 };
 
 type User = {
