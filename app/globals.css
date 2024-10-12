@@ -390,7 +390,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 @media screen and (max-width: 800px) {
   .containerLogin section {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 }
 
@@ -415,6 +415,11 @@ html::-webkit-scrollbar-thumb:hover {
   margin-bottom: 3vh;
   letter-spacing: 2px;
   text-align: center;
+}
+@media screen and (max-width: 800px) {
+  .wrapperLogin h2 {
+    font-size: 1.8rem;
+  }
 }
 .wrapperLogin form {
   margin: 3vh auto 5vh;

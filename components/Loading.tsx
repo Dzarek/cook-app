@@ -3,15 +3,15 @@ import Image from "next/image";
 const Loading = () => {
   return (
     <div className="z-50 fixed top-0 left-0 w-screen h-screen text-white bg-zinc-950 flex flex-col items-center justify-center">
-      <div className="flex items-center mb-14 -mt-20">
+      <div className="flex flex-col xl:flex-row items-center mb-20 xl:mb-14 -mt-20">
         <Image
           src="/assets/images/logo.png"
           width={100}
           height={100}
           alt="logo"
-          className="mr-5"
+          className="mb-3 w-[80px] h-[80px] xl:mr-5 xl:mb-0 xl:w-[100px] xl:h-[100px]"
         />
-        <h1 className="text-5xl capitalize font-bold logoFont">
+        <h1 className="text-4xl xl:text-5xl capitalize font-bold logoFont">
           <span className="text-red-800">Stępki </span>Gotują
         </h1>
       </div>
@@ -54,41 +54,6 @@ const Loading = () => {
       <p className="mt-10 font-medium text-center text-lg w-[100vw]">
         Wczytywanie Przepisów...
       </p>
-
-      {/* <div className="flex items-center flex-col">
-        <Image
-          src="/assets/images/logo.png"
-          width={100}
-          height={100}
-          alt="logo"
-        />
-      </div>
-      <div id="page">
-        <div id="container">
-          <div id="ring" />
-          <div id="ring" />
-          <div id="ring" />
-          <div id="ring" />
-        </div>
-      </div> */}
-      {/* /* From Uiverse.io by Smit-Prajapati */}
-      {/* <div className="loader">
-        <div className="box">
-          <div className="logo">
-            <Image
-              src="/assets/images/logo.png"
-              width={80}
-              height={80}
-              alt="logo"
-              //   className="h-4/6 w-14"
-            />
-          </div>
-        </div>
-        <div className="box"></div>
-        <div className="box"></div>
-        <div className="box"></div>
-        <div className="box"></div>
-      </div> */}
     </div>
   );
 };

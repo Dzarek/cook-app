@@ -2,6 +2,7 @@
 import { useGlobalContext } from "./authContext";
 import { editLike } from "@/lib/user.actions";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const LikeControl = ({
@@ -17,16 +18,38 @@ const LikeControl = ({
   const [activeLikes, setActiveLikes] = useState(likes);
 
   const handleDislike = async () => {
-    let currentLikes = [...activeLikes];
-    currentLikes = currentLikes.filter((like) => like !== activeUser.uid);
-    setActiveLikes(currentLikes);
-    editLike(userID, recipeID, currentLikes);
+    if (userID === activeUser.uid) {
+      toast("Nie możesz zmienić liczby polubień własnego przepisu!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+        },
+      });
+    } else {
+      let currentLikes = [...activeLikes];
+      currentLikes = currentLikes.filter((like) => like !== activeUser.uid);
+      setActiveLikes(currentLikes);
+      editLike(userID, recipeID, currentLikes);
+    }
   };
   const handleLike = async () => {
-    let currentLikes = [...activeLikes];
-    currentLikes = [...currentLikes, activeUser.uid];
-    setActiveLikes(currentLikes);
-    editLike(userID, recipeID, currentLikes);
+    if (userID === activeUser.uid) {
+      toast("Nie możesz polubić swojego własnego przepisu!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+        },
+      });
+    } else {
+      let currentLikes = [...activeLikes];
+      currentLikes = [...currentLikes, activeUser.uid];
+      setActiveLikes(currentLikes);
+      editLike(userID, recipeID, currentLikes);
+    }
   };
 
   if (activeUser && activeLikes.includes(activeUser.uid)) {

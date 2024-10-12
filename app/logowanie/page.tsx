@@ -131,7 +131,7 @@ const LoginPage = () => {
             <h2 className="font-semibold">Rejestracja</h2>
             {newRegistrationSend ? (
               <>
-                <h4 className="errorInfo">
+                <h4 className="errorInfo text-center">
                   Prośba o dodanie konta do aplikacji STĘPKI GOTUJĄ została
                   przesłana do administratora. <br /> Niedługo otrzymasz
                   odpowiedź na podanego maila.
@@ -154,7 +154,7 @@ const LoginPage = () => {
                   dodać Cię do naszej społeczności.
                 </h4>
                 <section>
-                  <div className="flex flex-col items-center w-1/2 mb-10">
+                  <div className="flex flex-col items-center w-1/2 mt-10 xl:mt-0 xl:mb-10">
                     <Image
                       src="/assets/images/logo.png"
                       width={500}
@@ -211,13 +211,13 @@ const LoginPage = () => {
                 </>
               ) : (
                 <>
-                  <h4 className="errorInfo mb-5">
+                  <h4 className="errorInfo xl:mb-5">
                     Podaj adres email na który zostanie przesłany link do
                     resetowania hasła.
                   </h4>
 
                   <section className="mt-5">
-                    <div className="flex flex-col items-center w-1/2 mb-10">
+                    <div className="flex flex-col items-center w-1/2 mt-10 xl:mt-0 xl:mb-10">
                       <Image
                         src="/assets/images/logo.png"
                         width={500}
