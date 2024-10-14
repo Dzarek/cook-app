@@ -59,6 +59,8 @@ type ContextTypes = {
   setModalName: (modalName: boolean) => void;
   setAvatar: (avatar: string) => void;
   setLoading: (loading: boolean) => void;
+  file: any;
+  setFile: (file: any) => void;
 };
 
 type CloudinaryContextTypes = {

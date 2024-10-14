@@ -19,6 +19,8 @@ const defaultValues: ContextTypes = {
   setLoading: () => true,
   editRecipe: null,
   setEditRecipe: () => {},
+  file: null,
+  setFile: () => {},
 };
 
 const AppContext = createContext<ContextTypes>(defaultValues);
@@ -32,6 +34,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [avatar, setAvatar] = useState("/assets/images/avatars/avatar0.webp");
   const [modalName, setModalName] = useState(false);
   const [editRecipe, setEditRecipe] = useState<Recipe | null>(null);
+  const [file, setFile] = useState<any>(null);
 
   useEffect(() => {
     setLoading(true);
@@ -71,6 +74,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
         avatar,
         modalName,
         editRecipe,
+        file,
+        setFile,
         setEditRecipe,
         setIsLogin,
         setName,

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { MdOutlineAddCircle } from "react-icons/md";
 import { FaDownload, FaUpload } from "react-icons/fa";
 import ImportModal from "@/components/ImportModal";
-import { createNewUser, disableUser } from "@/lib/admin.actions";
+import { createNewUser, disableUser, exportData } from "@/lib/admin.actions";
 import { logout } from "@/lib/user.actions";
 import { signOut } from "next-auth/react";
 import { useGlobalContext } from "./authContext";
@@ -18,95 +18,6 @@ const AdminComponent = ({ users }: { users: User[] }) => {
   const [activeUsers, setActiveUsers] = useState(users);
 
   const { setIsLogin } = useGlobalContext();
-
-  // const exportData = () => {
-  //   if (isAdmin) {
-  //     const wb = XLSX.utils.book_new();
-  //     downloadData.map((item) => {
-  //       const { name, itemsArray } = item;
-  //       if (itemsArray.length > 0) {
-  //         const sortedTransfers = itemsArray.sort((a, b) => {
-  //           let tA = a.time; // hh:mm
-  //           let msA =
-  //             Number(tA.split(":")[0]) * 60 * 60 * 1000 +
-  //             Number(tA.split(":")[1]) * 60 * 1000;
-  //           const firstDate = new Date(a.date).getTime() + msA;
-  //           let tB = b.time; // hh:mm
-  //           let msB =
-  //             Number(tB.split(":")[0]) * 60 * 60 * 1000 +
-  //             Number(tB.split(":")[1]) * 60 * 1000;
-  //           const secondDate = new Date(b.date).getTime() + msB;
-  //           return firstDate - secondDate;
-  //         });
-
-  //         const newItemsArray = sortedTransfers.map((ob) => {
-  //           const objectOrder = {
-  //             date: null,
-  //             time: null,
-  //             nameOfGuest: null,
-  //             direction: null,
-  //             flight: null,
-  //             people: null,
-  //             phone: null,
-  //             price: null,
-  //             provision: null,
-  //             details: null,
-  //             status: null,
-  //             id: null,
-  //           };
-  //           return Object.assign(objectOrder, ob);
-  //         });
-  //         const sheet1 = XLSX.utils.book_append_sheet(
-  //           wb,
-  //           XLSX.utils.json_to_sheet(newItemsArray),
-  //           name
-  //         );
-  //       }
-  //     });
-  //     XLSX.writeFile(wb, "Transfery.xlsx");
-
-  //     // JSON
-  //     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-  //       JSON.stringify(downloadData)
-  //     )}`;
-  //     const link = document.createElement("a");
-  //     link.href = jsonString;
-  //     link.download = "TransferyBackUp.json";
-  //     link.click();
-  //   }
-  // };
-
-  // const uploadData = async () => {
-  //   file.map(async (el) => {
-  //     const userRef = doc(db, "usersList", el.id);
-  //     await setDoc(userRef, {
-  //       activeAccount: true,
-  //       userName: el.name,
-  //       money: el.money,
-  //     });
-  //     el.itemsArray.map(async (item) => {
-  //       const backupCollection = doc(
-  //         collection(db, `usersList/${el.id}/transfers`)
-  //       );
-
-  //       await setDoc(backupCollection, {
-  //         id: item.id,
-  //         status: item.status,
-  //         date: item.date,
-  //         time: item.time,
-  //         nameOfGuest: item.nameOfGuest,
-  //         direction: item.direction,
-  //         people: item.people,
-  //         details: item.details,
-  //         flight: item.flight,
-  //         phone: item.phone,
-  //         price: item.price,
-  //         provision: item.provision,
-  //       });
-  //     });
-  //   });
-  //   getAllUsers();
-  // };
 
   const handleDelete = (id: string) => {
     disableUser(id);
@@ -162,7 +73,7 @@ const AdminComponent = ({ users }: { users: User[] }) => {
               <p className="text-xl font-semibold">exportuj dane</p>
               <FaDownload
                 className="text-red-900 text-5xl mt-5 transition-all hover:text-red-700 cursor-pointer"
-                // onClick={exportData}
+                onClick={exportData}
               />
             </article>
             <article className="flex flex-col items-center justify-center mx-[10vw]">
