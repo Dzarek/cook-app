@@ -55,7 +55,10 @@ const ProfilComponent = ({ currentUser, userRecipes, userID }: ProfilTypes) => {
     }
   }, [nick, email, avatar]);
 
-  const totalLikes = userRecipes.reduce((sum, recipe) => sum + recipe.likes, 0);
+  const totalLikes = userRecipes.reduce(
+    (sum, recipe) => sum + recipe.likes.length,
+    0
+  );
 
   let level = 0;
   if (totalLikes > 24) {

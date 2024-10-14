@@ -316,7 +316,6 @@ html::-webkit-scrollbar-thumb:hover {
   text-align: center;
   margin-bottom: 2vh;
   font-weight: 500;
-  text-transform: capitalize;
   color: #000;
 }
 
