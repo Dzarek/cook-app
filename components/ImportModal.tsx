@@ -33,7 +33,7 @@ const ImportModal = ({ setOpenImportModal }: ImportModalProps) => {
   const handleSubmitImport = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (file) {
-      // deleteData(file);
+      deleteData(file);
       uploadData(file);
       setOpenImportModal(false);
     }

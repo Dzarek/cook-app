@@ -85,7 +85,7 @@ const getBackup = async () => {
       .filter((doc) => doc.id !== "0")
       .map((doc) => ({ id: doc.id, ...(doc.data() as User) }));
 
-    items = items.filter((el) => el.activeUser === true);
+    // items = items.filter((el) => el.activeUser === true);
     let backupArray: any[] = [];
     await Promise.all(
       items.map(async (el) => {
@@ -126,7 +126,10 @@ const getBackup = async () => {
         });
         backupArray.push({
           id: el.id,
-          name: el.userName,
+          activeUser: el.activeUser,
+          avatar: el.avatar,
+          email: el.email,
+          userName: el.userName,
           itemsArray,
         });
       })
@@ -229,17 +232,14 @@ export const deleteData = async (file: any) => {
 export const uploadData = async (file: any) => {
   file.map(async (el: any) => {
     const userRef = doc(db, "usersList", el.id);
-    // await setDoc(userRef, {
-    //   activeUser: el.activeUser,
-    //   avatar: el.avatar,
-    //   email: el.email,
-    //   userName: el.name,
-    // });
+    await setDoc(userRef, {
+      activeUser: el.activeUser,
+      avatar: el.avatar,
+      email: el.email,
+      userName: el.userName,
+    });
     el.itemsArray.map(async (item: Recipe) => {
-      // const backupCollection = doc(
-      //   collection(db, `usersList/${el.id}/recipesb`, item.id)
-      // );
-      const backupDocument = doc(db, `usersList/${el.id}/recipesb`, item.id);
+      const backupDocument = doc(db, `usersList/${el.id}/recipes`, item.id);
       await setDoc(backupDocument, {
         createdTime: item.createdTime,
         title: item.title,

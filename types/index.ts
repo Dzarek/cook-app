@@ -40,6 +40,7 @@ type User = {
   activeUser: boolean;
   avatar: string;
   id: string;
+  email: string;
 };
 
 type BackupData = {};
