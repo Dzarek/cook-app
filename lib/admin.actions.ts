@@ -105,7 +105,6 @@ const getBackup = async () => {
               authorID: el.id,
             },
             title: recipeData.title,
-            slug: recipeData.slug,
             image: recipeData.image,
             prepTime: recipeData.prepTime,
             cookTime: recipeData.cookTime,

@@ -7,7 +7,6 @@ type Recipe = {
     authorID: string;
   };
   title: string;
-  slug: string;
   image: string;
   prepTime: number;
   cookTime: number;

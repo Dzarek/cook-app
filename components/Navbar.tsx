@@ -7,6 +7,7 @@ import {
   RiLogoutCircleRLine,
 } from "react-icons/ri";
 import { GiCook } from "react-icons/gi";
+import { FaRankingStar } from "react-icons/fa6";
 
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -53,6 +54,12 @@ const links = [
   },
   {
     id: 5,
+    href: "/ranking",
+    label: "ranking",
+    icon: <FaRankingStar />,
+  },
+  {
+    id: 6,
     href: "/logowanie",
     label: "logowanie",
     icon: <GiCook />,
@@ -167,7 +174,9 @@ const Navbar = () => {
                   );
                 })
             : links
-                .filter((link) => link.href !== "/dodaj")
+                .filter(
+                  (link) => link.href !== "/dodaj" && link.href !== "/ranking"
+                )
                 .map((link) => {
                   return (
                     <Link
