@@ -883,3 +883,37 @@ svg:not(.starRotate) + .starRotate {
   color: rgb(114, 0, 0);
   animation: scaleLikeBtn 1s 1 ease;
 }
+
+.rankingList::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.rankingList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 30px;
+}
+
+/* Handle */
+.rankingList::-webkit-scrollbar-thumb {
+  background: #740b0b;
+  border-radius: 30px;
+}
+
+/* Handle on hover */
+.rankingList::-webkit-scrollbar-thumb:hover {
+  background: #3d0808;
+}
+
+.awardAnim {
+  animation: awardAnim 1s linear infinite alternate;
+}
+
+@keyframes awardAnim {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.02);
+  }
+}
