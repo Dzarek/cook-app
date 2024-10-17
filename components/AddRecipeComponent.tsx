@@ -15,6 +15,8 @@ import { postRecipe } from "@/lib/user.actions";
 import toast from "react-hot-toast";
 import UploadImage from "./cloudinary/UploadImage";
 import { useGlobalContext } from "./authContext";
+import VoiceIngredient from "./voice/VoiceIngredient";
+import VoiceLongText from "./voice/VoiceLongText";
 
 // const ingredientsTest = [
 //   "ketchup",
@@ -406,17 +408,25 @@ const AddRecipeComponent = ({
               </Element>
             ) : (
               <Element name="editIgredient">
-                <div className="flex items-center justify-between mt-8">
-                  <input
-                    type="text"
-                    placeholder="dodaj nowy składnik"
-                    value={newIngredient}
-                    onChange={(e) => setNewIgredient(e.target.value)}
-                    className="newRecipeInput flex-grow text-center "
-                  />
-                  <MdOutlineAddCircle
-                    className="ml-3 text-green-900 cursor-pointer text-2xl"
-                    onClick={handleAddIngredient}
+                <div>
+                  <div className="flex items-center justify-between mt-8">
+                    <input
+                      type="text"
+                      placeholder="dodaj nowy składnik"
+                      value={newIngredient}
+                      onChange={(e) => setNewIgredient(e.target.value)}
+                      className="newRecipeInput flex-grow text-center "
+                    />
+                    <MdOutlineAddCircle
+                      className="ml-3 text-green-900 cursor-pointer text-4xl"
+                      onClick={handleAddIngredient}
+                    />
+                  </div>
+
+                  <VoiceIngredient
+                    newIngredients={newIngredients}
+                    setNewIgredients={setNewIngredients}
+                    toastText="powiedz nazwę składnika"
                   />
                 </div>
               </Element>
@@ -490,17 +500,23 @@ const AddRecipeComponent = ({
               </Element>
             ) : (
               <Element name="editIgredient">
-                <div className="flex items-center justify-between mt-8">
-                  <input
-                    type="text"
-                    placeholder="dodaj nowy krok"
-                    value={newStep}
-                    onChange={(e) => setNewStep(e.target.value)}
-                    className="newRecipeInput flex-grow text-center "
-                  />
-                  <MdOutlineAddCircle
-                    className="ml-3 text-green-900 cursor-pointer text-2xl"
-                    onClick={handleAddStep}
+                <div>
+                  <div className="flex items-center justify-between mt-8">
+                    <input
+                      type="text"
+                      placeholder="dodaj nowy krok"
+                      value={newStep}
+                      onChange={(e) => setNewStep(e.target.value)}
+                      className="newRecipeInput flex-grow text-center "
+                    />
+                    <MdOutlineAddCircle
+                      className="ml-3 text-green-900 cursor-pointer text-4xl"
+                      onClick={handleAddStep}
+                    />
+                  </div>
+                  <VoiceLongText
+                    setNewText={setNewStep}
+                    toastText="powiedz nowy krok instrukcji"
                   />
                 </div>
               </Element>
