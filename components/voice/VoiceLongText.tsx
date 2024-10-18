@@ -9,11 +9,18 @@ import SpeechRecognition, {
 import toast from "react-hot-toast";
 
 type VoiceType = {
-  setNewText: (text: string) => void;
+  setNewText: (newText: string) => void;
+  newText: string;
   toastText: string;
+  setActiveVoice: (activeVoice: string) => void;
 };
 
-const VoiceLongText = ({ setNewText, toastText }: VoiceType) => {
+const VoiceLongText = ({
+  setNewText,
+  newText,
+  toastText,
+  setActiveVoice,
+}: VoiceType) => {
   const [voiceOn, setVoiceOn] = useState(true);
 
   const commands = [
@@ -30,6 +37,7 @@ const VoiceLongText = ({ setNewText, toastText }: VoiceType) => {
   });
 
   const handleVoice = () => {
+    setActiveVoice("stepsVoice");
     setVoiceOn(!voiceOn);
     let toastId = "";
     if (voiceOn) {
@@ -53,12 +61,13 @@ const VoiceLongText = ({ setNewText, toastText }: VoiceType) => {
         },
       });
       SpeechRecognition.stopListening();
+      setActiveVoice("");
     }
   };
 
   const addItemVoice = (item: string) => {
     if (item) {
-      setNewText(item);
+      setNewText(newText + " " + item);
     }
   };
 

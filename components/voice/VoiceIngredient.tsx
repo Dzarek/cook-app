@@ -12,12 +12,14 @@ type VoiceType = {
   newIngredients: string[];
   setNewIgredients: (newIgredients: string[]) => void;
   toastText: string;
+  setActiveVoice: (activeVoice: string) => void;
 };
 
 const VoiceIngredient = ({
   newIngredients,
   setNewIgredients,
   toastText,
+  setActiveVoice,
 }: VoiceType) => {
   const [voiceOn, setVoiceOn] = useState(true);
 
@@ -35,6 +37,7 @@ const VoiceIngredient = ({
   });
 
   const handleVoice = () => {
+    setActiveVoice("ingredientVoice");
     setVoiceOn(!voiceOn);
     let toastId = "";
     if (voiceOn) {
@@ -58,6 +61,7 @@ const VoiceIngredient = ({
         },
       });
       SpeechRecognition.stopListening();
+      setActiveVoice("");
     }
   };
 

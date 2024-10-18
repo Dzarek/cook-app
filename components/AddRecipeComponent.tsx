@@ -18,30 +18,6 @@ import { useGlobalContext } from "./authContext";
 import VoiceIngredient from "./voice/VoiceIngredient";
 import VoiceLongText from "./voice/VoiceLongText";
 
-// const ingredientsTest = [
-//   "ketchup",
-//   "3 szklanki mąki",
-//   "1 szklanka mleka",
-//   "50g drożdzy",
-//   "1 łyżeczka soli",
-//   "1 łyżeczka cukru",
-//   "4 łyżki oleju",
-//   "grzyby",
-//   "szynka drobiowa lub salami lub jakakolwiek inna byle było dobre",
-//   "ser żółty",
-// ];
-
-// const steps = [
-//   "1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-//   "2Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-//   "3Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-//   "4Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-//   "5Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, hic.",
-// ];
-
-// const description =
-//   "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex, placeat reiciendis magni ut distinctio quo dolore quia sit maiores atque molestiae provident accusamus quis rem facilis, accusantium earum eligendi quam autem molestias? A, veniam! Labore quas alias nulla dolor? Non nemo est voluptatem blanditiis, quis impedit vel? Harum, quaerat hic.";
-
 const AddRecipeComponent = ({
   edycja,
   userID,
@@ -63,6 +39,7 @@ const AddRecipeComponent = ({
   const [newStep, setNewStep] = useState("");
   const [newDescription, setNewDescription] = useState<string>("");
   const [newImage, setNewImage] = useState<string>("");
+  const [activeVoice, setActiveVoice] = useState("");
 
   const { editRecipe, setEditRecipe } = useGlobalContext();
 
@@ -423,11 +400,14 @@ const AddRecipeComponent = ({
                     />
                   </div>
 
-                  <VoiceIngredient
-                    newIngredients={newIngredients}
-                    setNewIgredients={setNewIngredients}
-                    toastText="powiedz nazwę składnika"
-                  />
+                  {activeVoice !== "stepsVoice" && (
+                    <VoiceIngredient
+                      newIngredients={newIngredients}
+                      setNewIgredients={setNewIngredients}
+                      toastText="powiedz nazwę składnika"
+                      setActiveVoice={setActiveVoice}
+                    />
+                  )}
                 </div>
               </Element>
             )}
@@ -514,10 +494,14 @@ const AddRecipeComponent = ({
                       onClick={handleAddStep}
                     />
                   </div>
-                  <VoiceLongText
-                    setNewText={setNewStep}
-                    toastText="powiedz nowy krok instrukcji"
-                  />
+                  {activeVoice !== "ingredientVoice" && (
+                    <VoiceLongText
+                      setNewText={setNewStep}
+                      newText={newStep}
+                      toastText="powiedz nowy krok instrukcji"
+                      setActiveVoice={setActiveVoice}
+                    />
+                  )}
                 </div>
               </Element>
             )}
