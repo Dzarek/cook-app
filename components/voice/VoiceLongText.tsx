@@ -37,7 +37,15 @@ const VoiceLongText = ({
   });
 
   const handleVoice = () => {
-    setActiveVoice("stepsVoice");
+    if (toastText === "nagrywanie...") {
+      setActiveVoice("descriptionVoice");
+    } else if (toastText === "nagrywanie krótkiego opisu...") {
+      setActiveVoice("shortInfoVoice");
+    } else if (toastText === "nagrywanie tytułu...") {
+      setActiveVoice("titleVoice");
+    } else {
+      setActiveVoice("stepsVoice");
+    }
     setVoiceOn(!voiceOn);
     let toastId = "";
     if (voiceOn) {

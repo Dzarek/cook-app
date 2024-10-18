@@ -3,7 +3,7 @@
 import { tags } from "@/constants";
 import Image from "next/image";
 import { Link, Element } from "react-scroll";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BsClockHistory } from "react-icons/bs";
 import { GiRiceCooker } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
@@ -42,6 +42,8 @@ const AddRecipeComponent = ({
   const [activeVoice, setActiveVoice] = useState("");
 
   const { editRecipe, setEditRecipe } = useGlobalContext();
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (edycja) {
@@ -195,9 +197,9 @@ const AddRecipeComponent = ({
           </div>
         )}
         <div className="w-[55%] flex flex-col">
-          <div className="w-full flex justify-center items-center">
+          <div className="w-full flex justify-center items-center ">
             <label
-              className="font-semibold uppercase text-xl mr-3"
+              className="font-semibold uppercase text-xl mr-3 "
               htmlFor="title"
             >
               Tytuł:
@@ -212,7 +214,18 @@ const AddRecipeComponent = ({
               className="newRecipeInput font-bold text-center"
             />
           </div>
-          <div className="w-full flex justify-center items-center">
+          {activeVoice !== "ingredientVoice" &&
+            activeVoice !== "stepsVoice" &&
+            activeVoice !== "descriptionVoice" &&
+            activeVoice !== "shortInfoVoice" && (
+              <VoiceLongText
+                setNewText={setNewTitle}
+                newText={newTitle}
+                toastText="nagrywanie tytułu..."
+                setActiveVoice={setActiveVoice}
+              />
+            )}
+          <div className="w-full flex justify-center items-center ">
             <label
               className="font-semibold uppercase text-xl mr-3"
               htmlFor="shortInfo"
@@ -228,33 +241,44 @@ const AddRecipeComponent = ({
               className="newRecipeInput mt-10 min-h-[20vh]"
             ></textarea>
           </div>
-          <div className="w-full flex justify-center items-center mt-10">
-            <label
-              className="font-semibold uppercase text-xl mr-3"
-              htmlFor="category"
-            >
-              Kategorie:
-            </label>
-            <ul className="flex-grow flex items-center justify-center flex-wrap">
-              {tags.map((tag, index) => {
-                return (
-                  <li
-                    onClick={() => handleNewCategory(tag)}
-                    key={index}
-                    className={
-                      newCategory.includes(tag)
-                        ? "bg-red-900 text-white transition-all border-red-900 border-2 p-2 m-2 rounded-md cursor-pointer"
-                        : "border-red-900 bg-[#fbf3f3] border-2 p-2 m-2 rounded-md cursor-pointer hover:bg-red-900 hover:text-white transition-all"
-                    }
-                  >
-                    {tag}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          {activeVoice !== "ingredientVoice" &&
+            activeVoice !== "stepsVoice" &&
+            activeVoice !== "descriptionVoice" &&
+            activeVoice !== "titleVoice" && (
+              <VoiceLongText
+                setNewText={setNewShortInfo}
+                newText={newShortInfo}
+                toastText="nagrywanie krótkiego opisu..."
+                setActiveVoice={setActiveVoice}
+              />
+            )}
         </div>
       </section>
+      <div className="w-full flex flex-col justify-center items-center mt-16 bg-red-50 p-4 rounded-md">
+        <label
+          className="font-semibold uppercase text-xl mb-5"
+          htmlFor="category"
+        >
+          Kategorie:
+        </label>
+        <ul className="flex-grow flex items-center justify-center flex-wrap">
+          {tags.map((tag, index) => {
+            return (
+              <li
+                onClick={() => handleNewCategory(tag)}
+                key={index}
+                className={
+                  newCategory.includes(tag)
+                    ? "bg-red-900 text-white transition-all border-red-900 border-2 p-2 m-4 rounded-md cursor-pointer"
+                    : "border-red-900 bg-[#ffffff] border-2 p-2 m-4 rounded-md cursor-pointer hover:bg-red-900 hover:text-white transition-all"
+                }
+              >
+                {tag}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
       <section className="w-2/3 mx-auto flex items-center justify-between my-[8vh]">
         <div className="flex flex-col items-center justify-center">
           <label
@@ -375,7 +399,7 @@ const AddRecipeComponent = ({
                     type="text"
                     value={newIngredient}
                     onChange={(e) => setNewIgredient(e.target.value)}
-                    className="newRecipeInput flex-grow text-center "
+                    className="newRecipeInput flex-grow text-left "
                   />
                   <GiConfirmed
                     className="ml-3 text-green-900 cursor-pointer text-2xl"
@@ -392,7 +416,7 @@ const AddRecipeComponent = ({
                       placeholder="dodaj nowy składnik"
                       value={newIngredient}
                       onChange={(e) => setNewIgredient(e.target.value)}
-                      className="newRecipeInput flex-grow text-center "
+                      className="newRecipeInput flex-grow text-left "
                     />
                     <MdOutlineAddCircle
                       className="ml-3 text-green-900 cursor-pointer text-4xl"
@@ -400,14 +424,17 @@ const AddRecipeComponent = ({
                     />
                   </div>
 
-                  {activeVoice !== "stepsVoice" && (
-                    <VoiceIngredient
-                      newIngredients={newIngredients}
-                      setNewIgredients={setNewIngredients}
-                      toastText="powiedz nazwę składnika"
-                      setActiveVoice={setActiveVoice}
-                    />
-                  )}
+                  {activeVoice !== "stepsVoice" &&
+                    activeVoice !== "descriptionVoice" &&
+                    activeVoice !== "shortInfoVoice" &&
+                    activeVoice !== "titleVoice" && (
+                      <VoiceIngredient
+                        newIngredients={newIngredients}
+                        setNewIgredients={setNewIngredients}
+                        toastText="powiedz nazwę składnika"
+                        setActiveVoice={setActiveVoice}
+                      />
+                    )}
                 </div>
               </Element>
             )}
@@ -466,11 +493,12 @@ const AddRecipeComponent = ({
                   Edycja:
                 </h3>
                 <div className="flex items-center justify-between mt-4">
-                  <input
-                    type="text"
+                  <textarea
+                    ref={textareaRef}
+                    placeholder="dodaj nowy krok"
                     value={newStep}
                     onChange={(e) => setNewStep(e.target.value)}
-                    className="newRecipeInput flex-grow text-center "
+                    className="newRecipeInput pl-10 flex-grow text-left min-h-[18vh]"
                   />
                   <GiConfirmed
                     className="ml-3 text-green-900 cursor-pointer text-2xl"
@@ -482,26 +510,36 @@ const AddRecipeComponent = ({
               <Element name="editIgredient">
                 <div>
                   <div className="flex items-center justify-between mt-8">
-                    <input
+                    {/* <input
                       type="text"
                       placeholder="dodaj nowy krok"
                       value={newStep}
                       onChange={(e) => setNewStep(e.target.value)}
                       className="newRecipeInput flex-grow text-center "
+                    /> */}
+                    <textarea
+                      ref={textareaRef}
+                      placeholder="dodaj nowy krok"
+                      value={newStep}
+                      onChange={(e) => setNewStep(e.target.value)}
+                      className="newRecipeInput pl-10 flex-grow text-left min-h-[18vh]"
                     />
                     <MdOutlineAddCircle
                       className="ml-3 text-green-900 cursor-pointer text-4xl"
                       onClick={handleAddStep}
                     />
                   </div>
-                  {activeVoice !== "ingredientVoice" && (
-                    <VoiceLongText
-                      setNewText={setNewStep}
-                      newText={newStep}
-                      toastText="powiedz nowy krok instrukcji"
-                      setActiveVoice={setActiveVoice}
-                    />
-                  )}
+                  {activeVoice !== "ingredientVoice" &&
+                    activeVoice !== "descriptionVoice" &&
+                    activeVoice !== "shortInfoVoice" &&
+                    activeVoice !== "titleVoice" && (
+                      <VoiceLongText
+                        setNewText={setNewStep}
+                        newText={newStep}
+                        toastText="powiedz nowy krok instrukcji"
+                        setActiveVoice={setActiveVoice}
+                      />
+                    )}
                 </div>
               </Element>
             )}
@@ -515,14 +553,26 @@ const AddRecipeComponent = ({
         <textarea
           name="newDesription"
           id="newDesription"
+          placeholder="Opis przepisu..."
           value={newDescription}
           onChange={(e) => setNewDescription(e.target.value)}
           className="newRecipeInput w-full min-h-[20vh]"
         ></textarea>
+        {activeVoice !== "ingredientVoice" &&
+          activeVoice !== "stepsVoice" &&
+          activeVoice !== "shortInfoVoice" &&
+          activeVoice !== "titleVoice" && (
+            <VoiceLongText
+              setNewText={setNewDescription}
+              newText={newDescription}
+              toastText="nagrywanie..."
+              setActiveVoice={setActiveVoice}
+            />
+          )}
       </div>
       <button
         type="submit"
-        className="mt-10 border-2 border-red-900 bg-[#fbf3f3] text-red-900 hover:bg-red-900 hover:text-white p-4 text-xl font-bodyFont  rounded-md font-semibold w-1/7 uppercase mx-auto transition-all"
+        className="mt-2 border-2 border-red-900 bg-[#fbf3f3] text-red-900 hover:bg-red-900 hover:text-white p-4 text-xl font-bodyFont  rounded-md font-semibold w-1/7 uppercase mx-auto transition-all"
       >
         Zapisz
       </button>
