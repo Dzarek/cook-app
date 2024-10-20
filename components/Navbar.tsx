@@ -3,27 +3,17 @@ import {
   RiFileList3Fill,
   RiHome5Fill,
   RiStickyNoteAddFill,
-  RiAdminFill,
   RiLogoutCircleRLine,
 } from "react-icons/ri";
 import { GiCook } from "react-icons/gi";
 import { FaRankingStar } from "react-icons/fa6";
 
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import {
-  User,
-  getAuth,
-  onAuthStateChanged,
-  // signOut,
-  updateProfile,
-} from "firebase/auth";
-import { db, auth } from "@/firebase/clientApp";
-import { setDoc, doc } from "firebase/firestore";
-import { logout, updateName } from "@/lib/user.actions";
+import { logout } from "@/lib/user.actions";
 import ModalName from "./ModalName";
 import Loading from "./Loading";
 import { useGlobalContext } from "./authContext";
@@ -82,42 +72,6 @@ const Navbar = () => {
   } = useGlobalContext();
   const pathname = usePathname();
   const [showMenu, setShowMenu] = useState(false);
-  // const [isLogin, setIsLogin] = useState(false);
-  // const [activeUser, setActiveUser] = useState<any>(null);
-  // const [modalName, setModalName] = useState(false);
-  // const [name, setName] = useState<string>("");
-  // const [email, setEmail] = useState("");
-  // const [avatar, setAvatar] = useState("/assets/images/avatars/avatar0.webp");
-  // const [loading, setLoading] = useState(true);
-  // const getUser = getAuth();
-  // console.log(getUser);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const unsubscribe = onAuthStateChanged(auth, async (user) => {
-  //     if (user) {
-  //       setActiveUser(user);
-  //       setIsLogin(true);
-  //       if (user.displayName) {
-  //         setName(user.displayName);
-  //       }
-  //       if (user.email) {
-  //         setEmail(user.email);
-  //       }
-  //       if (user.photoURL) {
-  //         setAvatar(user.photoURL);
-  //       }
-  //       if (user.displayName === null) {
-  //         setModalName(true);
-  //       }
-  //     } else {
-  //       setActiveUser(null);
-  //     }
-  //     setLoading(false);
-  //   });
-
-  //   return unsubscribe;
-  // }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -285,15 +239,15 @@ const Navbar = () => {
                           href={link.href}
                           key={link.id}
                           onClick={() => setShowMenu(false)}
-                          className={`w-1/2 h-[20vh] flex flex-col items-center justify-center font-bold text-red-700 text-md uppercase transition  hover:text-red-900 
+                          className={`w-[45%] rounded-md  bg-[rgba(0,0,0,0.3)] my-2 h-[14vh] text-center p-2 flex flex-col items-center justify-center font-bold text-red-700 text-sm uppercase transition  hover:text-red-900 
                 ${
                   pathname === link.href &&
-                  "text-zinc-800 p-2 bg-zinc-100 rounded-md font-bold"
+                  "text-zinc-800  bg-[rgba(255,255,255,1)] font-bold"
                 }
               `}
                         >
                           <span
-                            className={`mb-3 text-5xl  ${
+                            className={`mb-3 text-4xl  ${
                               pathname === link.href
                                 ? "text-red-900"
                                 : "text-white"
@@ -306,22 +260,25 @@ const Navbar = () => {
                       );
                     })
                 : links
-                    .filter((link) => link.href !== "/dodaj")
+                    .filter(
+                      (link) =>
+                        link.href !== "/dodaj" && link.href !== "/ranking"
+                    )
                     .map((link) => {
                       return (
                         <Link
                           href={link.href}
                           key={link.id}
                           onClick={() => setShowMenu(false)}
-                          className={`w-1/2 h-[20vh] flex flex-col items-center justify-center font-bold text-red-700 text-md uppercase transition  hover:text-red-900 mb-5
+                          className={`w-[45%] bg-[rgba(0,0,0,0.3)] p-2 rounded-md h-[20vh] flex flex-col items-center justify-center font-bold text-red-700 text-md uppercase transition  hover:text-red-900 mb-5
                             ${
                               pathname === link.href &&
-                              "text-zinc-800 p-2 bg-zinc-100 rounded-md font-bold"
+                              "text-zinc-800  bg-[rgba(255,255,255,1)] font-bold"
                             }
                           `}
                         >
                           <span
-                            className={`mb-3 text-5xl  ${
+                            className={`mb-3 text-4xl  ${
                               pathname === link.href
                                 ? "text-red-900"
                                 : "text-white"
@@ -338,10 +295,10 @@ const Navbar = () => {
                   <Link
                     href="/profil"
                     onClick={() => setShowMenu(false)}
-                    className={`w-1/2 h-[20vh] flex flex-col items-center justify-center font-bold text-red-700 text-md uppercase transition  hover:text-red-900 
+                    className={`w-[45%] h-[14vh] bg-[rgba(0,0,0,0.3)] p-2 mt-5 rounded-md flex flex-col items-center justify-center font-bold text-red-700 text-sm uppercase transition  hover:text-red-900 
                     ${
                       pathname === "/profil" &&
-                      "text-zinc-800 p-2 bg-zinc-100 rounded-md font-bold"
+                      "text-zinc-800  bg-[rgba(255,255,255,1)] font-bold"
                     }
                   `}
                   >
@@ -351,7 +308,7 @@ const Navbar = () => {
                         width={40}
                         height={40}
                         alt="avatar"
-                        className="rounded-full border-2  h-[45px] w-[45px]"
+                        className="rounded-full border-2  h-[40px] w-[40px]"
                       />
                     </span>{" "}
                     {name}

@@ -63,7 +63,7 @@ export default async function Home() {
                 <>
                   {item.tag === "śniadanie" ? (
                     <Link
-                      className="mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
+                      className="text-sm md:text-base mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
                       key={index}
                       href={{
                         pathname: "/przepisy",
@@ -74,7 +74,7 @@ export default async function Home() {
                     </Link>
                   ) : (
                     <Link
-                      className="mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
+                      className="text-sm md:text-base mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
                       key={index}
                       href={{
                         pathname: "/przepisy",
