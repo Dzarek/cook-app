@@ -6,6 +6,7 @@ import { BiFork } from "react-icons/bi";
 import { GiCook } from "react-icons/gi";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { useState, useEffect } from "react";
+import { RiArrowDownCircleFill2 } from "react-icons/ri";
 
 type RecipeSearchType = {
   allRecipes: Recipe[];
@@ -22,6 +23,7 @@ const RecipesSearch = ({
   const [activeCategory, setActiveKategory] = useState("wszystkie");
   const [activeAuthor, setActiveAuthor] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
     if (kategoria) {
@@ -106,23 +108,31 @@ const RecipesSearch = ({
   };
 
   return (
-    <main className="flex items-start w-[100vw]  my-[5vh] justify-between ">
-      <div className="bg-red-900 border-red-950  w-[10vw] h-[45px] border-t-2"></div>
-      <section className="w-1/5 border-2 border-red-950 rounded-b-md rounded-br-md bg-white">
-        <h3 className="uppercase text-xl font-semibold bg-red-900 text-white p-2 text-center">
+    <main className="flex items-start w-[100vw]  xl:my-[5vh] justify-between flex-col xl:flex-row">
+      <div className="bg-red-900 border-red-950  w-[10vw] h-[45px] border-t-2 hidden xl:block"></div>
+      <section
+        className={`${
+          showFilter ? "h-auto " : "h-12 xl:h-auto mb-5"
+        } xl:h-auto overflow-hidden w-full xl:w-1/5 duration-300 border-2 border-red-950 rounded-b-md rounded-br-md bg-white`}
+      >
+        <h3
+          onClick={() => setShowFilter(!showFilter)}
+          className="uppercase h-12 xl:h-auto text-lg xl:text-xl flex items-center justify-center font-semibold bg-red-900 text-white p-2 text-center"
+        >
           Filtruj
+          <RiArrowDownCircleFill2 className="ml-5 text-2xl xl:hidden" />
         </h3>
-        <div className="filterBy">
-          <h4 className="w-full bg-red-200 p-1 px-4 text-md font-semibold font-bodyFont uppercase tracking-wider">
+        <div className="filterBy bg-red-200 xl:bg-white">
+          <h4 className="w-full bg-zinc-800 text-white p-1 px-8 xl:px-4 text-md font-semibold font-bodyFont uppercase tracking-wider">
             Kategorie:
           </h4>
-          <ul className="py-2 overflow-hidden">
+          <ul className="py-2  overflow-hidden flex flex-wrap w-4/5 mx-auto xl:w-full justify-between items-center xl:items-start xl:flex-col">
             <>
               <li
-                className={`ml-4 my-2 cursor-pointer hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
+                className={`xl:ml-4 my-2 w-[45%] xl:w-full cursor-pointer xl:hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
                  ${
                    activeCategory === "wszystkie" &&
-                   "bg-red-900 rounded-l-lg text-white py-1 ml-16 hover:translate-x-0 transition-all"
+                   "bg-red-900 rounded-lg xl:rounded-none xl:rounded-l-lg text-white py-1 xl:ml-16 hover:translate-x-0 transition-all"
                  }
                   `}
                 onClick={() => handleCategory("wszystkie")}
@@ -137,10 +147,10 @@ const RecipesSearch = ({
               {tags.map((tag, index) => {
                 return (
                   <li
-                    className={`ml-4 my-2 cursor-pointer hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
+                    className={`xl:ml-4 my-2 w-[45%] xl:w-full cursor-pointer xl:hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
                  ${
                    activeCategory === tag &&
-                   "bg-red-900 rounded-l-lg text-white py-1 ml-16 hover:translate-x-0 transition-all"
+                   "bg-red-900 rounded-lg xl:rounded-none xl:rounded-l-lg text-white py-1 xl:ml-16 hover:translate-x-0 transition-all"
                  }
                   `}
                     key={index}
@@ -158,18 +168,18 @@ const RecipesSearch = ({
             </>
           </ul>
         </div>
-        <div className="filterBy">
-          <h4 className="w-full bg-red-200 p-1 px-4 text-md font-semibold font-bodyFont uppercase tracking-wider">
+        <div className="filterBy bg-red-200 xl:bg-white">
+          <h4 className="w-full bg-zinc-800 text-white p-1 px-8 xl:px-4 text-md font-semibold font-bodyFont uppercase tracking-wider">
             Autor:
           </h4>
           {authors && (
-            <ul className="py-2 overflow-hidden">
+            <ul className="py-2  overflow-hidden flex flex-wrap w-4/5 mx-auto xl:w-full justify-between items-center xl:items-start xl:flex-col">
               <>
                 <li
-                  className={`ml-4 my-2 cursor-pointer hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
+                  className={`xl:ml-4 my-2 w-[45%] xl:w-full cursor-pointer xl:hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center pl-2 xl:pl-0 
                  ${
                    activeAuthor === "wszyscy" &&
-                   "bg-red-900 rounded-l-lg text-white py-1 ml-16 hover:translate-x-0 transition-all"
+                   "bg-red-900 rounded-lg xl:rounded-none xl:rounded-l-lg text-white py-1 xl:ml-16 hover:translate-x-0 transition-all"
                  }
                   `}
                   onClick={() => handleAuthor("wszyscy")}
@@ -184,10 +194,10 @@ const RecipesSearch = ({
                 {authors.map((author) => {
                   return (
                     <li
-                      className={`ml-4 my-2 cursor-pointer hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center 
+                      className={`xl:ml-4 my-2 w-[45%] xl:w-full cursor-pointer xl:hover:translate-x-4 transition-all capitalize tracking-wider font-medium flex items-center pl-2 xl:pl-0 
                     ${
                       activeAuthor === author.userName &&
-                      "bg-red-900 rounded-l-lg text-white py-1  ml-16  hover:translate-x-0 transition-all"
+                      "bg-red-900 rounded-lg xl:rounded-none xl:rounded-l-lg text-white py-1 xl:ml-16 hover:translate-x-0 transition-all"
                     }
                      `}
                       key={author.id}
@@ -207,19 +217,22 @@ const RecipesSearch = ({
           )}
         </div>
       </section>
-      <section className="w-4/5 border-t-2 border-red-950">
-        <h3 className="uppercase text-xl font-semibold bg-red-900 text-white p-2 text-center ">
+      <section className="w-full xl:w-4/5 border-t-2 border-red-950">
+        <h3 className="uppercase text-lg xl:text-xl font-semibold bg-red-900 text-white p-2 text-center ">
           Lista przepisów:
         </h3>
-        <div className="sort mx-auto w-full flex items-center justify-center mt-10 -mb-5">
-          <section className="mr-10">
-            <label id="sort" className="mr-3 text-xl font-bold text-red-900">
+        <div className="sort mx-auto w-full flex flex-col xl:flex-row items-center justify-center mt-10 -mb-5">
+          <section className="flex flex-col w-full xl:w-auto justify-center items-center mb-5 xl:mb-0 xl:flex-row xl:mr-10">
+            <label
+              id="sort"
+              className="mb-2 xl:mb-0 xl:mr-3 text-xl font-bold text-red-900"
+            >
               Sortuj według:
             </label>
             <select
               name="sort"
               id="sort"
-              className="text-lg p-2 px-3 lowercase rounded-md bg-zinc-700 text-white"
+              className="text-lg p-2 px-3 w-4/5 xl:w-auto lowercase text-center xl:text-left rounded-md bg-zinc-700 text-white"
               onChange={(e) => handleSort(e.target.value)}
             >
               {options.map((option, index) => {
@@ -231,21 +244,26 @@ const RecipesSearch = ({
               })}
             </select>
           </section>
-          <section className="flex items-center justify-center">
-            <label id="search" className="mr-3 text-xl font-bold text-red-900">
+          <section className="flex flex-col xl:flex-row w-full xl:w-auto mb-10 xl:mb-0 items-center justify-center">
+            <label
+              id="search"
+              className="mb-2 xl:mb-0 xl:mr-3 text-xl font-bold text-red-900"
+            >
               Szukaj:
             </label>
-            <input
-              type="text"
-              id="search"
-              name="search"
-              className="bg-zinc-700 text-white rounded-md lowercase p-2 px-3 text-lg w-[16vw]"
-              placeholder="wpisz nazwę"
-              value={searchTerm}
-              onChange={(e) => handleSearchTitle(e)}
-            />
-            <div className="text-xl text-white -ml-7">
-              <BiSearchAlt2 />
+            <div className="relative w-4/5 xl:w-auto">
+              <input
+                type="text"
+                id="search"
+                name="search"
+                className="bg-zinc-700 w-full text-center xl:text-left xl:w-[16vw] text-white rounded-md lowercase p-2 px-3 text-lg "
+                placeholder="wpisz nazwę"
+                value={searchTerm}
+                onChange={(e) => handleSearchTitle(e)}
+              />
+              <div className="text-xl text-white absolute top-[50%] right-2 translate-y-[-50%] ">
+                <BiSearchAlt2 />
+              </div>
             </div>
           </section>
         </div>

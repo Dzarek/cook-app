@@ -31,8 +31,8 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
               className="w-full h-2/4 2xl:h-3/5 object-cover recipe-img"
               alt={title}
             />
-            <section className="h-1/2 2xl:h-2/6 flex flex-col items-center justify-center p-2">
-              <h5 className="text-base text-center font-bold mb-2 2xl:mb-4 w-full uppercase">
+            <section className="h-1/2 2xl:h-2/5 w-full flex flex-col items-center justify-start ">
+              <h5 className="text-sm xl:text-base bg-zinc-800 text-white p-1 text-center font-bold mb-2 2xl:mb-4 w-full uppercase">
                 {title}
               </h5>
               <p className="text-gray-600 text-sm mb-2 text-center flex flex-col  2xl:inline">

@@ -270,7 +270,7 @@ const Navbar = () => {
                           href={link.href}
                           key={link.id}
                           onClick={() => setShowMenu(false)}
-                          className={`w-[45%] bg-[rgba(0,0,0,0.3)] p-2 rounded-md h-[20vh] flex flex-col items-center justify-center font-bold text-red-700 text-md uppercase transition  hover:text-red-900 mb-5
+                          className={`w-[45%] text-center bg-[rgba(0,0,0,0.3)] text-sm p-2 rounded-md h-[20vh] flex flex-col items-center justify-center font-bold text-red-700 text-md uppercase transition  hover:text-red-900 mb-5
                             ${
                               pathname === link.href &&
                               "text-zinc-800  bg-[rgba(255,255,255,1)] font-bold"
