@@ -23,6 +23,7 @@
 html {
   overflow-x: hidden;
   min-height: 100vh;
+  width: 100vw;
 }
 
 body {
@@ -139,6 +140,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0.8;
 }
 .logoJarek a {
   width: 25px;
@@ -157,7 +159,7 @@ body {
 
 .logoJarek p {
   font-size: 12px;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   color: white;
 }
 @media screen and (max-width: 800px) {
@@ -403,7 +405,8 @@ html::-webkit-scrollbar-thumb:hover {
 }
 @media screen and (max-width: 800px) {
   .errorInfo {
-    width: 90%;
+    width: 100%;
+    font-size: 1rem;
   }
 }
 .wrapperLogin h2 {
@@ -417,7 +420,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 @media screen and (max-width: 800px) {
   .wrapperLogin h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 }
 .wrapperLogin form {
@@ -882,6 +885,15 @@ svg:not(.starRotate) + .starRotate {
   font-size: 3rem;
   color: rgb(114, 0, 0);
   animation: scaleLikeBtn 1s 1 ease;
+}
+
+@media screen and (max-width: 1024px) {
+  .likeBtn {
+    font-size: 2rem;
+  }
+  .dislikeBtn {
+    font-size: 2rem;
+  }
 }
 
 .rankingList::-webkit-scrollbar {

@@ -149,7 +149,7 @@ const LoginPage = () => {
               </>
             ) : (
               <>
-                <h4 className="errorInfo mb-10">
+                <h4 className="errorInfo mt-5 xl:mt-0 mb-5 xl:mb-10">
                   Chcesz do nas dołączyć? Podaj swój adres email, by admin mógł
                   dodać Cię do naszej społeczności.
                 </h4>
@@ -162,7 +162,7 @@ const LoginPage = () => {
                       alt="logo"
                       className="w-1/3"
                     />
-                    <h1 className="text-4xl flex items-center justify-center capitalize font-bold logoFont text-center w-90%">
+                    <h1 className="text-3xl xl:text-4xl flex items-center justify-center capitalize font-bold logoFont text-center w-90%">
                       <span className="text-red-800 mr-2">Stępki </span>Gotują
                     </h1>
                   </div>
@@ -211,7 +211,7 @@ const LoginPage = () => {
                 </>
               ) : (
                 <>
-                  <h4 className="errorInfo xl:mb-5">
+                  <h4 className="errorInfo mt-5 xl:mt-0 xl:mb-5">
                     Podaj adres email na który zostanie przesłany link do
                     resetowania hasła.
                   </h4>
@@ -225,7 +225,7 @@ const LoginPage = () => {
                         alt="logo"
                         className="w-1/3"
                       />
-                      <h1 className="text-4xl flex items-center justify-center capitalize font-bold logoFont text-center w-90%">
+                      <h1 className="text-3xl xl:text-4xl flex items-center justify-center capitalize font-bold logoFont text-center w-90%">
                         <span className="text-red-800 mr-2">Stępki </span>Gotują
                       </h1>
                     </div>
@@ -266,9 +266,9 @@ const LoginPage = () => {
                     width={500}
                     height={500}
                     alt="logo"
-                    className="w-1/2"
+                    className="w-1/3 xl:w-1/2"
                   />
-                  <h1 className="text-4xl flex items-center justify-center capitalize font-bold logoFont text-center w-90%">
+                  <h1 className="text-3xl xl:text-4xl flex items-center justify-center capitalize font-bold logoFont text-center w-90%">
                     <span className="text-red-800 mr-2">Stępki </span>Gotują
                   </h1>
                 </div>

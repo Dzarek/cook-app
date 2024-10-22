@@ -25,6 +25,7 @@ const LikeControl = ({
           borderRadius: "10px",
           background: "#280505",
           color: "#fff",
+          textAlign: "center",
         },
       });
     } else {
@@ -35,6 +36,18 @@ const LikeControl = ({
     }
   };
   const handleLike = async () => {
+    if (!activeUser) {
+      toast("Musisz być zalogowany aby polubić przepis!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+          textAlign: "center",
+        },
+      });
+      return;
+    }
     if (userID === activeUser.uid) {
       toast("Nie możesz polubić swojego własnego przepisu!", {
         icon: "✖",
@@ -42,6 +55,7 @@ const LikeControl = ({
           borderRadius: "10px",
           background: "#280505",
           color: "#fff",
+          textAlign: "center",
         },
       });
     } else {
@@ -55,7 +69,9 @@ const LikeControl = ({
   if (activeUser && activeLikes.includes(activeUser.uid)) {
     return (
       <div className="absolute bottom-[10%] right-[10%] flex items-center justify-center">
-        <p className="mr-3 text-xl">Smakuje Ci!</p>
+        <p className="mr-3 text-lg font-medium text-gray-600 xl:text-xl">
+          Smakuje Ci!
+        </p>
         <FaHeart onClick={handleDislike} className="dislikeBtn" />
         <h2 className="ml-3 text-2xl font-bold">{activeLikes.length}</h2>
       </div>
@@ -63,7 +79,9 @@ const LikeControl = ({
   } else {
     return (
       <div className="absolute bottom-[10%] right-[10%] flex items-center justify-center">
-        <p className="mr-3 text-xl">Smaczne?</p>
+        <p className="mr-3 text-lg font-medium text-gray-600 xl:text-xl">
+          Smaczne?
+        </p>
         <FaRegHeart onClick={handleLike} className="likeBtn" />
         <h2 className="ml-3 text-2xl font-bold">{activeLikes.length}</h2>
       </div>
