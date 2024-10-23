@@ -114,10 +114,16 @@ body {
   align-items: center;
   font-family: var(--bodyFont);
 }
+@media screen and (max-width: 1024px) {
+  .recipeProfile {
+    width: 80%;
+    height: 58vh;
+  }
+}
+
 .recipe-img {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  /* margin-bottom: 5px; */
 }
 .recipe-imgProfile {
   border-top-right-radius: 6px;
@@ -127,6 +133,12 @@ body {
 
   margin-bottom: 5px;
 }
+@media screen and (max-width: 1024px) {
+  .recipe-imgProfile {
+    margin-bottom: 0px;
+  }
+}
+
 .recipeIcon {
   font-size: 1.6rem;
   color: #444;

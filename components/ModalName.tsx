@@ -47,11 +47,11 @@ const ModalName = ({
     <div className="bg-[rgba(0,0,0,0.8)] w-screen h-screen z-30 fixed top-0 left-0 flex items-center justify-center">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="bg-white p-3 w-[50vw] min-h-[75vh] rounded-md flex flex-col items-center justify-center"
+        className="bg-white py-10 px-3 xl:p-3 w-[95vw] xl:w-[50vw] min-h-[75vh] rounded-md flex flex-col items-center justify-center"
       >
-        <h3 className="text-2xl font-normal mb-10">
+        <h3 className="text-xl xl:text-2xl font-normal mb-5 xl:mb-10">
           Witaj w aplikacji{" "}
-          <span className="text-3xl mr-1 text-red-900 font-bold font-logoFont">
+          <span className="text-2xl xl:text-3xl mr-1 text-red-900 font-bold font-logoFont">
             Stępki Gotują
           </span>
           !
@@ -94,7 +94,7 @@ const ModalName = ({
             </div>
           </section>
         </div>
-        <p className="mt-10 mb-5 text-center">
+        <p className="mt-10 mb-10 xl:mb-5 text-center xl:text-lg">
           Na adres <span className="text-red-900 font-medium">{email}</span>{" "}
           zostanie przesłany link do zmiany hasła. <br /> (sprawdź również spam)
         </p>

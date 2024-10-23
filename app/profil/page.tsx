@@ -22,25 +22,22 @@ const Profil = async () => {
     );
   }
 
-  // const currentUser = session.user;
   const currentUser = await getOneUser(session.uid);
   const userRecipes = await getRecipes(session.uid);
   const sortedRecipes = userRecipes?.sort(
     (a, b) => b.createdTime - a.createdTime
   );
 
-  // console.log(currentUser);
-  // console.log(session.user);
   const userID = session.uid;
 
   return (
     <div className="page w-screen">
       <header className="text-center w-full py-[10vh] flex justify-center items-center">
-        <GiChefToque className="text-5xl text-red-900  mr-5 recipeRotate4" />
-        <h1 className="text-3xl font-bold font-bodyFont">
+        <GiChefToque className="text-3xl xl:text-5xl text-red-900  mr-5 recipeRotate4" />
+        <h1 className="max-w-[70%] xl:max-w-auto text-lg text-center xl:text-3xl font-bold font-bodyFont">
           Kucharz - {currentUser && currentUser.userName}
         </h1>
-        <GiChefToque className="text-5xl text-red-900 ml-5 recipeRotate2" />
+        <GiChefToque className="text-3xl xl:text-5xl text-red-900 ml-5 recipeRotate2" />
       </header>
       {currentUser && sortedRecipes && (
         <ProfilComponent
