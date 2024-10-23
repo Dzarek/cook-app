@@ -78,7 +78,7 @@ function CloudinaryUploadWidget({
     <CloudinaryScriptContext.Provider value={{ loaded }}>
       <button
         onClick={initializeCloudinaryWidget}
-        className="flex flex-col items-center justify-center w-2/5 h-[50vh] border-red-900 border-dashed border-2 rounded-md"
+        className="flex flex-col items-center justify-center w-full xl:w-2/5 h-[40vh] xl:h-[50vh] border-red-900 border-dashed border-2 rounded-md"
       >
         <RiImageAddLine className="text-6xl text-zinc-400" />
         <p className="mt-5 text-xl">dodaj zdjęcie</p>

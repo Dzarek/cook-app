@@ -5,7 +5,7 @@ const ConfirmBtn = ({ text }: { text: string }) => {
     <StyledWrapper>
       <button className="button" type="submit">
         {text}
-        {text !== "wyślij nowe" && (
+        {text !== "wyślij nowe" && text !== "Zapisz" && (
           <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
             <path
               fillRule="evenodd"

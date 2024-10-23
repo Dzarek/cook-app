@@ -31,13 +31,13 @@ const NewRecipePage = async ({
   return (
     <div className="page w-screen">
       <header className="text-center w-full py-[10vh] flex justify-center items-center">
-        <GiNotebook className="text-4xl text-red-900  mr-5 recipeRotate" />
-        <h1 className="text-3xl font-bold font-bodyFont">
+        <GiNotebook className="text-2xl xl:text-4xl text-red-900  mr-5 recipeRotate" />
+        <h1 className="max-w-[70%] xl:max-w-auto text-lg text-center xl:text-3xl font-bold font-bodyFont">
           {edycja
             ? "Edycja Istniejącego Przepisu"
             : "Tworzenie Nowego Przepisu"}
         </h1>
-        <GiNotebook className="text-4xl text-red-900 ml-5 recipeRotate2" />
+        <GiNotebook className="text-2xl xl:text-4xl text-red-900 ml-5 recipeRotate2" />
       </header>
       <AddRecipeComponent edycja={edycja} userID={userID} />
     </div>

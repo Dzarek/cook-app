@@ -17,6 +17,7 @@ import UploadImage from "./cloudinary/UploadImage";
 import { useGlobalContext } from "./authContext";
 import VoiceIngredient from "./voice/VoiceIngredient";
 import VoiceLongText from "./voice/VoiceLongText";
+import ConfirmBtn from "./uiverse/ConfirmBtn";
 
 const AddRecipeComponent = ({
   edycja,
@@ -40,6 +41,7 @@ const AddRecipeComponent = ({
   const [newDescription, setNewDescription] = useState<string>("");
   const [newImage, setNewImage] = useState<string>("");
   const [activeVoice, setActiveVoice] = useState("");
+  const [disableBtn, setDisableBtn] = useState(true);
 
   const { editRecipe, setEditRecipe } = useGlobalContext();
 
@@ -59,6 +61,14 @@ const AddRecipeComponent = ({
       setNewDescription(editRecipe.description);
     }
   }, []);
+
+  useEffect(() => {
+    if (newTitle === "") {
+      setDisableBtn(true);
+    } else {
+      setDisableBtn(false);
+    }
+  }, [newTitle]);
 
   const handleNewCategory = (tag: string) => {
     if (newCategory.includes(tag)) {
@@ -171,14 +181,14 @@ const AddRecipeComponent = ({
   return (
     <form
       onSubmit={submitForm}
-      className="flex flex-col w-4/5 mx-auto mb-[10vh]"
+      className="flex flex-col w-[95%] xl:w-4/5 mx-auto mb-[10vh]"
     >
-      <section className="flex justify-between w-full">
+      <section className="flex flex-col xl:flex-row justify-between w-full">
         {newImage === "" ? (
           <UploadImage setNewImage={setNewImage} />
         ) : (
-          <div className="flex flex-col items-center justify-center w-2/5">
-            <div className="flex flex-col items-center justify-center w-full h-[50vh] border-red-900 border-dashed border-2 rounded-md relative">
+          <div className="flex flex-col items-center justify-center w-full xl:w-2/5">
+            <div className="flex flex-col items-center justify-center w-full h-[40vh] xl:h-[50vh] border-red-900 border-dashed border-2 rounded-md relative">
               <Image
                 src={newImage}
                 width={500}
@@ -196,10 +206,10 @@ const AddRecipeComponent = ({
             </button>
           </div>
         )}
-        <div className="w-[55%] flex flex-col">
-          <div className="w-full flex justify-center items-center ">
+        <div className="w-full xl:w-[55%] flex flex-col mt-10 xl:mt-0">
+          <div className="w-full flex flex-col xl:flex-row justify-center items-center ">
             <label
-              className="font-semibold uppercase text-xl mr-3 "
+              className="font-semibold uppercase text-xl mb-3 xl:mb-0 xl:mr-3 "
               htmlFor="title"
             >
               Tytuł:
@@ -208,10 +218,11 @@ const AddRecipeComponent = ({
               type="text"
               name="title"
               id="title"
+              placeholder="wpisz tytuł"
               required
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
-              className="newRecipeInput font-bold text-center"
+              className="newRecipeInput font-semibold text-center w-[90%] xl:w-auto"
             />
           </div>
           {activeVoice !== "ingredientVoice" &&
@@ -225,9 +236,9 @@ const AddRecipeComponent = ({
                 setActiveVoice={setActiveVoice}
               />
             )}
-          <div className="w-full flex justify-center items-center ">
+          <div className="w-full flex flex-col xl:flex-row justify-center items-center mt-10 xl:mt-0">
             <label
-              className="font-semibold uppercase text-xl mr-3"
+              className="font-semibold uppercase text-xl mb-3 xl:mb-0 xl:mr-3"
               htmlFor="shortInfo"
             >
               Krótki opis:
@@ -235,10 +246,11 @@ const AddRecipeComponent = ({
             <textarea
               name="shortInfo"
               id="shortInfo"
+              placeholder="wpisz krótki opis"
               required
               value={newShortInfo}
               onChange={(e) => setNewShortInfo(e.target.value)}
-              className="newRecipeInput mt-10 min-h-[20vh]"
+              className="newRecipeInput xl:mt-10 min-h-[30vh] xl:min-h-[20vh] w-[90%] xl:w-auto"
             ></textarea>
           </div>
           {activeVoice !== "ingredientVoice" &&
@@ -279,38 +291,16 @@ const AddRecipeComponent = ({
           })}
         </ul>
       </div>
-      <section className="w-2/3 mx-auto flex items-center justify-between my-[8vh]">
-        <div className="flex flex-col items-center justify-center">
-          <label
-            htmlFor="prepTime"
-            className="uppercase font-semibold text-lg  mt-5 text-gray-800"
-          >
-            przygotowanie
-          </label>
-          <div className="flex items-center mt-4">
-            <BsClockHistory className="text-4xl text-red-900" />
-            <input
-              type="number"
-              name="prepTime"
-              id="prepTime"
-              className="newRecipeInput w-20 mx-3 text-center"
-              required
-              min={0}
-              value={newPrepTime}
-              onChange={(e) => setNewPrepTime(Number(e.target.value))}
-            />
-            <p>min.</p>
-          </div>
-        </div>
-        <div className="flex flex-col items-center justify-center">
+      <section className="w-full xl:w-2/3 mx-auto flex flex-wrap items-center justify-center xl:justify-between my-[8vh]">
+        <div className="flex w-1/2 xl:w-auto flex-col items-center justify-center">
           <label
             htmlFor="cookTime"
-            className="uppercase font-semibold text-lg  mt-5 text-gray-800"
+            className="uppercase font-semibold text-base xl:text-lg  mt-5 text-gray-800"
           >
             gotowanie
           </label>
-          <div className="flex items-center mt-4">
-            <GiRiceCooker className="text-4xl text-red-900" />
+          <div className="flex flex-col xl:flex-row items-center mt-4">
+            <GiRiceCooker className="text-3xl xl:text-4xl text-red-900 mb-4 xl:mb-0" />
             <input
               type="number"
               name="cookTime"
@@ -324,15 +314,38 @@ const AddRecipeComponent = ({
             <p>min.</p>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col w-1/2 xl:w-auto items-center justify-center">
+          <label
+            htmlFor="prepTime"
+            className=" uppercase font-semibold text-base xl:text-lg  mt-5 text-gray-800"
+          >
+            przygotowanie
+          </label>
+          <div className="flex flex-col xl:flex-row items-center mt-4">
+            <BsClockHistory className="text-3xl xl:text-4xl mb-4 xl:mb-0 text-red-900" />
+            <input
+              type="number"
+              name="prepTime"
+              id="prepTime"
+              className="newRecipeInput w-20 mx-3 text-center"
+              required
+              min={0}
+              value={newPrepTime}
+              onChange={(e) => setNewPrepTime(Number(e.target.value))}
+            />
+            <p>min.</p>
+          </div>
+        </div>
+
+        <div className="flex flex-col w-1/2 xl:w-auto items-center justify-center">
           <label
             htmlFor="portion"
-            className="uppercase font-semibold text-lg  mt-5 text-gray-800"
+            className=" uppercase font-semibold text-base xl:text-lg  mt-5 text-gray-800"
           >
             ilość porcji
           </label>
-          <div className="flex items-center mt-4">
-            <BsPeople className="text-4xl text-red-900" />
+          <div className="flex flex-col xl:flex-row items-center mt-4">
+            <BsPeople className="text-3xl xl:text-4xl mb-4 xl:mb-0 text-red-900" />
             <input
               type="number"
               name="portion"
@@ -347,20 +360,20 @@ const AddRecipeComponent = ({
           </div>
         </div>
       </section>
-      <section className="w-full my-[5vh] flex justify-between items-start">
-        <div className="w-1/3 flex flex-col">
-          <h2 className="text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
+      <section className="w-full my-[5vh] flex flex-col xl:flex-row justify-between items-start">
+        <div className="w-full xl:w-1/3 flex flex-col">
+          <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
             Składniki:
           </h2>
-          <ul>
+          <ul className="w-[95%] mx-auto xl:w-full">
             {newIngredients.length > 0 &&
               newIngredients.map((item, index) => {
                 return (
                   <li
                     className={
                       index === editingIngredient
-                        ? "text-lg font-bodyFont mb-2 border-b-2 py-2 flex items-center justify-between editAddRecipeItem rounded-md"
-                        : "text-lg font-bodyFont mb-2 border-b-2 py-2 flex items-center justify-between"
+                        ? "text-base xl:text-lg font-bodyFont mb-2 border-b-2 py-2 flex items-center justify-between editAddRecipeItem rounded-md"
+                        : "text-base xl:text-lg font-bodyFont mb-2 border-b-2 py-2 flex items-center justify-between"
                     }
                     key={index}
                   >
@@ -416,7 +429,7 @@ const AddRecipeComponent = ({
                       placeholder="dodaj nowy składnik"
                       value={newIngredient}
                       onChange={(e) => setNewIgredient(e.target.value)}
-                      className="newRecipeInput flex-grow text-left "
+                      className="newRecipeInput flex-grow text-left text-base"
                     />
                     <MdOutlineAddCircle
                       className="ml-3 text-green-900 cursor-pointer text-4xl"
@@ -440,11 +453,11 @@ const AddRecipeComponent = ({
             )}
           </ul>
         </div>
-        <div className="ml-[10vw] flex-grow flex flex-col">
-          <h2 className="text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
+        <div className="xl:ml-[10vw] mt-20 xl:mt-0 w-full xl:w-auto  flex-grow flex flex-col">
+          <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
             Instrukcje:
           </h2>
-          <ul>
+          <ul className="w-[95%] mx-auto xl:w-full">
             {newSteps.length > 0 &&
               newSteps.map((item, index) => {
                 return (
@@ -457,7 +470,7 @@ const AddRecipeComponent = ({
                     }
                   >
                     <div className="flex flex-nowrap items-center justify-between mb-2">
-                      <p className="uppercase text-red-900 text-2xl font-semibold font-headingFont mr-4">
+                      <p className="uppercase text-red-900 text-xl xl:text-2xl font-semibold font-headingFont mr-4">
                         krok {index + 1}
                       </p>
                       <span className="flex-grow h-[2px] bg-zinc-300 mr-5"></span>
@@ -498,7 +511,7 @@ const AddRecipeComponent = ({
                     placeholder="dodaj nowy krok"
                     value={newStep}
                     onChange={(e) => setNewStep(e.target.value)}
-                    className="newRecipeInput pl-10 flex-grow text-left min-h-[18vh]"
+                    className="newRecipeInput pl-10 flex-grow text-left min-h-[22vh] xl:min-h-[18vh]"
                   />
                   <GiConfirmed
                     className="ml-3 text-green-900 cursor-pointer text-2xl"
@@ -510,19 +523,12 @@ const AddRecipeComponent = ({
               <Element name="editIgredient">
                 <div>
                   <div className="flex items-center justify-between mt-8">
-                    {/* <input
-                      type="text"
-                      placeholder="dodaj nowy krok"
-                      value={newStep}
-                      onChange={(e) => setNewStep(e.target.value)}
-                      className="newRecipeInput flex-grow text-center "
-                    /> */}
                     <textarea
                       ref={textareaRef}
                       placeholder="dodaj nowy krok"
                       value={newStep}
                       onChange={(e) => setNewStep(e.target.value)}
-                      className="newRecipeInput pl-10 flex-grow text-left min-h-[18vh]"
+                      className="newRecipeInput pl-10 flex-grow text-left min-h-[22vh] xl:min-h-[18vh]"
                     />
                     <MdOutlineAddCircle
                       className="ml-3 text-green-900 cursor-pointer text-4xl"
@@ -546,8 +552,8 @@ const AddRecipeComponent = ({
           </ul>
         </div>
       </section>
-      <div className="w-4/5 flex justify-start items-start mx-auto my-[10vh] flex-col">
-        <h2 className="flex items-center justify-between text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
+      <div className="w-full xl:w-4/5 flex justify-start items-start mx-auto my-[10vh] flex-col">
+        <h2 className="flex items-center justify-between text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
           Opis: <span>(opcjonalne)</span>
         </h2>
         <textarea
@@ -556,7 +562,7 @@ const AddRecipeComponent = ({
           placeholder="Opis przepisu..."
           value={newDescription}
           onChange={(e) => setNewDescription(e.target.value)}
-          className="newRecipeInput w-full min-h-[20vh]"
+          className="newRecipeInput  min-h-[20vh] w-[98%] mx-auto xl:w-full"
         ></textarea>
         {activeVoice !== "ingredientVoice" &&
           activeVoice !== "stepsVoice" &&
@@ -570,12 +576,25 @@ const AddRecipeComponent = ({
             />
           )}
       </div>
-      <button
+      {/* <button
         type="submit"
         className="mt-2 border-2 border-red-900 bg-[#fbf3f3] text-red-900 hover:bg-red-900 hover:text-white p-4 text-xl font-bodyFont  rounded-md font-semibold w-1/7 uppercase mx-auto transition-all"
       >
         Zapisz
-      </button>
+      </button> */}
+      <div className="mx-auto">
+        {disableBtn ? (
+          <button
+            disabled={true}
+            type="button"
+            className="bg-red-800 opacity-50 saturate-0 rounded-full font-medium py-2 px-6 text-lg text-white"
+          >
+            Zapisz
+          </button>
+        ) : (
+          <ConfirmBtn text="Zapisz" />
+        )}
+      </div>
     </form>
   );
 };

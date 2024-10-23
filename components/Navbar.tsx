@@ -93,7 +93,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="bg-zinc-900 text-white w-screen h-[12vh] fixed top-0 left-0 z-10  items-center justify-between px-[8vw] hidden xl:flex">
+      <div className="bg-zinc-900 text-white w-screen h-[12vh] fixed top-0 left-0 z-10  items-center justify-between px-[4vw] 2xl:px-[6vw] hidden xl:flex">
         <div className="flex items-center">
           <Image
             src="/assets/images/logo.png"
