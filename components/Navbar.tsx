@@ -115,7 +115,7 @@ const Navbar = () => {
                     <Link
                       href={link.href}
                       key={link.id}
-                      className={`ml-8 flex items-center text-md capitalize transition  hover:text-red-900 
+                      className={`ml-8 flex items-center text-base capitalize transition  hover:text-red-900 
                 ${
                   pathname === link.href &&
                   "text-red-900 p-2 bg-zinc-100 rounded-md"
