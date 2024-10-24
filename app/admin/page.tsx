@@ -38,7 +38,9 @@ const AdminPage = async () => {
   return (
     <div className="page w-screen">
       <header className="bg-red-950 text-white text-center w-full py-[10vh] flex justify-center items-center">
-        <h1 className="text-3xl font-bold font-bodyFont">Panel Admina</h1>
+        <h1 className="text-xl xl:text-3xl font-bold font-bodyFont">
+          Panel Admina
+        </h1>
       </header>
       {users && <AdminComponent users={users} />}
     </div>

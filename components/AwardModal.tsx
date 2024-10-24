@@ -12,7 +12,7 @@ const AwardModal = () => {
         [zobacz trofeum]
       </button>
       {showModal && (
-        <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[40vw] h-[60vh] bg-white border-2 border-red-900 rounded-md flex justify-center items-center">
+        <div className="fixed z-30 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[90vw] xl:w-[40vw] h-[65vh] xl:h-[60vh] bg-white border-2 border-red-900 rounded-md flex justify-center items-center">
           <MdClose
             onClick={() => setShowModal(false)}
             className="absolute top-5 right-5 cursor-pointer text-4xl hover:text-red-600 hover:rotate-180 duration-[0.4s]"

@@ -10,7 +10,7 @@ export const getAllUsers = async () => {
     const data = await getDocs(allUsersCollectionRef);
     let items = data.docs
       .filter((doc) => doc.id !== "0")
-      .map((doc) => ({ id2: doc.id, ...(doc.data() as User) }));
+      .map((doc) => ({ id: doc.id, ...doc.data() } as User));
 
     items = items.filter((el) => el.activeUser === true);
     return items;
@@ -73,7 +73,7 @@ export const getAllRecipes = async () => {
     const data = await getDocs(allUsersCollectionRef);
     let items = data.docs
       .filter((doc) => doc.id !== "0")
-      .map((doc) => ({ id2: doc.id, ...(doc.data() as User) }));
+      .map((doc) => ({ id: doc.id, ...doc.data() } as User));
 
     items = items.filter((el) => el.activeUser === true);
 
@@ -83,7 +83,7 @@ export const getAllRecipes = async () => {
       items.map(async (el) => {
         const allUsersCollectionData = collection(
           db,
-          `usersList/${el.id2}/recipes`
+          `usersList/${el.id}/recipes`
         );
         const data = await getDocs(allUsersCollectionData);
         const itemsAllUsers = data.docs.map((doc) => {
@@ -94,7 +94,7 @@ export const getAllRecipes = async () => {
             author: {
               authorName: el.userName,
               authorAvatar: el.avatar,
-              authorID: el.id2,
+              authorID: el.id,
             },
             title: recipeData.title,
             image: recipeData.image,
@@ -129,12 +129,12 @@ export const getRankingUsers = async () => {
     const data = await getDocs(allUsersCollectionRef);
     let users = data.docs
       .filter((doc) => doc.id !== "0")
-      .map((doc) => ({ id2: doc.id, ...(doc.data() as User) }))
+      .map((doc) => ({ id: doc.id, ...doc.data() } as User))
       .filter((user) => user.activeUser === true);
 
     let backupArray = await Promise.all(
       users.map(async (user) => {
-        const userRecipesRef = collection(db, `usersList/${user.id2}/recipes`);
+        const userRecipesRef = collection(db, `usersList/${user.id}/recipes`);
         const recipesSnapshot = await getDocs(userRecipesRef);
         const recipes = recipesSnapshot.docs.map((doc) => {
           const recipeData = doc.data();
@@ -144,7 +144,7 @@ export const getRankingUsers = async () => {
             author: {
               authorName: user.userName,
               authorAvatar: user.avatar,
-              authorID: user.id2,
+              authorID: user.id,
             },
             title: recipeData.title,
             image: recipeData.image,
@@ -161,7 +161,7 @@ export const getRankingUsers = async () => {
         });
 
         return {
-          id: user.id2,
+          id: user.id,
           avatar: user.avatar,
           userName: user.userName,
           itemsArray: recipes,

@@ -306,6 +306,7 @@ export const postRecipe = async (
             color: "#fff",
           },
         });
+        window.location.href = "/przepisy";
       })
       .catch((error) => {
         console.error("Error writing document: ", error);

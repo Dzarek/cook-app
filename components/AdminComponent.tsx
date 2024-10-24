@@ -40,8 +40,8 @@ const AdminComponent = ({ users }: { users: User[] }) => {
     <div>
       <main className="w-4/5 mx-auto">
         {confirmDelete && (
-          <div className="z-20 rounded-md border-2 border-white flex flex-col fixed w-[40vw] h-[40vh] bg-red-950 text-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] p-4 items-center justify-center">
-            <h2 className="text-2xl text-center">
+          <div className="z-20 rounded-md border-2 border-white flex flex-col fixed w-[90vw] h-[50vh]  xl:w-[40vw] xl:h-[40vh] bg-red-950 text-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] p-4 items-center justify-center">
+            <h2 className="text-xl xl:text-2xl text-center">
               Czy napewo chcesz usunąć kucharza{" "}
               <span className="uppercase font-bold">
                 {confirmDelete.userName}
@@ -51,13 +51,13 @@ const AdminComponent = ({ users }: { users: User[] }) => {
             <div className="flex items-center justify-center mt-10">
               <button
                 onClick={() => setConfirmDelete(null)}
-                className="p-5 bg-white text-red-900 uppercase rounded-md text-2xl mx-4 transition-all border-2 border-white hover:bg-black hover:text-white"
+                className="p-5 bg-white text-red-900 uppercase rounded-md text-xl xl:text-2xl mx-4 transition-all border-2 border-white hover:bg-black hover:text-white"
               >
                 NIE
               </button>
               <button
                 onClick={() => handleDelete(confirmDelete.id)}
-                className="p-5 bg-white text-red-900 uppercase rounded-md text-2xl mx-4 transition-all border-2 border-white hover:bg-black hover:text-white"
+                className="p-5 bg-white text-red-900 uppercase rounded-md text-xl xl:text-2xl mx-4 transition-all border-2 border-white hover:bg-black hover:text-white"
               >
                 TAK
               </button>
@@ -70,14 +70,14 @@ const AdminComponent = ({ users }: { users: User[] }) => {
           </h2>
           <div className="flex items-center justify-center">
             <article className="flex flex-col items-center justify-center mx-[10vw]">
-              <p className="text-xl font-semibold">exportuj dane</p>
+              <p className="text-xl font-semibold text-center">exportuj dane</p>
               <FaDownload
                 className="text-red-900 text-5xl mt-5 transition-all hover:text-red-700 cursor-pointer"
                 onClick={exportData}
               />
             </article>
             <article className="flex flex-col items-center justify-center mx-[10vw]">
-              <p className="text-xl font-semibold">importuj dane</p>
+              <p className="text-xl font-semibold text-center">importuj dane</p>
               <FaUpload
                 className="text-red-900 text-5xl mt-5 transition-all hover:text-red-700 cursor-pointer"
                 onClick={() => setOpenImportModal(true)}
@@ -94,7 +94,7 @@ const AdminComponent = ({ users }: { users: User[] }) => {
               return (
                 <li
                   key={user.id}
-                  className="pb-5 m-5 h-[20vw] w-[16vw] rounded-md mx-[3vw]  border-2 border-red-900 overflow-hidden flex flex-col justify-between items-center bg-red-50"
+                  className="pb-5 m-5 h-[70vw] w-[60vw] xl:h-[20vw] xl:w-[16vw] rounded-md mx-[3vw]  border-2 border-red-900 overflow-hidden flex flex-col justify-between items-center bg-red-50"
                 >
                   <Image
                     src={user.avatar}
@@ -115,39 +115,39 @@ const AdminComponent = ({ users }: { users: User[] }) => {
             })}
           </ul>
           <div className="bg-zinc-950 w-screen mt-[10vh] text-white py-10">
-            <h2 className="text-center text-2xl font-semibold uppercase  mb-[5vh]">
+            <h2 className="text-center text-xl xl:text-2xl font-semibold uppercase  mb-[5vh]">
               Stwórz nowego kucharza
             </h2>
-            <div className="flex items-center justify-center">
+            <div className="flex flex-col xl:flex-row items-center justify-center">
               <Image
                 src="/assets/images/createCooker.png"
                 width={400}
                 height={400}
                 alt="kucharz"
-                className="w-[24vw] object-fill mr-14"
+                className="w-1/2 xl:w-[24vw] object-fill mb-5 xl:mb-0 xl:mr-14"
               />
               <form
                 onSubmit={handleCreateUser}
-                className="flex flex-col items-center "
+                className="flex flex-col items-center w-[90vw] mx-auto xl:mx-0 xl:w-auto"
               >
                 <input
                   type="text"
                   placeholder="nick kucharza"
-                  className="adminInput"
+                  className="adminInput w-full xl:w-auto"
                   value={newNick}
                   onChange={(e) => setNewNick(e.target.value)}
                 />
                 <input
                   type="email"
                   placeholder="adres email"
-                  className="adminInput"
+                  className="adminInput w-full xl:w-auto"
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
                 />
                 <input
                   type="password"
                   placeholder="hasło"
-                  className="adminInput"
+                  className="adminInput w-full xl:w-auto"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />

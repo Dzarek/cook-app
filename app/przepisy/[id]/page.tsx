@@ -118,7 +118,7 @@ const OneRecipePage = async ({
               })}
             </ul>
           </section>
-          <section className="mt-10 xl:mt-0 xl:ml-[10vw] flex-grow flex flex-col">
+          <section className="mt-10 xl:mt-0 xl:ml-[10vw] w-full xl:w-auto flex-grow flex flex-col">
             <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
               Instrukcje:
             </h2>

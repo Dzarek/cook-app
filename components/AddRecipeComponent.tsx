@@ -308,7 +308,7 @@ const AddRecipeComponent = ({
               className="newRecipeInput w-20 mx-3 text-center"
               required
               min={0}
-              value={newCookTime}
+              value={newCookTime === 0 ? "" : newCookTime}
               onChange={(e) => setNewCookTime(Number(e.target.value))}
             />
             <p>min.</p>
@@ -330,7 +330,7 @@ const AddRecipeComponent = ({
               className="newRecipeInput w-20 mx-3 text-center"
               required
               min={0}
-              value={newPrepTime}
+              value={newPrepTime === 0 ? "" : newPrepTime}
               onChange={(e) => setNewPrepTime(Number(e.target.value))}
             />
             <p>min.</p>
@@ -353,7 +353,7 @@ const AddRecipeComponent = ({
               className="newRecipeInput w-20 mx-3 text-center"
               required
               min={0}
-              value={newPortion}
+              value={newPortion === 0 ? "" : newPortion}
               onChange={(e) => setNewPortion(Number(e.target.value))}
             />
             <p>szt.</p>

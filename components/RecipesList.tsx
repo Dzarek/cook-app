@@ -20,7 +20,7 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
           <Link
             href={`/przepisy/${id}`}
             className="recipe  bg-neutral-50 
-            cursor-pointer overflow-hidden relative transition-all duration-300 hover:-translate-y-2  rounded-lg shadow-xl flex flex-row items-center justify-between  before:absolute before:w-full hover:before:top-0 before:duration-300 before:-top-1 before:h-1 before:bg-red-900 pb-2
+            cursor-pointer overflow-hidden relative transition-all duration-300 hover:-translate-y-2  rounded-lg shadow-xl flex flex-row items-center justify-between  before:absolute before:w-full hover:before:top-0 before:duration-300 before:-top-1 before:h-1 before:bg-red-900 
             "
             key={id}
           >
@@ -28,10 +28,10 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
               src={image}
               width={500}
               height={500}
-              className="w-full h-2/4 2xl:h-3/5 object-cover recipe-img"
+              className="w-full h-1/2 2xl:h-[55%] object-cover recipe-img "
               alt={title}
             />
-            <section className="h-1/2 2xl:h-2/5 w-full flex flex-col items-center justify-start ">
+            <section className="h-1/2  2xl:h-[45%] w-full flex flex-col items-center justify-between pb-2">
               <h5 className="text-sm xl:text-base bg-zinc-800 text-white p-1 text-center font-bold mb-2 2xl:mb-4 w-full uppercase">
                 {title}
               </h5>
@@ -56,10 +56,10 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
                       ? category[0] + ", inne..."
                       : category[0]}
                   </strong>{" "}
-                </span>
-
+                </span>{" "}
                 <span className="hidden 2xl:inline">|</span>
                 <span>
+                  {" "}
                   Autor:{" "}
                   <strong className="text-red-800">{author.authorName}</strong>
                 </span>

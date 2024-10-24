@@ -83,7 +83,7 @@ const getBackup = async () => {
     const data = await getDocs(allUsersCollectionRef);
     let items = data.docs
       .filter((doc) => doc.id !== "0")
-      .map((doc) => ({ id2: doc.id, ...(doc.data() as User) }));
+      .map((doc) => ({ id: doc.id, ...doc.data() } as User));
 
     // items = items.filter((el) => el.activeUser === true);
     let backupArray: any[] = [];
@@ -91,7 +91,7 @@ const getBackup = async () => {
       items.map(async (el) => {
         const allUsersCollectionData = collection(
           db,
-          `usersList/${el.id2}/recipes`
+          `usersList/${el.id}/recipes`
         );
         const data = await getDocs(allUsersCollectionData);
         const itemsAllUsers = data.docs.map((doc) => {
@@ -102,7 +102,7 @@ const getBackup = async () => {
             author: {
               authorName: el.userName,
               authorAvatar: el.avatar,
-              authorID: el.id2,
+              authorID: el.id,
             },
             title: recipeData.title,
             image: recipeData.image,
@@ -124,7 +124,7 @@ const getBackup = async () => {
           itemsArray.push(item);
         });
         backupArray.push({
-          id: el.id2,
+          id: el.id,
           activeUser: el.activeUser,
           avatar: el.avatar,
           email: el.email,
@@ -263,4 +263,5 @@ export const uploadData = async (file: any) => {
       color: "#fff",
     },
   });
+  window.location.href = "/admin";
 };

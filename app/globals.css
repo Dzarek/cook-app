@@ -32,6 +32,8 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  overflow-x: hidden;
+  width: 100vw;
 }
 
 .page {
@@ -78,7 +80,7 @@ body {
 
 .recipe {
   width: 21vw;
-  height: 350px;
+  height: 400px;
   border: 2px solid gray;
   border-radius: 10px;
   display: flex;
@@ -131,7 +133,7 @@ body {
   border-top-left-radius: 0;
   border-bottom-left-radius: 6px;
 
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 }
 @media screen and (max-width: 1024px) {
   .recipe-imgProfile {
