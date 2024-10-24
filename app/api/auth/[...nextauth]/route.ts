@@ -1,10 +1,10 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { auth } from "@/firebase/clientApp";
 
 // Define your NextAuth options
-export const authOptions: NextAuthOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
