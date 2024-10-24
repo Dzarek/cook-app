@@ -11,8 +11,6 @@ export const metadata: Metadata = {
   description: "Przepisy kulinarne stworzone przez rodzine Stępków.",
   manifest: "/manifest.json",
   keywords: ["gotowanie", "przepisy"],
-  viewport:
-    "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
 };
 
 export default function RootLayout({
