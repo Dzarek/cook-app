@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+// import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import Link from "next/link";
 import AddRecipeComponent from "@/components/AddRecipeComponent";
 import { GiNotebook } from "react-icons/gi";

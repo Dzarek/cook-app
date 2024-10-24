@@ -3,7 +3,6 @@
 import { auth, db } from "@/firebase/clientApp";
 import {
   collection,
-  getDocs,
   getDoc,
   setDoc,
   updateDoc,
@@ -11,10 +10,8 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
   updateProfile,
   getAuth,
   sendPasswordResetEmail,
