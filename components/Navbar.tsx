@@ -22,40 +22,6 @@ import { signOut } from "next-auth/react";
 import { CgMenuGridR } from "react-icons/cg";
 import { FaRegArrowAltCircleUp } from "react-icons/fa";
 
-const links = [
-  {
-    id: 1,
-    href: "/",
-    label: "strona główna",
-    icon: <RiHome5Fill />,
-  },
-  {
-    id: 2,
-    href: "/przepisy",
-    label: "przepisy",
-    icon: <RiFileList3Fill />,
-  },
-
-  {
-    id: 4,
-    href: "/dodaj",
-    label: "dodaj przepis",
-    icon: <RiStickyNoteAddFill />,
-  },
-  {
-    id: 5,
-    href: "/ranking",
-    label: "ranking",
-    icon: <FaRankingStar />,
-  },
-  {
-    id: 6,
-    href: "/logowanie",
-    label: "logowanie",
-    icon: <GiCook />,
-  },
-];
-
 const Navbar = () => {
   const {
     isLogin,
@@ -72,6 +38,40 @@ const Navbar = () => {
   } = useGlobalContext();
   const pathname = usePathname();
   const [showMenu, setShowMenu] = useState(false);
+
+  const links = [
+    {
+      id: 1,
+      href: "/",
+      label: "strona główna",
+      icon: <RiHome5Fill />,
+    },
+    {
+      id: 2,
+      href: "/przepisy",
+      label: "przepisy",
+      icon: <RiFileList3Fill />,
+    },
+
+    {
+      id: 4,
+      href: "/dodaj",
+      label: "dodaj przepis",
+      icon: <RiStickyNoteAddFill />,
+    },
+    {
+      id: 5,
+      href: "/ranking",
+      label: "ranking",
+      icon: <FaRankingStar />,
+    },
+    {
+      id: 6,
+      href: "/logowanie",
+      label: "logowanie",
+      icon: <GiCook />,
+    },
+  ];
 
   const handleLogout = async () => {
     await logout();
@@ -151,7 +151,11 @@ const Navbar = () => {
           {isLogin && (
             <>
               <Link
-                href="/profil"
+                href={
+                  activeUser.uid === process.env.NEXT_PUBLIC_ADMIN_ID
+                    ? "/admin"
+                    : "/profil"
+                }
                 className={`ml-12  flex items-center text-md capitalize transition  hover:text-red-900 
                 ${
                   pathname === "/profil" &&
@@ -293,7 +297,11 @@ const Navbar = () => {
               {isLogin && (
                 <>
                   <Link
-                    href="/profil"
+                    href={
+                      activeUser.uid === process.env.NEXT_PUBLIC_ADMIN_ID
+                        ? "/admin"
+                        : "/profil"
+                    }
                     onClick={() => setShowMenu(false)}
                     className={`w-[45%] h-[14vh] bg-[rgba(0,0,0,0.3)] p-2 mt-5 rounded-md flex flex-col items-center justify-center font-bold text-red-700 text-sm uppercase transition  hover:text-red-900 
                     ${

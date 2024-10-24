@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth";
-// import { authOptions } from "../api/auth/[...nextauth]/route";
 import { authOptions } from "@/lib/authOptions";
 import Link from "next/link";
 import RankingDate from "@/components/uiverse/RankingDate";
@@ -20,7 +19,6 @@ const RankingModal = async () => {
           href="/logowanie"
           className="mt-5 p-2 rounded-md bg-red-900 text-white"
         >
-          {" "}
           zaloguj się
         </Link>
       </div>
@@ -30,10 +28,26 @@ const RankingModal = async () => {
   const allUsers = await getRankingUsers();
   const userID = session.uid;
 
+  // Sortowanie użytkowników według liczby polubień
+  const sortedUsers = allUsers.sort((a, b) => {
+    const likesA = a.itemsArray.reduce(
+      (sum, item) => sum + item.likes.length,
+      0
+    );
+    const likesB = b.itemsArray.reduce(
+      (sum, item) => sum + item.likes.length,
+      0
+    );
+    return likesB - likesA; // Sortowanie malejące
+  });
+
+  let currentPosition = 1;
+  let previousLikes: any = null;
+
   return (
     <div className="mt-[10vh] h-auto xl:h-[80vh] w-[90vw] xl:w-[80vw] mx-auto flex flex-col">
       <h2 className="flex justify-center items-center mx-auto text-red-900 w-full text-center mt-[10vh] text-xl xl:text-2xl font-bold  mb-[5vh]">
-        <FaStar className="text-xl text-yellow-500 mx-2" />{" "}
+        <FaStar className="text-xl text-yellow-500 mx-2" />
         <FaStar className="text-xl text-yellow-500 mx-2" />
         <FaStar className="text-xl text-yellow-500 mx-2" />
         <span className="mx-3 xl:mx-5">Ranking Kucharzy</span>
@@ -48,12 +62,12 @@ const RankingModal = async () => {
             <span className="font-logoFont text-xl xl:text-2xl text-red-900 font-bold">
               Stępki Gotują
             </span>
-            ! Im więcej zdobędzisz polubień od innych kucharzy tym wyżej
+            ! Im więcej zdobędzisz polubień od innych kucharzy, tym wyżej
             znajdziesz się w rankingu.
           </p>
           <p className="my-[2vh] xl:my-[3vh] text-base xl:text-lg text-center xl:text-left">
             Kucharz z największą liczbą smacznych przepisów, oprócz szacunku
-            reszty kucharzy zdobędzie (lub obroni) tytuł MISTRZA KUCHNI!{" "}
+            reszty kucharzy, zdobędzie (lub obroni) tytuł MISTRZA KUCHNI!{" "}
             <AwardModal />
           </p>
           <div className="my-[2vh] xl:my-[3vh] flex items-center justify-center xl:justify-start ">
@@ -63,10 +77,19 @@ const RankingModal = async () => {
         </div>
 
         <ul className="my-10 xl:my-0 rankingList h-full w-full xl:w-[55%] overflow-y-auto flex flex-col items-center justify-start px-0 xl:pl-[2vw] bg-white">
-          {allUsers.map((user, index) => {
-            const numberOfLikes = user.itemsArray.reduce((sum, item) => {
-              return sum + item.likes.length;
-            }, 0);
+          {sortedUsers.map((user, index) => {
+            const numberOfLikes = user.itemsArray.reduce(
+              (sum, item) => sum + item.likes.length,
+              0
+            );
+
+            // Sprawdzenie czy obecny użytkownik ma tyle samo polubień co poprzedni
+            if (previousLikes !== null && previousLikes !== numberOfLikes) {
+              currentPosition = index + 1; // Ustawienie nowej pozycji
+            }
+
+            previousLikes = numberOfLikes; // Zapisanie liczby polubień obecnego użytkownika
+
             return (
               <li
                 key={user.id}
@@ -75,7 +98,7 @@ const RankingModal = async () => {
                 }`}
               >
                 <span className="text-xl xl:text-3xl font-bold text-gray-500 mr-2 xl:mr-10">
-                  {numberOfLikes === 0 ? allUsers.length - 1 : index + 1}.
+                  {numberOfLikes === 0 ? sortedUsers.length : currentPosition}.
                 </span>
                 <Image
                   src={user.avatar}
