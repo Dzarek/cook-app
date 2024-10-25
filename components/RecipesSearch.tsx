@@ -111,9 +111,11 @@ const RecipesSearch = ({
     <main className="flex items-start w-[100vw]  xl:my-[5vh] justify-between flex-col xl:flex-row">
       <div className="bg-red-900 border-red-950  w-[10vw] h-[45px] border-t-2 hidden xl:block"></div>
       <section
-        className={`${
-          showFilter ? "h-auto " : "h-12 xl:h-auto mb-5"
-        } xl:h-auto overflow-hidden w-full xl:w-1/5 duration-300 border-2 border-red-950 rounded-b-md rounded-br-md bg-white`}
+        // className={`${
+        //   showFilter ? "h-auto " : "h-12 xl:h-auto mb-5"
+        // } xl:h-auto overflow-hidden w-full xl:w-1/5 duration-300 border-2 border-red-950 rounded-b-md rounded-br-md bg-white`}
+
+        className="h-auto overflow-hidden w-full xl:w-1/5 duration-300 border-2 border-red-950 rounded-b-md rounded-br-md bg-white"
       >
         <h3
           onClick={() => setShowFilter(!showFilter)}
