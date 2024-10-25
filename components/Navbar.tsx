@@ -152,6 +152,7 @@ const Navbar = () => {
             <>
               <Link
                 href={
+                  activeUser &&
                   activeUser.uid === process.env.NEXT_PUBLIC_ADMIN_ID
                     ? "/admin"
                     : "/profil"
@@ -218,7 +219,7 @@ const Navbar = () => {
             muted
             loop
             playsInline
-            className="absolute  z-0 top-0 left-0 w-screen h-[dvh] scale-105 object-fill opacity-40"
+            className="absolute  z-0 top-0 left-0 w-screen h-[100dvh] scale-105 object-fill opacity-40"
           ></video>
           <div className="flex flex-col justify-between items-center p-2 absolute z-1 bg-[rgba(10,10,10,0.8)] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[89vw] h-[94.8dvh]">
             <div className="flex flex-col items-center justify-center mt-10">
@@ -230,7 +231,7 @@ const Navbar = () => {
                 className="h-4/6 w-14 mb-3"
               />
               <h1 className="text-4xl capitalize font-bold logoFont">
-                <span className="text-red-700">Stępki </span>Gotują
+                <span className="text-red-800">Stępki </span>Gotują
               </h1>
             </div>
             <div className="flex flex-wrap items-center justify-around w-[100%] mx-auto">
@@ -243,7 +244,7 @@ const Navbar = () => {
                           href={link.href}
                           key={link.id}
                           onClick={() => setShowMenu(false)}
-                          className={`w-[45%] rounded-md  bg-[rgba(0,0,0,0.7)] my-2 h-[14vh] text-center p-1 flex flex-col items-center justify-center font-bold text-red-700 text-[0.8rem] uppercase transition  hover:text-red-900 
+                          className={`w-[45%] rounded-md  bg-[rgba(0,0,0,0.7)] my-2 h-[14vh] text-center p-1 flex flex-col items-center justify-center font-bold text-red-800 text-[0.8rem] uppercase transition  hover:text-red-900 
                 ${
                   pathname === link.href &&
                   "text-zinc-800  bg-[rgba(255,255,255,1)] font-bold"
@@ -274,7 +275,7 @@ const Navbar = () => {
                           href={link.href}
                           key={link.id}
                           onClick={() => setShowMenu(false)}
-                          className={`w-[45%] text-center bg-[rgba(0,0,0,0.7)] text-sm p-2 rounded-md h-[20vh] flex flex-col items-center justify-center font-bold text-red-700 text-md uppercase transition  hover:text-red-900 mb-5
+                          className={`w-[45%] text-center bg-[rgba(0,0,0,0.7)] text-sm p-2 rounded-md h-[20vh] flex flex-col items-center justify-center font-bold text-red-800 text-md uppercase transition  hover:text-red-900 mb-5
                             ${
                               pathname === link.href &&
                               "text-zinc-800  bg-[rgba(255,255,255,0.95)] font-bold"
@@ -298,12 +299,13 @@ const Navbar = () => {
                 <>
                   <Link
                     href={
+                      activeUser &&
                       activeUser.uid === process.env.NEXT_PUBLIC_ADMIN_ID
                         ? "/admin"
                         : "/profil"
                     }
                     onClick={() => setShowMenu(false)}
-                    className={`w-[45%] h-[14vh] bg-[rgba(0,0,0,0.7)] p-2 mt-5 rounded-md flex flex-col items-center justify-center font-bold text-red-700 text-sm uppercase transition  hover:text-red-900 
+                    className={`w-[45%] h-[14vh] bg-[rgba(0,0,0,0.7)] p-2 mt-5 rounded-md flex flex-col items-center justify-center font-bold text-red-800 text-sm uppercase transition  hover:text-red-900 
                     ${
                       pathname === "/profil" &&
                       "text-zinc-800  bg-[rgba(255,255,255,1)] font-bold"

@@ -4,10 +4,10 @@ import { FaRegShareFromSquare } from "react-icons/fa6";
 
 import toast from "react-hot-toast";
 
-const NativeShareButton = ({ url }: { url: string }) => {
+const NativeShareButton = ({ url, title }: { url: string; title: string }) => {
   const shareData = {
     title: "Sprawdź ten przepis!",
-    // text: 'Zobacz tę interesującą stronę!',
+    text: title,
     url: url,
   };
 
