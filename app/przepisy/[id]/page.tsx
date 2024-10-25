@@ -53,7 +53,7 @@ const OneRecipePage = async ({
             width={500}
             height={500}
             alt={title}
-            className="w-full bg-red-100  xl:w-2/5 h-[35vh] xl:h-[50vh] object-fill rounded-md"
+            className="w-full bg-red-100  xl:w-2/5 h-[35vh] xl:h-[50vh] object-cover rounded-md"
           />
           <section className="w-[95%] mx-auto xl:w-[55%] mt-[5vh] xl:mt-0">
             <p className="w-[90%] xl:w-auto mx-auto text-lg text-center xl:text-left font-bodyFont mb-10 pb-10 xl:pb-5 border-b-2 ">
@@ -166,7 +166,7 @@ const OneRecipePage = async ({
             width={100}
             height={100}
             alt="avatar"
-            className="rounded-full w-14 h-14 object-fill"
+            className="rounded-full w-14 h-14 object-cover"
           />
           <span className="px-2 py-1 text-lg xl:text-xl text-red-900 rounded-md font-semibold font-bodyFont">
             {author.authorName}

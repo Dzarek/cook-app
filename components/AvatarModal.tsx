@@ -71,7 +71,7 @@ const AvatarModal = ({
             )}
             <li
               onClick={() => setCategory("wszystkie")}
-              className={`border-2 rounded-lg py-2 xl:border-0 xl:py-0 uppercase text-lg xl:text-xl w-[42%] xl:w-auto font-semibold my-5 xl:my-10 xl:hover:text-red-700 cursor-pointer duration-[0.5s] ${
+              className={`border-2 rounded-lg py-2 xl:border-0 xl:py-0 uppercase text-base xl:text-xl w-[42%] xl:w-auto font-semibold my-5 xl:my-10 xl:hover:text-red-700 cursor-pointer duration-[0.5s] ${
                 category === "wszystkie" &&
                 "text-white xl:text-red-700 bg-red-900 xl:bg-transparent xl:ml-[20%]"
               }`}
@@ -83,7 +83,7 @@ const AvatarModal = ({
                 <li
                   key={avatar.id}
                   onClick={() => setCategory(avatar.name)}
-                  className={`border-2 rounded-lg py-2 xl:border-0 xl:py-0 uppercase text-lg xl:text-xl w-[42%] xl:w-auto font-semibold my-5 xl:my-10 xl:hover:text-red-700 cursor-pointer duration-[0.5s] ${
+                  className={`border-2 rounded-lg py-2 xl:border-0 xl:py-0 uppercase text-base xl:text-xl w-[42%] xl:w-auto font-semibold my-5 xl:my-10 xl:hover:text-red-700 cursor-pointer duration-[0.5s] ${
                     category === avatar.name &&
                     "text-white xl:text-red-700 bg-red-900 xl:bg-transparent xl:ml-[20%]"
                   }`}
