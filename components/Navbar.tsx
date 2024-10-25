@@ -208,8 +208,8 @@ const Navbar = () => {
         <nav
           className={
             showMenu
-              ? "fixed h-[100dvh] w-screen top-0 left-0  flex flex-col justify-between items-center z-50 bg-zinc-900 duration-1000  transition-all"
-              : "fixed h-[100dvh] w-screen top-0 left-0  flex flex-col justify-between items-center z-50 bg-zinc-900 duration-1000  transition-all translate-y-[-115dvh]"
+              ? "overflow-hidden fixed h-[100dvh] w-screen top-0 left-0  flex flex-col justify-between items-center z-50 bg-zinc-900 duration-1000  transition-all"
+              : "overflow-hidden fixed h-[100dvh] w-screen top-0 left-0  flex flex-col justify-between items-center z-50 bg-zinc-900 duration-1000  transition-all translate-y-[-115dvh]"
           }
         >
           <video
@@ -218,9 +218,9 @@ const Navbar = () => {
             muted
             loop
             playsInline
-            className="absolute  z-0 top-0 left-0 w-screen h-screen object-fill"
+            className="absolute  z-0 top-0 left-0 w-screen h-screen scale-105 object-fill opacity-50"
           ></video>
-          <div className="flex flex-col justify-between items-center p-4 absolute z-1 bg-[rgba(20,20,20,0.7)] top-0 left-0 w-screen h-screen">
+          <div className="flex flex-col justify-between items-center p-2 absolute z-1 bg-[rgba(10,10,10,0.8)] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[89vw] h-[94.8vh]">
             <div className="flex flex-col items-center justify-center mt-10">
               <Image
                 src="/assets/images/logo.png"
@@ -233,7 +233,7 @@ const Navbar = () => {
                 <span className="text-red-700">Stępki </span>Gotują
               </h1>
             </div>
-            <div className="flex flex-wrap items-center justify-around w-[90%] mx-auto">
+            <div className="flex flex-wrap items-center justify-around w-[100%] mx-auto">
               {isLogin
                 ? links
                     .filter((link) => link.href !== "/logowanie")
@@ -325,7 +325,7 @@ const Navbar = () => {
               )}
             </div>
             <div
-              className={`flex items-center w-[90%] mb-5 ${
+              className={`flex items-center w-[100%] mb-2 ${
                 isLogin ? "justify-between " : "justify-end"
               }`}
             >

@@ -6,6 +6,8 @@ import { FaSpoon } from "react-icons/fa6";
 import { BiFork } from "react-icons/bi";
 import { getAllRecipes } from "@/lib/actions";
 import LikeControl from "@/components/LikeControl";
+import ShareBtn from "@/components/ShareBtn";
+import NativeShareButton from "@/components/ShareBtn";
 
 const OneRecipePage = async ({
   params: { id },
@@ -40,6 +42,9 @@ const OneRecipePage = async ({
             {title}
           </h1>
           <BiFork className="text-2xl xl:text-4xl text-red-900 ml-5 forkRotate" />
+          <NativeShareButton
+            url={`https://stepkigotuja.netlify.app/przepisy/${id}`}
+          />
           <LikeControl likes={likes} userID={author.authorID} recipeID={id} />
         </header>
         <main className=" w-[100%] xl:w-4/5 mx-auto flex flex-col xl:flex-row justify-between items-center">

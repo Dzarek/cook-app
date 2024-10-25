@@ -104,12 +104,12 @@ export default async function Home() {
         </h3>
         <RecipesList recipes={lastFiveRecipes} />
         {authors && (
-          <section className="my-[10vh] w-4/5 mx-auto">
+          <section className="my-[10vh] w-full xl:w-4/5 mx-auto">
             <div className="bg-red-950 w-[45vw] xl:w-[35vw] h-[2px] mb-10 mx-auto"></div>
             <h3 className="text-2xl font-bold text-center font-headingFont ">
               Członkowie:
             </h3>
-            <ul className="mt-5 flex flex-wrap justify-center items-center">
+            <ul className="mt-5 flex flex-wrap justify-center items-center w-full xl:w-auto">
               {authors.map((author) => {
                 return (
                   <li
