@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import ConfirmBtn from "@/components/uiverse/ConfirmBtn";
 import { sendNewUserRequest } from "@/lib/api";
-
 import { signIn } from "next-auth/react";
 
 const LoginPage = () => {

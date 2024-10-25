@@ -218,9 +218,9 @@ const Navbar = () => {
             muted
             loop
             playsInline
-            className="absolute  z-0 top-0 left-0 w-screen h-screen scale-105 object-fill opacity-50"
+            className="absolute  z-0 top-0 left-0 w-screen h-[dvh] scale-105 object-fill opacity-40"
           ></video>
-          <div className="flex flex-col justify-between items-center p-2 absolute z-1 bg-[rgba(10,10,10,0.8)] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[89vw] h-[94.8vh]">
+          <div className="flex flex-col justify-between items-center p-2 absolute z-1 bg-[rgba(10,10,10,0.8)] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[89vw] h-[94.8dvh]">
             <div className="flex flex-col items-center justify-center mt-10">
               <Image
                 src="/assets/images/logo.png"
@@ -243,10 +243,10 @@ const Navbar = () => {
                           href={link.href}
                           key={link.id}
                           onClick={() => setShowMenu(false)}
-                          className={`w-[45%] rounded-md  bg-[rgba(0,0,0,0.5)] my-2 h-[14vh] text-center p-1 flex flex-col items-center justify-center font-bold text-red-700 text-[0.8rem] uppercase transition  hover:text-red-900 
+                          className={`w-[45%] rounded-md  bg-[rgba(0,0,0,0.7)] my-2 h-[14vh] text-center p-1 flex flex-col items-center justify-center font-bold text-red-700 text-[0.8rem] uppercase transition  hover:text-red-900 
                 ${
                   pathname === link.href &&
-                  "text-zinc-800  bg-[rgba(255,255,255,0.9)] font-bold"
+                  "text-zinc-800  bg-[rgba(255,255,255,1)] font-bold"
                 }
               `}
                         >
@@ -274,10 +274,10 @@ const Navbar = () => {
                           href={link.href}
                           key={link.id}
                           onClick={() => setShowMenu(false)}
-                          className={`w-[45%] text-center bg-[rgba(0,0,0,0.3)] text-sm p-2 rounded-md h-[20vh] flex flex-col items-center justify-center font-bold text-red-700 text-md uppercase transition  hover:text-red-900 mb-5
+                          className={`w-[45%] text-center bg-[rgba(0,0,0,0.7)] text-sm p-2 rounded-md h-[20vh] flex flex-col items-center justify-center font-bold text-red-700 text-md uppercase transition  hover:text-red-900 mb-5
                             ${
                               pathname === link.href &&
-                              "text-zinc-800  bg-[rgba(255,255,255,1)] font-bold"
+                              "text-zinc-800  bg-[rgba(255,255,255,0.95)] font-bold"
                             }
                           `}
                         >
@@ -303,7 +303,7 @@ const Navbar = () => {
                         : "/profil"
                     }
                     onClick={() => setShowMenu(false)}
-                    className={`w-[45%] h-[14vh] bg-[rgba(0,0,0,0.3)] p-2 mt-5 rounded-md flex flex-col items-center justify-center font-bold text-red-700 text-sm uppercase transition  hover:text-red-900 
+                    className={`w-[45%] h-[14vh] bg-[rgba(0,0,0,0.7)] p-2 mt-5 rounded-md flex flex-col items-center justify-center font-bold text-red-700 text-sm uppercase transition  hover:text-red-900 
                     ${
                       pathname === "/profil" &&
                       "text-zinc-800  bg-[rgba(255,255,255,1)] font-bold"

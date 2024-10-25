@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { FaMicrophone } from "react-icons/fa";
-
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";

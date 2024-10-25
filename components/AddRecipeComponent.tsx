@@ -576,12 +576,6 @@ const AddRecipeComponent = ({
             />
           )}
       </div>
-      {/* <button
-        type="submit"
-        className="mt-2 border-2 border-red-900 bg-[#fbf3f3] text-red-900 hover:bg-red-900 hover:text-white p-4 text-xl font-bodyFont  rounded-md font-semibold w-1/7 uppercase mx-auto transition-all"
-      >
-        Zapisz
-      </button> */}
       <div className="mx-auto">
         {disableBtn ? (
           <button

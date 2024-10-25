@@ -11,9 +11,7 @@ export default async function Home() {
   const allRecipes = await getAllRecipes();
 
   const lastFiveRecipes = allRecipes
-    .sort((a, b) => {
-      return b.createdTime - a.createdTime;
-    })
+    .sort((a, b) => b.createdTime - a.createdTime)
     .slice(0, 5);
 
   const countCategoriesByTags = (recipes: Recipe[], tags: string[]) => {

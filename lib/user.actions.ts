@@ -82,26 +82,7 @@ export const checkPassword = async (password: string, email: string) => {
     getUser.currentUser!.email!,
     password
   );
-  // if (getUser.currentUser?.emailVerified === false) {
-  //   sendEmailVerification(getUser.currentUser!)
-  //     .then(() => {
-  //       // console.log("Verification email sent to the old email!");
-  //       toast(
-  //         `Poprzedni adres email nie został zweryfikowany! Sprawdź swoją skrzynke pocztową ${getUser.currentUser?.email}.`,
-  //         {
-  //           icon: "✖",
-  //           style: {
-  //             borderRadius: "10px",
-  //             background: "#052814",
-  //             color: "#fff",
-  //           },
-  //         }
-  //       );
-  //     })
-  //     .catch((error) => {
-  //       // console.error("Error sending verification email:", error);
-  //     });
-  // } else {
+
   reauthenticateWithCredential(getUser.currentUser!, credential)
     .then(() => {
       // console.log("User re-authenticated successfully");

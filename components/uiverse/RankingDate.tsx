@@ -66,10 +66,6 @@ const StyledWrapper = styled.div`
     inset: 3px;
     border-radius: 10px;
   }
-  /* .card:hover:before {
-  background-image: linear-gradient(180deg, rgb(81, 255, 0), purple);
-  animation: rotBGimg 3.5s linear infinite;
-} */
 `;
 
 export default RankingDate;

@@ -6,7 +6,6 @@ import { FaSpoon } from "react-icons/fa6";
 import { BiFork } from "react-icons/bi";
 import { getAllRecipes } from "@/lib/actions";
 import LikeControl from "@/components/LikeControl";
-import ShareBtn from "@/components/ShareBtn";
 import NativeShareButton from "@/components/ShareBtn";
 
 const OneRecipePage = async ({
