@@ -18,13 +18,17 @@ import { useGlobalContext } from "./authContext";
 import VoiceIngredient from "./voice/VoiceIngredient";
 import VoiceLongText from "./voice/VoiceLongText";
 import ConfirmBtn from "./uiverse/ConfirmBtn";
+import { subscribe } from "@/notification/Notification";
+import { v4 as uuidv4 } from "uuid";
 
 const AddRecipeComponent = ({
   edycja,
   userID,
+  userName,
 }: {
   edycja: string;
   userID: string;
+  userName: string;
 }) => {
   const [newTitle, setNewTitle] = useState("");
   const [newShortInfo, setNewShortInfo] = useState("");
@@ -137,6 +141,7 @@ const AddRecipeComponent = ({
     e.preventDefault();
     let editing = edycja ? true : false;
     let recipeID = edycja;
+
     if (
       userID !== "" &&
       newImage !== "" &&
@@ -165,6 +170,10 @@ const AddRecipeComponent = ({
         newSteps,
         newDescription
       );
+      if (!editing) {
+        const uuid = uuidv4();
+        await handleSub(newTitle, uuid);
+      }
       resetForm();
     } else {
       toast("Uzupełnij wszystkie pola!", {
@@ -176,6 +185,39 @@ const AddRecipeComponent = ({
         },
       });
     }
+  };
+
+  useEffect(() => {
+    if (userID && userID !== undefined) {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then(function (registration) {
+            console.log(
+              "Service Worker registered with scope:",
+              registration.scope
+            );
+          })
+          .catch(function (error) {
+            console.error("Service Worker registration failed:", error);
+          });
+      }
+      if ("Notification" in window && "PushManager" in window) {
+        Notification.requestPermission().then(function (permission) {
+          if (permission === "granted") {
+            console.log("Notification permission granted.");
+          }
+        });
+      }
+    }
+  }, [userID]);
+
+  const handleSub = async (newTitle: string, uuid: any) => {
+    const cookerName = userName.toUpperCase();
+    const title = `Kucharz ${cookerName} dodał(a) nowy przepis!`;
+    const body = newTitle;
+    const tag = uuid;
+    await subscribe(title, body, tag, userID);
   };
 
   return (

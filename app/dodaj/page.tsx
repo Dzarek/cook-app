@@ -26,6 +26,7 @@ const NewRecipePage = async ({
   }
 
   const userID = session.uid;
+  const userName = session.user.name;
   const { edycja } = searchParams;
 
   return (
@@ -39,7 +40,11 @@ const NewRecipePage = async ({
         </h1>
         <GiNotebook className="text-2xl xl:text-4xl text-red-900 ml-5 recipeRotate2" />
       </header>
-      <AddRecipeComponent edycja={edycja} userID={userID} />
+      <AddRecipeComponent
+        edycja={edycja}
+        userID={userID}
+        userName={userName ? userName : ""}
+      />
     </div>
   );
 };

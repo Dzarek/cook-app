@@ -6,6 +6,8 @@ import { getAllUsers, getAllRecipes } from "@/lib/actions";
 
 const welcomeVideo = "/assets/video/intro3.mp4";
 
+export const revalidate = 60; // Regenerate the page every 60 seconds
+
 export default async function Home() {
   const authors = await getAllUsers();
   const allRecipes = await getAllRecipes();
@@ -52,16 +54,16 @@ export default async function Home() {
         </div>
 
         <div className="tags w-full xl:w-2/6 h-full bg-zinc-900 text-white p-5 flex flex-col items-center justify-center">
-          <h3 className="text-center mb-10 text-2xl font-bold uppercase font-headingFont">
+          <h3 className="text-center mb-10 xl:mb-7 text-2xl font-bold uppercase font-headingFont">
             Kategorie:
           </h3>
-          <ul className="flex flex-wrap items-center justify-around  text-white text-md capitalize text-center">
+          <ul className="flex flex-wrap items-center justify-around  text-white text-base capitalize text-center">
             {categories.map((item, index) => {
               return (
                 <>
                   {item.tag === "śniadanie" ? (
                     <Link
-                      className="text-sm md:text-base mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
+                      className="text-sm md:text-sm mb-5 xl:mb-4 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
                       key={index}
                       href={{
                         pathname: "/przepisy",
@@ -72,7 +74,7 @@ export default async function Home() {
                     </Link>
                   ) : (
                     <Link
-                      className="text-sm md:text-base mb-5 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
+                      className="text-sm md:text-sm mb-5 xl:mb-4 w-[35%] bg-red-950 p-2 rounded-md hover:bg-red-900 transition-colors"
                       key={index}
                       href={{
                         pathname: "/przepisy",

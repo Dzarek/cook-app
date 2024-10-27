@@ -25,8 +25,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-    // "app/api/auth/[...nextauth]/route.ts" // "components/cloudinary/CloudinaryUploadWidget.tsx"
+    ".next/types/**/*.ts",
+    "app/api/push/route.js" // "app/api/auth/[...nextauth]/route.ts" // "components/cloudinary/CloudinaryUploadWidget.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -2,12 +2,14 @@ export const tags = [
   "śniadanie",
   "obiad",
   "kolacja",
-  "impreza",
-  "praca",
   "kurczak",
-  "owoce",
   "ryby",
+  "owoce",
   "fit",
+  "praca",
+  "impreza",
+  "przekąski",
+  "wypieki",
   "napoje",
 ];
 
