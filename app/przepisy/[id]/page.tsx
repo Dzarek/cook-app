@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { BsClockHistory } from "react-icons/bs";
-import { GiRiceCooker } from "react-icons/gi";
+import { BsBarChart } from "react-icons/bs";
 import { BsPeople } from "react-icons/bs";
 import { FaSpoon } from "react-icons/fa6";
 import { BiFork } from "react-icons/bi";
@@ -38,7 +38,7 @@ const OneRecipePage = async ({
       <div className="page w-screen">
         <header className="relative text-center bg-red-100  xl:mb-[10vh] w-full pt-[10vh] pb-[15vh] xl:pb-[10vh] flex justify-center items-center">
           <FaSpoon className="text-2xl xl:text-3xl text-red-900  mr-6 spoonRotate" />
-          <h1 className="max-w-[65%] xl:max-w-auto text-lg text-center xl:text-3xl font-bold font-bodyFont uppercase">
+          <h1 className="max-w-[65%] xl:max-w-auto text-lg text-center xl:text-2xl font-bold font-bodyFont uppercase">
             {title}
           </h1>
           <BiFork className="text-2xl xl:text-4xl text-red-900 ml-5 forkRotate" />
@@ -54,24 +54,15 @@ const OneRecipePage = async ({
             width={500}
             height={500}
             alt={title}
-            className="w-full bg-red-100  xl:w-2/5 h-[35vh] xl:h-[50vh] object-cover rounded-md"
+            className="w-full bg-red-100  xl:w-2/5 h-[40vh] xl:h-[50vh] object-cover rounded-md"
           />
           <section className="w-[95%] mx-auto xl:w-[55%] mt-[5vh] xl:mt-0">
             <p className="w-[90%] xl:w-auto mx-auto text-lg text-center xl:text-left font-bodyFont mb-10 pb-10 xl:pb-5 border-b-2 ">
               {shortInfo}
             </p>
-            <div className="w-full xl:w-4/5 mx-auto flex justify-between items-center xl:my-12">
-              <div className="w-1/3 xl:w-auto flex flex-col items-center justify-center">
-                <BsPeople className="text-3xl xl:text-5xl text-red-900" />
-                <p className="uppercase font-semibold text-sm xl:text-lg  mt-5 text-gray-800">
-                  ilość porcji
-                </p>
-                <span className="text-gray-500 font-bold text-lg">
-                  {portion} szt.
-                </span>
-              </div>
-              <div className="w-1/3 xl:w-auto flex flex-col items-center justify-center">
-                <BsClockHistory className="text-3xl xl:text-5xl text-red-900" />
+            <div className="w-full xl:w-4/5 mx-auto flex flex-wrap justify-around items-center xl:my-12">
+              <div className="w-2/5 xl:w-auto flex flex-col items-center justify-center">
+                <BsClockHistory className="text-3xl xl:text-4xl text-red-900" />
                 <p className="uppercase font-semibold text-sm xl:text-lg  mt-5 text-gray-800">
                   przygotowanie
                 </p>
@@ -79,8 +70,18 @@ const OneRecipePage = async ({
                   {prepTime} min.
                 </span>
               </div>
-              <div className="w-1/3 xl:w-auto flex flex-col items-center justify-center">
-                <GiRiceCooker className="text-3xl xl:text-5xl text-red-900" />
+              <div className="w-2/5 xl:w-auto flex flex-col items-center justify-center">
+                <BsPeople className="text-3xl xl:text-4xl text-red-900" />
+                <p className="uppercase font-semibold text-sm xl:text-lg  mt-5 text-gray-800">
+                  ilość porcji
+                </p>
+                <span className="text-gray-500 font-bold text-lg">
+                  {portion} szt.
+                </span>
+              </div>
+
+              <div className="w-2/5 xl:w-auto mt-5 xl:mt-0 flex flex-col items-center justify-center">
+                <BsBarChart className="text-3xl xl:text-4xl text-red-900" />
                 <p className="uppercase font-semibold text-sm xl:text-lg  mt-5 text-gray-800">
                   poziom trudności
                 </p>
@@ -105,7 +106,7 @@ const OneRecipePage = async ({
           </section>
         </main>
         <div className="w-[90%] xl:w-4/5 flex flex-col xl:flex-row justify-between items-start mx-auto my-[10vh]">
-          <section className="w-full xl:w-1/4 flex flex-col">
+          <section className="w-full xl:w-2/5 flex flex-col">
             <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
               Składniki:
             </h2>
@@ -122,7 +123,7 @@ const OneRecipePage = async ({
               })}
             </ul>
           </section>
-          <section className="mt-10 xl:mt-0 xl:ml-[10vw] w-full xl:w-auto flex-grow flex flex-col">
+          <section className="mt-10 xl:mt-0 xl:ml-[8vw] w-full xl:w-auto flex-grow flex flex-col">
             <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
               Instrukcje:
             </h2>
@@ -147,11 +148,11 @@ const OneRecipePage = async ({
           </section>
         </div>
         {description && description !== "" && (
-          <div className="w-[90%] xl:w-4/5 flex justify-start items-start mx-auto my-[5vh] xl:my-[10vh] flex-col">
+          <div className="w-[90%] xl:w-4/5 flex justify-start items-start flex-nowrap mx-auto my-[5vh] xl:my-[10vh] flex-col">
             <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
               Opis:
             </h2>
-            <p className="w-[98%] mx-auto ml-0 xl:w-full text-base xl:text-lg font-bodyFont text-justify">
+            <p className="w-[98%] mx-auto ml-0 xl:w-full text-base xl:text-lg font-bodyFont text-justify break-words">
               {description}
             </p>
           </div>
@@ -163,14 +164,14 @@ const OneRecipePage = async ({
             </h2>
             <a
               href={source}
-              className="w-[98%] mx-auto xl:w-full text-base xl:text-lg font-bodyFont text-justify flex flex-nowrap"
+              className="italic w-[98%] mx-auto xl:w-full text-base xl:text-lg font-bodyFont text-justify break-words"
             >
-              aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              {source}
             </a>
           </div>
         )}
         <div className="w-full mx-auto flex items-center justify-center mt-20 mb-14">
-          <h4 className="font-semibold uppercase text-xl xl:text-2xl mr-4 text-zinc-400">
+          <h4 className="font-semibold uppercase text-lg xl:text-2xl mr-4 text-zinc-400">
             Kucharz:
           </h4>
           <Image

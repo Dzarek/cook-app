@@ -69,7 +69,7 @@ const LikeControl = ({
   if (activeUser && activeLikes.includes(activeUser.uid)) {
     return (
       <div className="absolute bottom-[10%] right-[10%] flex items-center justify-center">
-        <p className="mr-3 text-lg font-medium text-gray-600 xl:text-xl">
+        <p className="mr-3 text-lg font-medium text-gray-600 xl:text-lg">
           Smakuje Ci!
         </p>
         <FaHeart onClick={handleDislike} className="dislikeBtn" />

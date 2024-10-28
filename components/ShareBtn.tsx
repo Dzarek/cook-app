@@ -43,7 +43,7 @@ const NativeShareButton = ({ url, title }: { url: string; title: string }) => {
       className="absolute bottom-[10%] left-[10%] flex justify-center items-center"
       onClick={handleShare}
     >
-      <FaRegShareFromSquare className="text-3xl xl:text-5xl text-red-900" />
+      <FaRegShareFromSquare className="text-3xl xl:text-4xl text-red-900" />
     </button>
   );
 };

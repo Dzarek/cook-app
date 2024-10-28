@@ -891,12 +891,12 @@ svg:not(.starRotate) + .starRotate {
 }
 
 .likeBtn {
-  font-size: 3rem;
+  font-size: 2rem;
   color: rgb(114, 0, 0);
   animation: scaleLikeBtn2 1s 1 ease;
 }
 .dislikeBtn {
-  font-size: 3rem;
+  font-size: 2rem;
   color: rgb(114, 0, 0);
   animation: scaleLikeBtn 1s 1 ease;
 }

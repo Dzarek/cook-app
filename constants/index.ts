@@ -65,3 +65,11 @@ export const avatars = [
     ],
   },
 ];
+
+export const levels = [
+  "każdy to ugotuje",
+  "łatwy",
+  "średni",
+  "trudny",
+  "nie dasz rady...",
+];

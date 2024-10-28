@@ -1,10 +1,10 @@
 "use client";
 
-import { tags } from "@/constants";
+import { levels, tags } from "@/constants";
 import Image from "next/image";
 import { Link, Element } from "react-scroll";
 import { useState, useEffect, useRef } from "react";
-import { BsClockHistory } from "react-icons/bs";
+import { BsBarChart, BsClockHistory } from "react-icons/bs";
 import { GiRiceCooker } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
 import { BiEdit } from "react-icons/bi";
@@ -34,7 +34,7 @@ const AddRecipeComponent = ({
   const [newShortInfo, setNewShortInfo] = useState("");
   const [newCategory, setNewCategory] = useState<string[]>([]);
   const [newPrepTime, setNewPrepTime] = useState(0);
-  const [newCookTime, setNewCookTime] = useState(0);
+  const [newLevel, setNewLevel] = useState<string>(levels[0]);
   const [newPortion, setNewPortion] = useState(0);
   const [newIngredients, setNewIngredients] = useState<string[]>([]);
   const [editingIngredient, setEditingIngredient] = useState<number>(-1);
@@ -43,6 +43,7 @@ const AddRecipeComponent = ({
   const [editingStep, setEditingStep] = useState<number>(-1);
   const [newStep, setNewStep] = useState("");
   const [newDescription, setNewDescription] = useState<string>("");
+  const [newSource, setNewSource] = useState<string>("");
   const [newImage, setNewImage] = useState<string>("");
   const [activeVoice, setActiveVoice] = useState("");
   const [disableBtn, setDisableBtn] = useState(true);
@@ -58,11 +59,12 @@ const AddRecipeComponent = ({
       setNewShortInfo(editRecipe.shortInfo);
       setNewCategory(editRecipe.category);
       setNewPrepTime(editRecipe.prepTime);
-      setNewCookTime(editRecipe.cookTime);
+      setNewLevel(editRecipe.level);
       setNewPortion(editRecipe.portion);
       setNewIngredients(editRecipe.ingredients);
       setNewSteps(editRecipe.steps);
       setNewDescription(editRecipe.description);
+      setNewSource(editRecipe.source);
     }
   }, []);
 
@@ -80,6 +82,10 @@ const AddRecipeComponent = ({
     } else {
       setNewCategory([...newCategory, tag]);
     }
+  };
+
+  const handleLevel = (option: string) => {
+    setNewLevel(option);
   };
 
   const handleAddIngredient = () => {
@@ -125,7 +131,7 @@ const AddRecipeComponent = ({
     setNewShortInfo("");
     setNewCategory([]);
     setNewPrepTime(0);
-    setNewCookTime(0);
+    setNewLevel(levels[0]);
     setNewPortion(0);
     setNewIngredients([]);
     setEditingIngredient(-1);
@@ -134,6 +140,7 @@ const AddRecipeComponent = ({
     setEditingStep(-1);
     setNewStep("");
     setNewDescription("");
+    setNewSource("");
     setEditRecipe(null);
   };
 
@@ -149,7 +156,7 @@ const AddRecipeComponent = ({
       newShortInfo !== "" &&
       newCategory.length > 0 &&
       newPrepTime > 0 &&
-      newCookTime > 0 &&
+      // newLevel > "" &&
       newPortion > 0 &&
       newIngredients.length > 0 &&
       newSteps.length > 0
@@ -164,11 +171,12 @@ const AddRecipeComponent = ({
         newShortInfo,
         newCategory,
         newPrepTime,
-        newCookTime,
+        newLevel,
         newPortion,
         newIngredients,
         newSteps,
-        newDescription
+        newDescription,
+        newSource
       );
       if (!editing) {
         const uuid = uuidv4();
@@ -334,28 +342,6 @@ const AddRecipeComponent = ({
         </ul>
       </div>
       <section className="w-full xl:w-2/3 mx-auto flex flex-wrap items-center justify-center xl:justify-between my-[8vh]">
-        <div className="flex w-1/2 xl:w-auto flex-col items-center justify-center">
-          <label
-            htmlFor="cookTime"
-            className="uppercase font-semibold text-base xl:text-lg  mt-5 text-gray-800"
-          >
-            gotowanie
-          </label>
-          <div className="flex flex-col xl:flex-row items-center mt-4">
-            <GiRiceCooker className="text-3xl xl:text-4xl text-red-900 mb-4 xl:mb-0" />
-            <input
-              type="number"
-              name="cookTime"
-              id="cookTime"
-              className="newRecipeInput w-20 mx-3 text-center"
-              required
-              min={0}
-              value={newCookTime === 0 ? "" : newCookTime}
-              onChange={(e) => setNewCookTime(Number(e.target.value))}
-            />
-            <p>min.</p>
-          </div>
-        </div>
         <div className="flex flex-col w-1/2 xl:w-auto items-center justify-center">
           <label
             htmlFor="prepTime"
@@ -399,6 +385,31 @@ const AddRecipeComponent = ({
               onChange={(e) => setNewPortion(Number(e.target.value))}
             />
             <p>szt.</p>
+          </div>
+        </div>
+        <div className="flex flex-col w-1/2 xl:w-auto items-center justify-center">
+          <label
+            id="sort"
+            className=" uppercase font-semibold text-base xl:text-lg  mt-5 text-gray-800"
+          >
+            Poziom trudności:
+          </label>
+          <div className="flex flex-col xl:flex-row items-center mt-4">
+            <BsBarChart className="text-3xl xl:text-4xl mb-4 xl:mb-0 text-red-900" />
+            <select
+              name="level"
+              id="level"
+              className="newRecipeInput w-auto mx-3 text-center"
+              onChange={(e) => handleLevel(e.target.value)}
+            >
+              {levels.map((option, index) => {
+                return (
+                  <option value={option} key={index}>
+                    {option}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
       </section>
@@ -617,6 +628,19 @@ const AddRecipeComponent = ({
               setActiveVoice={setActiveVoice}
             />
           )}
+      </div>
+      <div className="w-full xl:w-4/5 flex justify-start items-start mx-auto my-[10vh] flex-col">
+        <h2 className="flex items-center justify-between text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
+          Źródło: <span>(opcjonalne)</span>
+        </h2>
+        <textarea
+          name="newSource"
+          id="newSource"
+          placeholder="Źródło przepisu..."
+          value={newSource}
+          onChange={(e) => setNewSource(e.target.value)}
+          className="newRecipeInput  min-h-[20vh] w-[98%] mx-auto xl:w-full"
+        ></textarea>
       </div>
       <div className="mx-auto">
         {disableBtn ? (

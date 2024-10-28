@@ -93,17 +93,9 @@ const RecipesSearch = ({
         sortedRecipes.sort((a, b) => b.title.localeCompare(a.title))
       );
     } else if (option === "czas przygotowania: rosnąco") {
-      setActiveRecipes(
-        sortedRecipes.sort(
-          (a, b) => a.prepTime + a.cookTime - (b.prepTime + b.cookTime)
-        )
-      );
+      setActiveRecipes(sortedRecipes.sort((a, b) => a.prepTime - b.prepTime));
     } else if (option === "czas przygotowania: malejąco") {
-      setActiveRecipes(
-        sortedRecipes.sort(
-          (a, b) => b.prepTime + b.cookTime - (a.prepTime + a.cookTime)
-        )
-      );
+      setActiveRecipes(sortedRecipes.sort((a, b) => b.prepTime - a.prepTime));
     }
   };
 
