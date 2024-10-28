@@ -50,13 +50,14 @@ export const getRecipes = async (userID: string) => {
         title: recipeData.title,
         image: recipeData.image,
         prepTime: recipeData.prepTime,
-        cookTime: recipeData.cookTime,
+        level: recipeData.level,
         portion: recipeData.portion,
         category: recipeData.category,
         shortInfo: recipeData.shortInfo,
         ingredients: recipeData.ingredients,
         steps: recipeData.steps,
         description: recipeData.description || "",
+        source: recipeData.source || "",
         likes: recipeData.likes,
       };
       return recipe;
@@ -99,13 +100,14 @@ export const getAllRecipes = async () => {
             title: recipeData.title,
             image: recipeData.image,
             prepTime: recipeData.prepTime,
-            cookTime: recipeData.cookTime,
+            level: recipeData.level,
             portion: recipeData.portion,
             category: recipeData.category,
             shortInfo: recipeData.shortInfo,
             ingredients: recipeData.ingredients,
             steps: recipeData.steps,
             description: recipeData.description || "",
+            source: recipeData.source || "",
             likes: recipeData.likes,
           };
 
@@ -149,13 +151,14 @@ export const getRankingUsers = async () => {
             title: recipeData.title,
             image: recipeData.image,
             prepTime: recipeData.prepTime,
-            cookTime: recipeData.cookTime,
+            level: recipeData.level,
             portion: recipeData.portion,
             category: recipeData.category,
             shortInfo: recipeData.shortInfo,
             ingredients: recipeData.ingredients,
             steps: recipeData.steps,
             description: recipeData.description || "",
+            source: recipeData.source || "",
             likes: recipeData.likes, // Likes array
           };
         });

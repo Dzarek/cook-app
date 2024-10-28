@@ -217,11 +217,12 @@ export const postRecipe = async (
   newShortInfo: string,
   newCategory: string[],
   newPrepTime: number,
-  newCookTime: number,
+  newLevel: string,
   newPortion: number,
   newIngredients: string[],
   newSteps: string[],
-  newDescription: string
+  newDescription: string,
+  newSource: string
 ) => {
   if (editing) {
     const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
@@ -231,11 +232,12 @@ export const postRecipe = async (
       shortInfo: newShortInfo,
       category: newCategory,
       prepTime: newPrepTime,
-      cookTime: newCookTime,
+      level: newLevel,
       portion: newPortion,
       ingredients: newIngredients,
       steps: newSteps,
       description: newDescription,
+      source: newSource,
     };
     await updateDoc(recipeDoc, updatedRecipe)
       .then(() => {
@@ -271,11 +273,12 @@ export const postRecipe = async (
       shortInfo: newShortInfo,
       category: newCategory,
       prepTime: newPrepTime,
-      cookTime: newCookTime,
+      level: newLevel,
       portion: newPortion,
       ingredients: newIngredients,
       steps: newSteps,
       description: newDescription,
+      source: newSource,
       likes: [],
     })
       .then(() => {

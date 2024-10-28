@@ -9,7 +9,9 @@ type Recipe = {
   title: string;
   image: string;
   prepTime: number;
-  cookTime: number;
+  // cookTime: number;
+  level: string;
+  source: string;
   portion: number;
   category: string[];
   shortInfo: string;
@@ -24,7 +26,9 @@ type RecipeTypeList = {
   title: string;
   image: string;
   prepTime: number;
-  cookTime: number;
+  // cookTime: number;
+  level: string;
+  portion: number;
   author: {
     authorName: string;
     authorAvatar: string;

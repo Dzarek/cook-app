@@ -6,16 +6,8 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
   return (
     <div className="mx-auto my-[5vh] flex flex-col xl:flex-row w-full items-center justify-center flex-wrap">
       {recipes.map((recipe) => {
-        const {
-          id,
-          title,
-          image,
-          prepTime,
-          cookTime,
-          author,
-          category,
-          likes,
-        } = recipe;
+        const { id, title, image, prepTime, portion, author, category, likes } =
+          recipe;
         return (
           <Link
             href={`/przepisy/${id}`}
@@ -43,8 +35,8 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
                 <span className="hidden 2xl:inline">|</span>
                 <span>
                   {" "}
-                  Gotowanie:{" "}
-                  <strong className="text-red-800">{cookTime} min</strong>
+                  Ilość porcji:{" "}
+                  <strong className="text-red-800">{portion}</strong>
                 </span>
               </p>
               <p className="text-gray-600 text-sm mb-2 text-center flex flex-col  2xl:inline">

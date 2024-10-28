@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaMicrophone } from "react-icons/fa";
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -21,6 +21,7 @@ const VoiceIngredient = ({
   setActiveVoice,
 }: VoiceType) => {
   const [voiceOn, setVoiceOn] = useState(true);
+  const [toastId, setToastId] = useState<string | null>(null);
 
   const commands = [
     {
@@ -38,9 +39,9 @@ const VoiceIngredient = ({
   const handleVoice = () => {
     setActiveVoice("ingredientVoice");
     setVoiceOn(!voiceOn);
-    let toastId = "";
+    // let toastId = "";
     if (voiceOn) {
-      toastId = toast.loading(toastText, {
+      const id = toast.loading(toastText, {
         icon: <FaMicrophone />,
         style: {
           borderRadius: "10px",
@@ -48,20 +49,26 @@ const VoiceIngredient = ({
           color: "#fff",
         },
       });
+      setToastId(id);
       SpeechRecognition.startListening({ continuous: true });
     } else {
-      toast.dismiss(toastId);
-      toast("nagrywanie zakończone", {
-        icon: <FaMicrophone />,
-        style: {
-          borderRadius: "10px",
-          background: "#051528",
-          color: "#fff",
-        },
-      });
-      SpeechRecognition.stopListening();
-      setActiveVoice("");
+      stopRecording();
     }
+  };
+
+  const stopRecording = () => {
+    if (toastId) toast.dismiss(toastId);
+    setToastId(null);
+    toast("nagrywanie zakończone", {
+      icon: <FaMicrophone />,
+      style: {
+        borderRadius: "10px",
+        background: "#051528",
+        color: "#fff",
+      },
+    });
+    SpeechRecognition.stopListening();
+    setActiveVoice("");
   };
 
   const addItemVoice = (item: string) => {
@@ -69,6 +76,19 @@ const VoiceIngredient = ({
       setNewIgredients([...newIngredients, item]);
     }
   };
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Stop recording when the screen is locked or app goes to background
+        if (listening) stopRecording();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [listening, toastId]);
 
   if (!browserSupportsSpeechRecognition) {
     return (

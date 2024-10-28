@@ -33,16 +33,8 @@ const RecipesListProfile = ({
   return (
     <div className="mx-auto my-[5vh] flex w-full items-center justify-center flex-wrap">
       {recipesList.map((recipe) => {
-        const {
-          id,
-          title,
-          image,
-          prepTime,
-          cookTime,
-          author,
-          category,
-          likes,
-        } = recipe;
+        const { id, title, image, prepTime, portion, author, category, likes } =
+          recipe;
 
         return (
           <div
@@ -115,8 +107,8 @@ const RecipesListProfile = ({
                   <span className="hidden 2xl:inline">|</span>
                   <span>
                     {" "}
-                    Gotowanie:{" "}
-                    <strong className="text-red-800">{cookTime} min</strong>
+                    Ilość porcji:{" "}
+                    <strong className="text-red-800">{portion}</strong>
                   </span>
                 </p>
                 <p className="text-gray-600 text-sm mb-2 text-center flex flex-col  2xl:inline">

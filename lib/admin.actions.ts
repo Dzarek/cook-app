@@ -107,13 +107,14 @@ const getBackup = async () => {
             title: recipeData.title,
             image: recipeData.image,
             prepTime: recipeData.prepTime,
-            cookTime: recipeData.cookTime,
+            level: recipeData.level,
             portion: recipeData.portion,
             category: recipeData.category,
             shortInfo: recipeData.shortInfo,
             ingredients: recipeData.ingredients,
             steps: recipeData.steps,
             description: recipeData.description || "",
+            source: recipeData.source || "",
             likes: recipeData.likes,
           };
 
@@ -158,13 +159,14 @@ export const exportData = async () => {
           title: null,
           image: null,
           prepTime: null,
-          cookTime: null,
+          level: null,
           portion: null,
           category: null,
           shortInfo: null,
           ingredients: null,
           steps: null,
           description: null,
+          source: null,
           likes: null,
         };
 
@@ -179,13 +181,14 @@ export const exportData = async () => {
           title: ob.title || null,
           image: ob.image || null,
           prepTime: ob.prepTime || null,
-          cookTime: ob.cookTime || null,
+          level: ob.level || null,
           portion: ob.portion || null,
           category: ob.category?.join(", ") || null, // Convert array to string
           shortInfo: ob.shortInfo || null,
           ingredients: ob.ingredients?.join(", ") || null,
           steps: ob.steps?.join(", ") || null, // Convert array to multiline string
           description: ob.description || null,
+          source: ob.source || null,
           likes: ob.likes?.join(", ") || null,
         };
 
@@ -244,13 +247,14 @@ export const uploadData = async (file: any) => {
         title: item.title,
         image: item.image,
         prepTime: item.prepTime,
-        cookTime: item.cookTime,
+        level: item.level,
         portion: item.portion,
         category: item.category,
         shortInfo: item.shortInfo,
         ingredients: item.ingredients,
         steps: item.steps,
         description: item.description || "",
+        source: item.source || "",
         likes: item.likes,
       });
     });

@@ -23,7 +23,7 @@ const OneRecipePage = async ({
       title,
       image,
       prepTime,
-      cookTime,
+      level,
       category,
       author,
       description,
@@ -32,6 +32,7 @@ const OneRecipePage = async ({
       shortInfo,
       portion,
       likes,
+      source,
     } = oneRecipe;
     return (
       <div className="page w-screen">
@@ -81,11 +82,9 @@ const OneRecipePage = async ({
               <div className="w-1/3 xl:w-auto flex flex-col items-center justify-center">
                 <GiRiceCooker className="text-3xl xl:text-5xl text-red-900" />
                 <p className="uppercase font-semibold text-sm xl:text-lg  mt-5 text-gray-800">
-                  gotowanie
+                  poziom trudności
                 </p>
-                <span className="text-gray-500 font-bold text-lg">
-                  {cookTime} min.
-                </span>
+                <span className="text-gray-500 font-bold text-lg">{level}</span>
               </div>
             </div>
             <div className="flex items-center justify-center xl:justify-start flex-wrap mt-14">
@@ -152,14 +151,27 @@ const OneRecipePage = async ({
             <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
               Opis:
             </h2>
-            <p className="w-[98%] mx-auto xl:w-full text-base xl:text-lg font-bodyFont text-justify">
+            <p className="w-[98%] mx-auto ml-0 xl:w-full text-base xl:text-lg font-bodyFont text-justify">
               {description}
             </p>
           </div>
         )}
+        {source && source !== "" && (
+          <div className="w-[90%] xl:w-4/5 flex justify-start items-start mx-auto my-[5vh] xl:my-[10vh] flex-col">
+            <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
+              Źródło:
+            </h2>
+            <a
+              href={source}
+              className="w-[98%] mx-auto xl:w-full text-base xl:text-lg font-bodyFont text-justify flex flex-nowrap"
+            >
+              aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            </a>
+          </div>
+        )}
         <div className="w-full mx-auto flex items-center justify-center mt-20 mb-14">
           <h4 className="font-semibold uppercase text-xl xl:text-2xl mr-4 text-zinc-400">
-            Autor:
+            Kucharz:
           </h4>
           <Image
             src={author.authorAvatar}
