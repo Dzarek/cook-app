@@ -24,6 +24,7 @@ const RecipesSearch = ({
   const [activeAuthor, setActiveAuthor] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilter, setShowFilter] = useState(false);
+  const [visibleRecipesCount, setVisibleRecipesCount] = useState(5);
 
   useEffect(() => {
     if (kategoria) {
@@ -42,6 +43,7 @@ const RecipesSearch = ({
         allRecipes.filter((recipe) => recipe.category.includes(tag))
       );
     }
+    setVisibleRecipesCount(5);
   };
   const handleAuthor = (name: string) => {
     setActiveKategory("");
@@ -54,6 +56,7 @@ const RecipesSearch = ({
         allRecipes.filter((recipe) => recipe.author.authorName === name)
       );
     }
+    setVisibleRecipesCount(5);
   };
 
   const handleSearchTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,6 +74,7 @@ const RecipesSearch = ({
       );
       setActiveRecipes(filteredRecipes);
     }
+    setVisibleRecipesCount(5);
   };
 
   const handleSort = (option: string) => {
@@ -97,6 +101,11 @@ const RecipesSearch = ({
     } else if (option === "czas przygotowania: malejąco") {
       setActiveRecipes(sortedRecipes.sort((a, b) => b.prepTime - a.prepTime));
     }
+    setVisibleRecipesCount(5);
+  };
+
+  const loadMoreRecipes = () => {
+    setVisibleRecipesCount((prevCount) => prevCount + 5);
   };
 
   return (
@@ -260,8 +269,20 @@ const RecipesSearch = ({
           </section>
         </div>
         {allRecipes && (
-          <div className="px-[5vw]">
-            <RecipesList recipes={activeRecipes} />
+          <div className="px-[5vw] pb-[10vh]">
+            <RecipesList
+              recipes={activeRecipes.slice(0, visibleRecipesCount)}
+            />
+            {visibleRecipesCount < activeRecipes.length && (
+              <div className="flex justify-center mt-6">
+                <button
+                  onClick={loadMoreRecipes}
+                  className="px-4 py-2 bg-red-900 text-white rounded-md xl:hover:bg-red-700 transition-all"
+                >
+                  Załaduj więcej
+                </button>
+              </div>
+            )}
           </div>
         )}
       </section>

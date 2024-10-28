@@ -21,6 +21,7 @@ const RecipesListProfile = ({
     null
   );
   const [recipesList, setRecipesList] = useState(recipes);
+  const [visibleRecipesCount, setVisibleRecipesCount] = useState(5);
   const { setEditRecipe } = useGlobalContext();
 
   const handleDelete = (id: string) => {
@@ -30,16 +31,20 @@ const RecipesListProfile = ({
     setConfirmDelete(null);
   };
 
+  const loadMoreRecipes = () => {
+    setVisibleRecipesCount((prevCount) => prevCount + 5);
+  };
+
   return (
     <div className="mx-auto my-[5vh] flex w-full items-center justify-center flex-wrap">
-      {recipesList.map((recipe) => {
+      {recipesList.slice(0, visibleRecipesCount).map((recipe) => {
         const { id, title, image, prepTime, portion, author, category, likes } =
           recipe;
 
         return (
           <div
             key={id}
-            className="flex items-strech w-full xl:w-[25vw] justify-between border-2 border-gray-600 shadow-xl rounded-md my-5  xl:m-[1.5vw]"
+            className="recipeProfileAnimation flex items-strech w-full xl:w-[25vw] justify-between border-2 border-gray-600 shadow-xl rounded-md my-5  xl:m-[1.5vw]"
           >
             {confirmDelete && (
               <div className="z-20 rounded-md border-2 border-white flex flex-col fixed w-[95%] xl:w-[40vw] h-[50vh] bg-red-900 text-white top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] p-4 items-center justify-center">
@@ -139,6 +144,16 @@ const RecipesListProfile = ({
           </div>
         );
       })}
+      {visibleRecipesCount < recipesList.length && (
+        <div className="flex w-full justify-center my-6">
+          <button
+            onClick={loadMoreRecipes}
+            className="px-4 py-2 bg-red-900 text-white rounded-md xl:hover:bg-red-700 transition-all"
+          >
+            Załaduj więcej
+          </button>
+        </div>
+      )}
     </div>
   );
 };

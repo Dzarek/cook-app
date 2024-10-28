@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Link, Element } from "react-scroll";
 import { useState, useEffect, useRef } from "react";
 import { BsBarChart, BsClockHistory } from "react-icons/bs";
-import { GiRiceCooker } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
 import { BiEdit } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
@@ -90,13 +89,35 @@ const AddRecipeComponent = ({
 
   const handleAddIngredient = () => {
     const updatedItems = [...newIngredients];
-    setNewIngredients([...updatedItems, newIngredient]);
-    setNewIgredient("");
+    if (newIngredient === "") {
+      toast("wpisz składnik!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+        },
+      });
+    } else {
+      setNewIngredients([...updatedItems, newIngredient]);
+      setNewIgredient("");
+    }
   };
   const handleAddStep = () => {
     const updatedItems = [...newSteps];
-    setNewSteps([...updatedItems, newStep]);
-    setNewStep("");
+    if (newStep === "") {
+      toast("wpisz nową instrukcje!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+        },
+      });
+    } else {
+      setNewSteps([...updatedItems, newStep]);
+      setNewStep("");
+    }
   };
 
   const handleEditIngredient = (index: number) => {
@@ -437,6 +458,7 @@ const AddRecipeComponent = ({
                         spy={true}
                         smooth={true}
                         duration={1000}
+                        offset={-300}
                       >
                         <BiEdit
                           className="mr-3 text-green-900 cursor-pointer"
@@ -533,6 +555,7 @@ const AddRecipeComponent = ({
                           spy={true}
                           smooth={true}
                           duration={1000}
+                          offset={-300}
                         >
                           <BiEdit
                             className="mr-3 text-green-900 cursor-pointer"
@@ -554,7 +577,7 @@ const AddRecipeComponent = ({
                 );
               })}
             {editingStep >= 0 ? (
-              <Element name="editIgredient">
+              <Element name="editStep">
                 <h3 className="text-center w-full uppercase text-xl mt-8 font-semibold">
                   Edycja:
                 </h3>
@@ -573,7 +596,7 @@ const AddRecipeComponent = ({
                 </div>
               </Element>
             ) : (
-              <Element name="editIgredient">
+              <Element name="editStep">
                 <div>
                   <div className="flex items-center justify-between mt-8">
                     <textarea
@@ -605,7 +628,7 @@ const AddRecipeComponent = ({
           </ul>
         </div>
       </section>
-      <div className="w-full xl:w-4/5 flex justify-start items-start mx-auto my-[10vh] flex-col">
+      <div className="w-full xl:w-[90%] flex justify-start items-start mx-auto my-[5vh] flex-col">
         <h2 className="flex items-center justify-between text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
           Opis: <span>(opcjonalne)</span>
         </h2>
@@ -629,7 +652,7 @@ const AddRecipeComponent = ({
             />
           )}
       </div>
-      <div className="w-full xl:w-4/5 flex justify-start items-start mx-auto my-[10vh] flex-col">
+      <div className="w-full xl:w-[90%] flex justify-start items-start mx-auto mt-[5vh] mb-[10vh] flex-col">
         <h2 className="flex items-center justify-between text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
           Źródło: <span>(opcjonalne)</span>
         </h2>
@@ -639,7 +662,7 @@ const AddRecipeComponent = ({
           placeholder="Źródło przepisu..."
           value={newSource}
           onChange={(e) => setNewSource(e.target.value)}
-          className="newRecipeInput  min-h-[20vh] w-[98%] mx-auto xl:w-full"
+          className="newRecipeInput  min-h-[15vh] w-[98%] mx-auto xl:w-full"
         ></textarea>
       </div>
       <div className="mx-auto">
