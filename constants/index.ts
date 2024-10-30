@@ -39,7 +39,7 @@ export const avatars = [
       "/assets/images/avatars/avatark10.webp",
       "/assets/images/avatars/avatark11.webp",
       "/assets/images/avatars/avatark12.webp",
-      "/assets/images/avatars/avatark13.webp",
+      // "/assets/images/avatars/avatark13.png",
     ],
   },
   {
@@ -69,7 +69,9 @@ export const avatars = [
       "/assets/images/avatars/avatard3.webp",
       "/assets/images/avatars/avatard4.webp",
       "/assets/images/avatars/avatard5.webp",
-      "/assets/images/avatars/avatard6.webp",
+      "/assets/images/avatars/avatard6.png",
+      "/assets/images/avatars/avatard7.webp",
+      "/assets/images/avatars/avatard8.webp",
     ],
   },
 ];
