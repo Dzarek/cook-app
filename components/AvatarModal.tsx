@@ -69,15 +69,7 @@ const AvatarModal = ({
                 className={`rounded-full xl:-ml-[5%] w-[60vw] xl:w-[12vw] h-[60vw] mx-auto xl:h-[12vw] mt-10 xl:mt-0 mb-10 xl:mb-0  object-fill xl:m-3 border-2 border-red-900 xl:border-b-0 `}
               />
             )}
-            <li
-              onClick={() => setCategory("wszystkie")}
-              className={`border-2 rounded-lg py-2 xl:border-0 xl:py-0 uppercase text-base xl:text-xl w-[42%] xl:w-auto font-semibold my-5 xl:my-10 xl:hover:text-red-700 cursor-pointer duration-[0.5s] ${
-                category === "wszystkie" &&
-                "text-white xl:text-red-700 bg-red-900 xl:bg-transparent xl:ml-[20%]"
-              }`}
-            >
-              wszystkie
-            </li>
+
             {avatars.map((avatar) => {
               return (
                 <li
@@ -92,6 +84,15 @@ const AvatarModal = ({
                 </li>
               );
             })}
+            <li
+              onClick={() => setCategory("wszystkie")}
+              className={`border-2 rounded-lg py-2 xl:border-0 xl:py-0 uppercase text-base xl:text-xl w-[42%] xl:w-auto font-semibold my-5 xl:my-10 xl:hover:text-red-700 cursor-pointer duration-[0.5s] ${
+                category === "wszystkie" &&
+                "text-white xl:text-red-700 bg-red-900 xl:bg-transparent xl:ml-[20%]"
+              }`}
+            >
+              wszystkie
+            </li>
           </ul>
           <section className="xl:pr-[2%] xl:pb-[5%] xl:overflow-auto w-4/5 xl:w-4/6 xl:h-[80vh] flex flex-wrap items-center justify-center">
             <h2 className="mx-auto w-full text-center mt-3 xl:mt-10 text-2xl font-bold  mb-10">
