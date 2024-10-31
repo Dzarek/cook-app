@@ -54,7 +54,7 @@ const OneRecipePage = async ({
             width={500}
             height={500}
             alt={title}
-            className="w-full bg-red-100 shadow-lg shadow-gray-500/50 border-2 border-red-900 xl:w-2/5 h-[40vh] xl:h-[50vh] object-cover rounded-b-lg xl:rounded-lg"
+            className="w-full bg-red-100 shadow-lg shadow-gray-500/50 border-y-2 md:border-2 border-red-900 md:w-2/5 h-[40vh] md:h-[50vh] object-cover rounded-b-lg md:rounded-lg md:mt-5 xl:mt-0"
           />
           <section className="w-[95%] mx-auto xl:mx-0 xl:w-[55%] mt-[5vh] xl:mt-0">
             <p className="w-[90%] xl:w-auto mx-auto text-lg text-center xl:text-left font-bodyFont mb-10 pb-10 xl:pb-5 border-b-2 ">

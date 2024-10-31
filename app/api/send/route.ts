@@ -14,7 +14,7 @@ export const POST = async (req: NextRequest) => {
         ...mailOptions,
         subject: `STĘPKI GOTUJĄ`,
         text: "",
-        html: `<p>Witaj! <br/><br/>  Nowa osoba chce dołączyć do społeczności STĘPKI GOTUJĄ. <br/> <br/> Adres email: <strong>${data}</strong> <br/> <br/> Dodaj nowego użytkownika w aplikacji: https://stepki-gotuja.vercel.app/</p>`,
+        html: `<p>Witaj! <br/><br/>  Nowa osoba chce dołączyć do społeczności STĘPKI GOTUJĄ. <br/> <br/> Adres email: <strong>${data}</strong> <br/> <br/> Dodaj nowego użytkownika w aplikacji: https://stepkigotuja.netlify.app/</p>`,
       });
       return NextResponse.json({ success: true });
     } catch (error) {
