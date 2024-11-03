@@ -109,7 +109,7 @@ export default async function Home() {
             <h3 className="text-2xl font-bold text-center font-headingFont ">
               Członkowie:
             </h3>
-            <ul className="mt-5 flex flex-wrap justify-center items-center w-full xl:w-auto">
+            <ul className="mt-5 flex flex-wrap justify-evenly xl:justify-center items-center w-full xl:w-auto">
               {authors.map((author) => {
                 return (
                   <li
