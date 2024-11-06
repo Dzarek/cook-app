@@ -109,12 +109,12 @@ export default async function Home() {
             <h3 className="text-2xl font-bold text-center font-headingFont ">
               Członkowie:
             </h3>
-            <ul className="mt-5 flex flex-wrap justify-evenly xl:justify-center items-center w-full xl:w-auto">
+            <ul className=" mt-5 flex flex-wrap justify-evenly xl:justify-center items-center w-full xl:w-auto">
               {authors.map((author) => {
                 return (
                   <li
                     key={author.id}
-                    className="flex flex-col items-center justify-center m-2"
+                    className="flex flex-col items-center justify-center my-2 xl:m-2 w-1/3 xl:w-auto"
                   >
                     <Image
                       src={author.avatar}
