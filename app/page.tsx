@@ -90,7 +90,7 @@ export default async function Home() {
           </ul>
         </div>
       </header>
-      <main className="mt-[8vh] w-3/4 mx-auto">
+      <main className="mt-[8vh] w-4/5 xl:w-3/4 mx-auto">
         <section>
           <p className="text-center text-lg">
             Szukasz nowych kulinarnych inspiracji? Nasza strona to kopalnia

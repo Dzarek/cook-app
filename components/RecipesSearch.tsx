@@ -269,7 +269,7 @@ const RecipesSearch = ({
           </section>
         </div>
         {allRecipes && (
-          <div className="px-[5vw] pb-[10vh]">
+          <div className="px-[10vw] xl:px-[5vw] pb-[10vh]">
             <RecipesList
               recipes={activeRecipes.slice(0, visibleRecipesCount)}
             />

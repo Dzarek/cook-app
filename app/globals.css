@@ -130,7 +130,7 @@ body {
     transform: scale(1);
   }
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1280px) {
   .recipeProfile {
     width: 80%;
     height: 58vh;
@@ -152,6 +152,25 @@ body {
 @media screen and (max-width: 1024px) {
   .recipe-imgProfile {
     margin-bottom: 0px;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1280px) {
+  .recipeProfile {
+    width: 80%;
+    height: 58vh;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .recipe-imgProfile {
+    height: 100%;
+    width: 55%;
+    border-radius: 6px;
+    object-fit: fill;
+  }
+  .recipe-sectionProfile {
+    height: 100%;
+    width: 45%;
   }
 }
 
@@ -238,9 +257,9 @@ html::-webkit-scrollbar-thumb:hover {
   opacity: 0;
 }
 
-/* .knifeRotate {
-  animation: knifeRotate 3s ease-out 1 forwards;
-} */
+.knifeRotate {
+  animation: knifeRotate 2s linear 1 forwards;
+}
 @keyframes knifeRotate {
   0% {
     transform: translateX(-60vw);
@@ -249,9 +268,9 @@ html::-webkit-scrollbar-thumb:hover {
     transform: rotate(225deg) translateX(0vw);
   }
 }
-/* .knifeRotate2 {
-  animation: knifeRotate2 3s ease-out 1 forwards;
-} */
+.knifeRotate2 {
+  animation: knifeRotate2 2s linear 1 forwards;
+}
 @keyframes knifeRotate2 {
   0% {
     transform: translateX(60vw);
@@ -260,9 +279,9 @@ html::-webkit-scrollbar-thumb:hover {
     transform: rotate(45deg) translateX(0vw);
   }
 }
-/* .spoonRotate {
-  animation: spoonRotate 3s ease-out 1 forwards;
-} */
+.spoonRotate {
+  animation: spoonRotate 2s linear 1 forwards;
+}
 @keyframes spoonRotate {
   0% {
     transform: translateX(-60vw);
@@ -271,9 +290,9 @@ html::-webkit-scrollbar-thumb:hover {
     transform: rotate(45deg) translateX(0vw);
   }
 }
-/* .forkRotate {
-  animation: forkRotate 3s ease-out 1 forwards;
-} */
+.forkRotate {
+  animation: forkRotate 2s linear 1 forwards;
+}
 @keyframes forkRotate {
   0% {
     transform: translateX(60vw);
@@ -283,7 +302,7 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 .recipeRotate {
-  animation: recipeRotate 3s ease-out 1 forwards;
+  animation: recipeRotate 2s linear 1 forwards;
 }
 @keyframes recipeRotate {
   0% {
@@ -294,7 +313,7 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 .recipeRotate2 {
-  animation: recipeRotate2 3s ease-out 1 forwards;
+  animation: recipeRotate2 2s linear 1 forwards;
 }
 @keyframes recipeRotate2 {
   0% {
@@ -306,7 +325,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 .recipeRotate4 {
   transform: rotateY(180deg);
-  animation: recipeRotate3 3s ease-out 1 forwards;
+  animation: recipeRotate3 2s linear 1 forwards;
 }
 @keyframes recipeRotate3 {
   0% {
@@ -314,6 +333,37 @@ html::-webkit-scrollbar-thumb:hover {
   }
   100% {
     transform: rotateY(180deg) translateX(0vw);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .knifeRotate {
+    animation: knifeRotate 1s linear 1 forwards;
+  }
+
+  .knifeRotate2 {
+    animation: knifeRotate2 1s linear 1 forwards;
+  }
+
+  .spoonRotate {
+    animation: spoonRotate 1s linear 1 forwards;
+  }
+
+  .forkRotate {
+    animation: forkRotate 1s linear 1 forwards;
+  }
+
+  .recipeRotate {
+    animation: recipeRotate 1s linear 1 forwards;
+  }
+
+  .recipeRotate2 {
+    animation: recipeRotate2 1s linear 1 forwards;
+  }
+
+  .recipeRotate4 {
+    transform: rotateY(180deg);
+    animation: recipeRotate3 1s linear 1 forwards;
   }
 }
 

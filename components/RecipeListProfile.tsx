@@ -110,7 +110,7 @@ const RecipesListProfile = ({
                   className="w-full h-2/4 2xl:h-3/5 object-cover recipe-imgProfile"
                   alt={title}
                 />
-                <section className="h-1/2 2xl:h-2/6 flex flex-col items-center justify-around xl:justify-center p-2 xl:my-2">
+                <section className="h-1/2 2xl:h-2/6 flex flex-col items-center justify-around xl:justify-center p-2 xl:my-2 recipe-sectionProfile">
                   <h5 className="text-base text-center font-bold mb-2 w-full">
                     {title.toUpperCase()}
                   </h5>
