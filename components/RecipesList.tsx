@@ -18,6 +18,7 @@ const RecipesList = ({ recipes }: { recipes: Recipe[] }) => {
           >
             <Image
               src={image}
+              blurDataURL={image}
               width={500}
               height={500}
               className="w-full h-1/2 2xl:h-[55%] object-cover recipe-img "

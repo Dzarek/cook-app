@@ -35,7 +35,7 @@ const OneRecipePage = async ({
       source,
     } = oneRecipe;
     return (
-      <div className="page w-screen">
+      <div className="page w-full">
         <header className="border-b-4 border-red-100 xl:border-b-0 relative text-center bg-red-100  xl:mb-[10vh] w-full pt-[10vh] pb-[15vh] xl:pb-[10vh] flex justify-center items-center">
           <FaSpoon className="text-2xl xl:text-3xl text-red-900  mr-6 spoonRotate" />
           <h1 className="max-w-[65%] xl:max-w-auto text-lg text-center xl:text-2xl font-bold font-bodyFont uppercase">
@@ -51,6 +51,7 @@ const OneRecipePage = async ({
         <main className=" w-[100%] xl:w-4/5 mx-auto flex flex-col xl:flex-row justify-between items-center">
           <Image
             src={image}
+            blurDataURL={image}
             width={500}
             height={500}
             alt={title}
@@ -80,12 +81,14 @@ const OneRecipePage = async ({
                 </span>
               </div>
 
-              <div className="w-2/5 xl:w-auto mt-5 xl:mt-0 flex flex-col items-center justify-center">
+              <div className="w-full xl:w-auto mt-5 xl:mt-0 flex flex-col items-center justify-center">
                 <BsBarChart className="text-3xl xl:text-4xl text-red-900" />
                 <p className="uppercase font-semibold text-sm xl:text-lg  mt-5 text-gray-800">
                   poziom trudności
                 </p>
-                <span className="text-gray-500 font-bold text-lg">{level}</span>
+                <span className="text-gray-500 font-bold text-lg text-center">
+                  {level}
+                </span>
               </div>
             </div>
             <div className="flex items-center justify-center xl:justify-start flex-wrap mt-14">

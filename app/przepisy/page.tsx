@@ -17,7 +17,7 @@ const RecipesPage = async ({
   const { kategoria } = searchParams;
 
   return (
-    <div className="page w-screen">
+    <div className="page w-full">
       <header className="text-center w-full py-[10vh] flex justify-center items-center">
         <PiKnifeFill className="text-3xl xl:text-5xl text-red-900  mr-5 knifeRotate" />
         <h1 className="text-xl xl:text-3xl font-bold font-bodyFont">
