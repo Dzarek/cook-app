@@ -238,9 +238,9 @@ html::-webkit-scrollbar-thumb:hover {
   opacity: 0;
 }
 
-.knifeRotate {
+/* .knifeRotate {
   animation: knifeRotate 3s ease-out 1 forwards;
-}
+} */
 @keyframes knifeRotate {
   0% {
     transform: translateX(-60vw);
@@ -249,9 +249,9 @@ html::-webkit-scrollbar-thumb:hover {
     transform: rotate(225deg) translateX(0vw);
   }
 }
-.knifeRotate2 {
+/* .knifeRotate2 {
   animation: knifeRotate2 3s ease-out 1 forwards;
-}
+} */
 @keyframes knifeRotate2 {
   0% {
     transform: translateX(60vw);
@@ -260,9 +260,9 @@ html::-webkit-scrollbar-thumb:hover {
     transform: rotate(45deg) translateX(0vw);
   }
 }
-.spoonRotate {
+/* .spoonRotate {
   animation: spoonRotate 3s ease-out 1 forwards;
-}
+} */
 @keyframes spoonRotate {
   0% {
     transform: translateX(-60vw);
@@ -271,9 +271,9 @@ html::-webkit-scrollbar-thumb:hover {
     transform: rotate(45deg) translateX(0vw);
   }
 }
-.forkRotate {
+/* .forkRotate {
   animation: forkRotate 3s ease-out 1 forwards;
-}
+} */
 @keyframes forkRotate {
   0% {
     transform: translateX(60vw);
