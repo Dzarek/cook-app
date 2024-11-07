@@ -336,7 +336,7 @@ html::-webkit-scrollbar-thumb:hover {
   }
 }
 
-@media screen and (max-width: 900px) {
+/* @media screen and (max-width: 900px) {
   .knifeRotate {
     transform: rotate(225deg);
     animation: none;
@@ -370,7 +370,7 @@ html::-webkit-scrollbar-thumb:hover {
     transform: rotateY(180deg);
     animation: none;
   }
-}
+} */
 
 .newRecipeInput {
   border: 2px solid #7f1d1d;
