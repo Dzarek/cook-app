@@ -338,32 +338,37 @@ html::-webkit-scrollbar-thumb:hover {
 
 @media screen and (max-width: 900px) {
   .knifeRotate {
-    animation: knifeRotate 1s linear 1 forwards;
+    transform: rotate(225deg);
+    animation: none;
   }
 
   .knifeRotate2 {
-    animation: knifeRotate2 1s linear 1 forwards;
+    transform: rotate(45deg);
+    animation: none;
   }
 
   .spoonRotate {
-    animation: spoonRotate 1s linear 1 forwards;
+    transform: rotate(45deg);
+    animation: none;
   }
 
   .forkRotate {
-    animation: forkRotate 1s linear 1 forwards;
+    transform: rotate(225deg);
+    animation: none;
   }
 
   .recipeRotate {
-    animation: recipeRotate 1s linear 1 forwards;
+    transform: rotate(-45deg);
+    animation: none;
   }
 
   .recipeRotate2 {
-    animation: recipeRotate2 1s linear 1 forwards;
+    animation: none;
   }
 
   .recipeRotate4 {
     transform: rotateY(180deg);
-    animation: recipeRotate3 1s linear 1 forwards;
+    animation: none;
   }
 }
 
