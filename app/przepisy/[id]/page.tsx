@@ -8,6 +8,18 @@ import { getAllRecipes } from "@/lib/actions";
 import LikeControl from "@/components/LikeControl";
 import NativeShareButton from "@/components/ShareBtn";
 
+import { MdAddCircle } from "react-icons/md";
+
+const comments = [
+  {
+    user: {
+      name: "Oliwka",
+      avatar: "/assets/images/avatars/female/avatark1.jpg",
+    },
+    text: "Dziękuje ciociu za przepis!",
+  },
+];
+
 const OneRecipePage = async ({
   params: { id },
 }: {
@@ -64,7 +76,7 @@ const OneRecipePage = async ({
             <div className="w-full xl:w-4/5 mx-auto flex flex-wrap justify-around items-center xl:my-12">
               <div className="w-2/5 xl:w-auto flex flex-col items-center justify-center">
                 <BsClockHistory className="text-3xl xl:text-4xl text-red-900" />
-                <p className="uppercase font-semibold text-sm xl:text-lg  mt-5 text-gray-800">
+                <p className="uppercase font-semibold text-sm xl:text-base  mt-5 text-gray-800">
                   przygotowanie
                 </p>
                 <span className="text-gray-500 font-bold text-lg">
@@ -73,7 +85,7 @@ const OneRecipePage = async ({
               </div>
               <div className="w-2/5 xl:w-auto flex flex-col items-center justify-center">
                 <BsPeople className="text-3xl xl:text-4xl text-red-900" />
-                <p className="uppercase font-semibold text-sm xl:text-lg  mt-5 text-gray-800">
+                <p className="uppercase font-semibold text-sm xl:text-base  mt-5 text-gray-800">
                   ilość porcji
                 </p>
                 <span className="text-gray-500 font-bold text-lg">
@@ -83,7 +95,7 @@ const OneRecipePage = async ({
 
               <div className="w-full xl:w-auto mt-5 xl:mt-0 flex flex-col items-center justify-center">
                 <BsBarChart className="text-3xl xl:text-4xl text-red-900" />
-                <p className="uppercase font-semibold text-sm xl:text-lg  mt-5 text-gray-800">
+                <p className="uppercase font-semibold text-sm xl:text-base  mt-5 text-gray-800">
                   poziom trudności
                 </p>
                 <span className="text-gray-500 font-bold text-lg text-center">
@@ -109,7 +121,7 @@ const OneRecipePage = async ({
           </section>
         </main>
         <div className="w-[90%] xl:w-4/5 flex flex-col xl:flex-row justify-between items-start mx-auto my-[10vh]">
-          <section className="w-full xl:w-2/5 flex flex-col">
+          <section className="w-full xl:w-[30%] flex flex-col">
             <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
               Składniki:
             </h2>
@@ -126,7 +138,7 @@ const OneRecipePage = async ({
               })}
             </ul>
           </section>
-          <section className="mt-10 xl:mt-0 xl:ml-[8vw] w-full xl:w-auto flex-grow flex flex-col">
+          <section className="mt-10 xl:mt-0  w-full xl:w-[60%] flex-grow xl:flex-grow-0 flex flex-col">
             <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
               Instrukcje:
             </h2>
@@ -188,6 +200,58 @@ const OneRecipePage = async ({
             {author.authorName}
           </span>
         </div>
+        {/* {comments.length > 0 && (
+          <div className="w-[90%] xl:w-4/6 flex justify-start items-start flex-nowrap mx-auto my-[5vh] xl:my-[15vh] flex-col">
+            <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
+              Komentarze:
+            </h2>
+            <div className="w-full">
+              <article className="flex mx-auto w-[98%] items-center bg-red-100 py-2 px-5 rounded-md mb-2">
+                <div className="text-lg w-[100px] text-zinc-500 flex flex-col justify-center items-center mr-2">
+                  <Image
+                    src={"/assets/images/avatars/male/avatarm1.jpg"}
+                    width={50}
+                    height={50}
+                    alt={""}
+                    className="rounded-full border-2 border-red-900 mb-1"
+                  />
+                  <span className="text-red-800 ">{"Jarek"}</span>
+                </div>
+                <p className="text-2xl text-red-800 mr-5 font-bold">:</p>
+                <textarea
+                  name="newComment"
+                  id="newComment"
+                  placeholder="Dodaj swój komentarz tutaj..."
+                  className="w-[98%] mx-auto p-2 xl:w-full rounded-sm text-base xl:text-lg font-bodyFont text-justify break-words"
+                ></textarea>
+                <MdAddCircle className="ml-5 text-4xl text-zinc-700 hover:text-red-950 cursor-pointer transition-all" />
+              </article>
+            </div>
+            {comments.map((comment, index) => {
+              return (
+                <article
+                  key={index}
+                  className="flex mx-auto w-[98%] items-center bg-zinc-100 py-2 px-5 rounded-md mb-2"
+                >
+                  <div className="text-lg w-[100px] text-zinc-500 flex flex-col justify-center items-center mr-2">
+                    <Image
+                      src={comment.user.avatar}
+                      width={50}
+                      height={50}
+                      alt={comment.user.name}
+                      className="rounded-full border-2 border-red-900 mb-1"
+                    />
+                    <span>{comment.user.name}</span>
+                  </div>
+                  <p className="text-2xl text-red-800 mr-5 font-bold">:</p>
+                  <p className="w-[98%] mx-auto ml-0 xl:w-full text-base xl:text-lg font-bodyFont text-justify break-words">
+                    {comment.text}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
+        )} */}
       </div>
     );
   } else {
