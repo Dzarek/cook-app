@@ -116,6 +116,7 @@ const getBackup = async () => {
             description: recipeData.description || "",
             source: recipeData.source || "",
             likes: recipeData.likes,
+            comments: recipeData.comments,
           };
 
           return recipe;
@@ -168,6 +169,7 @@ export const exportData = async () => {
           description: null,
           source: null,
           likes: null,
+          comments: null,
         };
 
         // Flatten the object
@@ -190,6 +192,7 @@ export const exportData = async () => {
           description: ob.description || null,
           source: ob.source || null,
           likes: ob.likes?.join(", ") || null,
+          comments: null,
         };
 
         return flattenedObject;
@@ -256,6 +259,7 @@ export const uploadData = async (file: any) => {
         description: item.description || "",
         source: item.source || "",
         likes: item.likes,
+        comments: item.comments,
       });
     });
   });

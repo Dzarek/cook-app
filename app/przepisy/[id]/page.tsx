@@ -7,18 +7,7 @@ import { BiFork } from "react-icons/bi";
 import { getAllRecipes } from "@/lib/actions";
 import LikeControl from "@/components/LikeControl";
 import NativeShareButton from "@/components/ShareBtn";
-
-import { MdAddCircle } from "react-icons/md";
-
-const comments = [
-  {
-    user: {
-      name: "Oliwka",
-      avatar: "/assets/images/avatars/female/avatark1.jpg",
-    },
-    text: "Dziękuje ciociu za przepis!",
-  },
-];
+import AddComent from "@/components/AddComment";
 
 const OneRecipePage = async ({
   params: { id },
@@ -28,6 +17,18 @@ const OneRecipePage = async ({
   const allRecipes = await getAllRecipes();
 
   const oneRecipe = allRecipes.find((recipe) => recipe.id === id);
+
+  // const comments = [
+  //   {
+  //     id: "sdad",
+  //     user: {
+  //       uid: "dasdasd",
+  //       name: "Oliwka",
+  //       avatar: "/assets/images/avatars/female/avatark1.jpg",
+  //     },
+  //     text: "Dziękuje ciociu za przepis!",
+  //   },
+  // ];
 
   if (oneRecipe) {
     const {
@@ -45,6 +46,7 @@ const OneRecipePage = async ({
       portion,
       likes,
       source,
+      comments,
     } = oneRecipe;
     return (
       <div className="page w-full">
@@ -200,58 +202,11 @@ const OneRecipePage = async ({
             {author.authorName}
           </span>
         </div>
-        {/* {comments.length > 0 && (
-          <div className="w-[90%] xl:w-4/6 flex justify-start items-start flex-nowrap mx-auto my-[5vh] xl:my-[15vh] flex-col">
-            <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
-              Komentarze:
-            </h2>
-            <div className="w-full">
-              <article className="flex mx-auto w-[98%] items-center bg-red-100 py-2 px-5 rounded-md mb-2">
-                <div className="text-lg w-[100px] text-zinc-500 flex flex-col justify-center items-center mr-2">
-                  <Image
-                    src={"/assets/images/avatars/male/avatarm1.jpg"}
-                    width={50}
-                    height={50}
-                    alt={""}
-                    className="rounded-full border-2 border-red-900 mb-1"
-                  />
-                  <span className="text-red-800 ">{"Jarek"}</span>
-                </div>
-                <p className="text-2xl text-red-800 mr-5 font-bold">:</p>
-                <textarea
-                  name="newComment"
-                  id="newComment"
-                  placeholder="Dodaj swój komentarz tutaj..."
-                  className="w-[98%] mx-auto p-2 xl:w-full rounded-sm text-base xl:text-lg font-bodyFont text-justify break-words"
-                ></textarea>
-                <MdAddCircle className="ml-5 text-4xl text-zinc-700 hover:text-red-950 cursor-pointer transition-all" />
-              </article>
-            </div>
-            {comments.map((comment, index) => {
-              return (
-                <article
-                  key={index}
-                  className="flex mx-auto w-[98%] items-center bg-zinc-100 py-2 px-5 rounded-md mb-2"
-                >
-                  <div className="text-lg w-[100px] text-zinc-500 flex flex-col justify-center items-center mr-2">
-                    <Image
-                      src={comment.user.avatar}
-                      width={50}
-                      height={50}
-                      alt={comment.user.name}
-                      className="rounded-full border-2 border-red-900 mb-1"
-                    />
-                    <span>{comment.user.name}</span>
-                  </div>
-                  <p className="text-2xl text-red-800 mr-5 font-bold">:</p>
-                  <p className="w-[98%] mx-auto ml-0 xl:w-full text-base xl:text-lg font-bodyFont text-justify break-words">
-                    {comment.text}
-                  </p>
-                </article>
-              );
-            })}
-          </div>
-        )} */}
+        <AddComent
+          comments={comments || []}
+          userID={author.authorID}
+          recipeID={id}
+        />
       </div>
     );
   } else {

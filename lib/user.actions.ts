@@ -280,6 +280,7 @@ export const postRecipe = async (
       description: newDescription,
       source: newSource,
       likes: [],
+      comments: [],
     })
       .then(() => {
         toast("Przepis został dodany!", {
@@ -328,6 +329,25 @@ export const editLike = async (
   const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
   const updatedRecipe = {
     likes: newLikes,
+  };
+  await updateDoc(recipeDoc, updatedRecipe);
+};
+
+export const editComment = async (
+  userID: string,
+  recipeID: string,
+  newComments: {
+    user: {
+      uid: string;
+      name: string;
+      avatar: string;
+    };
+    text: string;
+  }[]
+) => {
+  const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
+  const updatedRecipe = {
+    comments: newComments,
   };
   await updateDoc(recipeDoc, updatedRecipe);
 };

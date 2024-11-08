@@ -59,6 +59,7 @@ export const getRecipes = async (userID: string) => {
         description: recipeData.description || "",
         source: recipeData.source || "",
         likes: recipeData.likes,
+        comments: recipeData.comments,
       };
       return recipe;
     });
@@ -109,6 +110,7 @@ export const getAllRecipes = async () => {
             description: recipeData.description || "",
             source: recipeData.source || "",
             likes: recipeData.likes,
+            comments: recipeData.comments,
           };
 
           return recipe;
@@ -160,6 +162,7 @@ export const getRankingUsers = async () => {
             description: recipeData.description || "",
             source: recipeData.source || "",
             likes: recipeData.likes, // Likes array
+            comments: recipeData.comments,
           };
         });
 

@@ -19,6 +19,15 @@ type Recipe = {
   steps: string[];
   description?: string;
   likes: string[];
+  comments: {
+    id: string;
+    user: {
+      uid: string;
+      name: string;
+      avatar: string;
+    };
+    text: string;
+  }[];
 };
 
 type RecipeTypeList = {
