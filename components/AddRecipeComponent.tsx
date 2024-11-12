@@ -284,6 +284,11 @@ const AddRecipeComponent = ({
       }
       resetForm();
       localStorage.clear();
+      if (editing) {
+        window.location.href = "/profil";
+      } else {
+        window.location.href = "/przepisy";
+      }
     } else {
       toast("Uzupełnij wszystkie pola!", {
         icon: "✖",

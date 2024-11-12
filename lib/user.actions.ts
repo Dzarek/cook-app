@@ -261,7 +261,7 @@ export const postRecipe = async (
           },
         });
       });
-    window.location.href = "/profil";
+    // window.location.href = "/profil";
   } else {
     const setDocRecipeCollectionRef = doc(
       collection(db, `usersList/${userID}/recipes`)
@@ -291,7 +291,7 @@ export const postRecipe = async (
             color: "#fff",
           },
         });
-        window.location.href = "/przepisy";
+        // window.location.href = "/przepisy";
       })
       .catch((error) => {
         console.error("Error writing document: ", error);
