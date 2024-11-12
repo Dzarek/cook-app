@@ -283,6 +283,7 @@ const AddRecipeComponent = ({
         await handleSub(newTitle, uuid);
       }
       resetForm();
+      localStorage.clear();
     } else {
       toast("Uzupełnij wszystkie pola!", {
         icon: "✖",
