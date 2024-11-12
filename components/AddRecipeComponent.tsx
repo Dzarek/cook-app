@@ -29,27 +29,105 @@ const AddRecipeComponent = ({
   userID: string;
   userName: string;
 }) => {
-  const [newTitle, setNewTitle] = useState("");
-  const [newShortInfo, setNewShortInfo] = useState("");
-  const [newCategory, setNewCategory] = useState<string[]>([]);
-  const [newPrepTime, setNewPrepTime] = useState(0);
-  const [newLevel, setNewLevel] = useState<string>(levels[0]);
-  const [newPortion, setNewPortion] = useState(0);
-  const [newIngredients, setNewIngredients] = useState<string[]>([]);
+  // Load data from localStorage if it exists
+  const loadFromLocalStorage = (key: string, defaultValue: any) => {
+    const savedValue = localStorage.getItem(key);
+    return savedValue ? JSON.parse(savedValue) : defaultValue;
+  };
+
+  const [newTitle, setNewTitle] = useState(
+    loadFromLocalStorage("newTitle", "")
+  );
+  const [newShortInfo, setNewShortInfo] = useState(
+    loadFromLocalStorage("newShortInfo", "")
+  );
+  const [newCategory, setNewCategory] = useState<string[]>(
+    loadFromLocalStorage("newCategory", [])
+  );
+  const [newPrepTime, setNewPrepTime] = useState(
+    loadFromLocalStorage("newPrepTime", 0)
+  );
+  const [newLevel, setNewLevel] = useState(
+    loadFromLocalStorage("newLevel", levels[0])
+  );
+  const [newPortion, setNewPortion] = useState(
+    loadFromLocalStorage("newPortion", 0)
+  );
+  const [newIngredients, setNewIngredients] = useState<string[]>(
+    loadFromLocalStorage("newIngredients", [])
+  );
   const [editingIngredient, setEditingIngredient] = useState<number>(-1);
   const [newIngredient, setNewIgredient] = useState("");
-  const [newSteps, setNewSteps] = useState<string[]>([]);
+  const [newSteps, setNewSteps] = useState<string[]>(
+    loadFromLocalStorage("newSteps", [])
+  );
   const [editingStep, setEditingStep] = useState<number>(-1);
   const [newStep, setNewStep] = useState("");
-  const [newDescription, setNewDescription] = useState<string>("");
-  const [newSource, setNewSource] = useState<string>("");
-  const [newImage, setNewImage] = useState<string>("");
+  const [newDescription, setNewDescription] = useState(
+    loadFromLocalStorage("newDescription", "")
+  );
+  const [newSource, setNewSource] = useState(
+    loadFromLocalStorage("newSource", "")
+  );
+  const [newImage, setNewImage] = useState(
+    loadFromLocalStorage("newImage", "")
+  );
   const [activeVoice, setActiveVoice] = useState("");
   const [disableBtn, setDisableBtn] = useState(true);
 
   const { editRecipe, setEditRecipe } = useGlobalContext();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Save data to localStorage whenever any field changes
+  const saveToLocalStorage = (key: string, value: any) => {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
+
+  // useEffect to handle saving to localStorage on change for each field
+  useEffect(() => {
+    saveToLocalStorage("newImage", newImage);
+  }, [newImage]);
+
+  useEffect(() => {
+    saveToLocalStorage("newTitle", newTitle);
+  }, [newTitle]);
+
+  useEffect(() => {
+    saveToLocalStorage("newShortInfo", newShortInfo);
+  }, [newShortInfo]);
+
+  useEffect(() => {
+    saveToLocalStorage("newCategory", newCategory);
+  }, [newCategory]);
+
+  useEffect(() => {
+    saveToLocalStorage("newPrepTime", newPrepTime);
+  }, [newPrepTime]);
+
+  useEffect(() => {
+    saveToLocalStorage("newLevel", newLevel);
+  }, [newLevel]);
+
+  useEffect(() => {
+    saveToLocalStorage("newPortion", newPortion);
+  }, [newPortion]);
+
+  useEffect(() => {
+    saveToLocalStorage("newIngredients", newIngredients);
+  }, [newIngredients]);
+
+  useEffect(() => {
+    saveToLocalStorage("newSteps", newSteps);
+  }, [newSteps]);
+
+  useEffect(() => {
+    saveToLocalStorage("newDescription", newDescription);
+  }, [newDescription]);
+
+  useEffect(() => {
+    saveToLocalStorage("newSource", newSource);
+  }, [newSource]);
 
   useEffect(() => {
     if (edycja) {
@@ -163,6 +241,7 @@ const AddRecipeComponent = ({
     setNewDescription("");
     setNewSource("");
     setEditRecipe(null);
+    localStorage.clear();
   };
 
   const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -422,6 +501,7 @@ const AddRecipeComponent = ({
               id="level"
               className="newRecipeInput w-auto mx-3 text-center"
               onChange={(e) => handleLevel(e.target.value)}
+              value={newLevel}
             >
               {levels.map((option, index) => {
                 return (
