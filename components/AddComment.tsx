@@ -104,7 +104,7 @@ const AddComment = ({ comments, userID, recipeID }: CommentProps) => {
           <article className="flex flex-wrap xl:flex-nowrap mx-auto w-[98%] justify-between xl:justify-start items-center bg-red-100 py-4 xl:py-2 px-5 rounded-md mb-2">
             <div className="text-lg order-1 xl:order-1 w-1/2 xl:w-[100px] text-zinc-500 flex flex-row xl:flex-col justify-start xl:justify-center items-center xl:mr-2">
               <Image
-                src={"/assets/images/avatars/male/avatarm1.jpg"}
+                src={activeUser.photoURL}
                 width={50}
                 height={50}
                 alt={""}
