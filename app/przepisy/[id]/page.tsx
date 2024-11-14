@@ -179,12 +179,9 @@ const OneRecipePage = async ({
             <h2 className="text-xl xl:text-2xl font-medium font-bodyFont mb-5 w-full bg-red-900 text-white rounded-md px-2 py-1">
               Źródło:
             </h2>
-            <a
-              href={source}
-              className="italic w-[98%] mx-auto xl:w-full text-base xl:text-lg font-bodyFont text-justify break-words"
-            >
+            <p className="italic w-[98%] mx-auto xl:w-full text-base xl:text-lg font-bodyFont text-justify break-words">
               {source}
-            </a>
+            </p>
           </div>
         )}
         <div className="w-full mx-auto flex items-center justify-center mt-20 mb-14">
