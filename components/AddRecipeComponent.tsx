@@ -75,7 +75,7 @@ const AddRecipeComponent = ({
   const [activeVoice, setActiveVoice] = useState("");
   const [disableBtn, setDisableBtn] = useState(true);
 
-  const { editRecipe, setEditRecipe } = useGlobalContext();
+  const { editRecipe, setEditRecipe, name } = useGlobalContext();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -327,7 +327,8 @@ const AddRecipeComponent = ({
   }, [userID]);
 
   const handleSub = async (newTitle: string, uuid: any) => {
-    const cookerName = userName.toUpperCase();
+    // const cookerName = userName.toUpperCase();
+    const cookerName = name.toUpperCase();
     const title = `Kucharz ${cookerName} dodał(a) nowy przepis!`;
     const body = newTitle;
     const tag = uuid;
