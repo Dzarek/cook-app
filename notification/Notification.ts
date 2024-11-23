@@ -61,7 +61,7 @@ export const subscribe = async (
     if (!userID || userID === undefined) {
       await unregisterServiceWorkers();
     }
-    fetch(BACKEND_URL);
+    await fetch(BACKEND_URL);
   } catch (err) {
     console.error("Error", err);
   }
