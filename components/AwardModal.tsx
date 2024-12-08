@@ -18,7 +18,7 @@ const AwardModal = () => {
             className="absolute top-5 right-5 cursor-pointer text-4xl hover:text-red-600 hover:rotate-180 duration-[0.4s]"
           />
           <Image
-            src="/assets/images/rankingAward.jpg"
+            src="/assets/images/rankingAward.png"
             width={500}
             height={500}
             alt="award"
