@@ -4,9 +4,10 @@ import Image from "next/image";
 import { MdAddCircle, MdDeleteForever } from "react-icons/md";
 import { useGlobalContext } from "./authContext";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { editComment } from "@/lib/user.actions";
 import { v4 as uuidv4 } from "uuid";
+import { subscribe } from "@/notification/Notification";
 
 type CommentProps = {
   comments: {
@@ -20,10 +21,16 @@ type CommentProps = {
   }[];
   userID: string;
   recipeID: string;
+  recipeName: string;
 };
 
-const AddComment = ({ comments, userID, recipeID }: CommentProps) => {
-  const { activeUser } = useGlobalContext();
+const AddComment = ({
+  comments,
+  userID,
+  recipeID,
+  recipeName,
+}: CommentProps) => {
+  const { activeUser, name } = useGlobalContext();
   const [activeComments, setActiveComments] = useState(comments);
   const [commentText, setCommentText] = useState("");
 
@@ -67,6 +74,7 @@ const AddComment = ({ comments, userID, recipeID }: CommentProps) => {
       ];
       setActiveComments(currentComments);
       await editComment(userID, recipeID, currentComments);
+      await handleSub(commentText, uuid);
       setCommentText("");
       toast("Komentarz został dodany!", {
         icon: "✔",
@@ -92,6 +100,40 @@ const AddComment = ({ comments, userID, recipeID }: CommentProps) => {
         color: "#fff",
       },
     });
+  };
+
+  useEffect(() => {
+    if (userID && userID !== undefined) {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then(function (registration) {
+            console.log(
+              "Service Worker registered with scope:",
+              registration.scope
+            );
+          })
+          .catch(function (error) {
+            console.error("Service Worker registration failed:", error);
+          });
+      }
+      if ("Notification" in window && "PushManager" in window) {
+        Notification.requestPermission().then(function (permission) {
+          if (permission === "granted") {
+            console.log("Notification permission granted.");
+          }
+        });
+      }
+    }
+  }, [userID]);
+
+  const handleSub = async (newTitle: string, uuid: any) => {
+    const cookerName = name.toUpperCase();
+    const recipeNameBig = recipeName.toUpperCase();
+    const title = `${cookerName} dodał(a) komentarz do przepisu ${recipeNameBig}.`;
+    const body = newTitle;
+    const tag = uuid;
+    await subscribe(title, body, tag, userID);
   };
 
   return (

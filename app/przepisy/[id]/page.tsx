@@ -203,6 +203,7 @@ const OneRecipePage = async ({
           comments={comments || []}
           userID={author.authorID}
           recipeID={id}
+          recipeName={title}
         />
       </div>
     );
