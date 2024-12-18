@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { editComment } from "@/lib/user.actions";
 import { v4 as uuidv4 } from "uuid";
-import { subscribe2 } from "@/notification/Comments";
+import { subscribe } from "@/notification/Comments";
 
 type CommentProps = {
   comments: {
@@ -72,10 +72,18 @@ const AddComment = ({
           text: commentText,
         },
       ];
+      const toastId = toast.loading("Dodawanie komentarza...", {
+        style: {
+          borderRadius: "10px",
+          background: "#0c3362",
+          color: "#fff",
+        },
+      });
       setActiveComments(currentComments);
       await editComment(userID, recipeID, currentComments);
-      await handleSub2(commentText, uuid);
+      await handleSub(commentText, uuid);
       setCommentText("");
+      toast.dismiss(toastId);
       toast("Komentarz został dodany!", {
         icon: "✔",
         style: {
@@ -127,13 +135,13 @@ const AddComment = ({
     }
   }, [userID]);
 
-  const handleSub2 = async (newTitle: string, uuid: any) => {
+  const handleSub = async (newTitle: string, uuid: any) => {
     const cookerName = name.toUpperCase();
     const recipeNameBig = recipeName.toUpperCase();
     const title = `${cookerName} dodał(a) komentarz do przepisu ${recipeNameBig}.`;
     const body = newTitle;
     const tag = uuid;
-    await subscribe2(title, body, tag, userID);
+    await subscribe(title, body, tag, userID);
   };
 
   return (

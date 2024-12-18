@@ -4,16 +4,16 @@ const CONFIG = {
   PUBLIC_KEY: process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY,
   PRIVATE_KEY: process.env.NEXT_PUBLIC_WEB_PUSH_PRIVATE_KEY,
 };
-export const unregisterServiceWorkers2 = async () => {
+export const unregisterServiceWorkers = async () => {
   const registrations = await navigator.serviceWorker.getRegistrations();
   await Promise.all(registrations.map((r) => r.unregister()));
 };
 
-const registerServiceWorker2 = async () => {
+const registerServiceWorker = async () => {
   return navigator.serviceWorker.register("/sw.js");
 };
 
-const saveSubscription2 = async (
+const saveSubscription = async (
   subscription: any,
   title: string,
   body: string,
@@ -37,7 +37,7 @@ const saveSubscription2 = async (
   return response.json();
 };
 
-export const subscribe2 = async (
+export const subscribe = async (
   title: string,
   body: string,
   tag: string,
@@ -46,7 +46,7 @@ export const subscribe2 = async (
   const ORIGIN = window.location.origin;
   const BACKEND_URL = `${ORIGIN}/api/comment`;
 
-  const swRegistration = await registerServiceWorker2();
+  const swRegistration = await registerServiceWorker();
   await Notification.requestPermission();
 
   try {
@@ -54,12 +54,12 @@ export const subscribe2 = async (
       applicationServerKey: CONFIG.PUBLIC_KEY,
       userVisibleOnly: true,
     };
-    const swRegistration = await registerServiceWorker2();
+    const swRegistration = await registerServiceWorker();
     await Notification.requestPermission();
     const subscription = await swRegistration.pushManager.subscribe(options);
-    await saveSubscription2(subscription, title, body, tag);
+    await saveSubscription(subscription, title, body, tag);
     if (!userID || userID === undefined) {
-      await unregisterServiceWorkers2();
+      await unregisterServiceWorkers();
     }
     await fetch(BACKEND_URL);
   } catch (err) {
