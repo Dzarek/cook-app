@@ -22,7 +22,7 @@ const showLocalNotification = (title, body, tag, recipeID, swRegistration) => {
 
 self.addEventListener("notificationclick", function (event) {
   const recipeID = event.notification.data.recipeID;
-  const url = `https://stepkigotuja.netlify.app/przepisy/${recipeID}/`;
+  const url = `https://stepkigotuja.netlify.app/przepisy/${recipeID}`;
   event.notification.close(); // Close the notification
 
   event.waitUntil(

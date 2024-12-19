@@ -17,7 +17,8 @@ const saveSubscription = async (
   subscription: any,
   title: string,
   body: string,
-  tag: string
+  tag: string,
+  recipeID: string
 ) => {
   const ORIGIN = window.location.origin;
   const BACKEND_URL = `${ORIGIN}/api/push`;
@@ -32,6 +33,7 @@ const saveSubscription = async (
       title,
       body,
       tag,
+      recipeID,
     }),
   });
   return response.json();
@@ -41,7 +43,8 @@ export const subscribe = async (
   title: string,
   body: string,
   tag: string,
-  userID: string
+  userID: string,
+  recipeID: string
 ) => {
   const ORIGIN = window.location.origin;
   const BACKEND_URL = `${ORIGIN}/api/push`;
@@ -57,7 +60,7 @@ export const subscribe = async (
     const swRegistration = await registerServiceWorker();
     await Notification.requestPermission();
     const subscription = await swRegistration.pushManager.subscribe(options);
-    await saveSubscription(subscription, title, body, tag);
+    await saveSubscription(subscription, title, body, tag, recipeID);
     if (!userID || userID === undefined) {
       await unregisterServiceWorkers();
     }

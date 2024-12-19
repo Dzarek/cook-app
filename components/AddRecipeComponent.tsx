@@ -332,7 +332,8 @@ const AddRecipeComponent = ({
     const title = `Kucharz ${cookerName} dodał(a) nowy przepis!`;
     const body = newTitle;
     const tag = uuid;
-    await subscribe(title, body, tag, userID);
+    const recipeID = "";
+    await subscribe(title, body, tag, userID, recipeID);
   };
 
   return (
