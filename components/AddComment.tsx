@@ -138,10 +138,10 @@ const AddComment = ({
   const handleSub = async (newTitle: string, uuid: any) => {
     const cookerName = name.toUpperCase();
     const recipeNameBig = recipeName.toUpperCase();
-    const title = `${cookerName} dodał(a) komentarz do przepisu ${recipeNameBig}.`;
+    const title = `${cookerName} komentuje ${recipeNameBig}.`;
     const body = newTitle;
     const tag = uuid;
-    await subscribe(title, body, tag, userID);
+    await subscribe(title, body, tag, userID, recipeID);
   };
 
   return (

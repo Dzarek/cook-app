@@ -19,13 +19,22 @@ export const POST = async (request) => {
         { status: 400 }
       );
     }
-    const { tag, title, body, subscription } = subscriptionMain;
+    const { tag, title, body, subscription, recipeID } = subscriptionMain;
     const { endpoint, expirationTime, keys } = subscription;
     const { p256dh, auth } = keys;
     const addProduct = await query({
       query:
-        "INSERT INTO comments (tag, title, body, endpoint, expirationTime, p256dh, auth) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      values: [tag, title, body, endpoint, expirationTime, p256dh, auth],
+        "INSERT INTO comments (tag, title, body, endpoint, expirationTime, p256dh, auth, recipeID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      values: [
+        tag,
+        title,
+        body,
+        endpoint,
+        expirationTime,
+        p256dh,
+        auth,
+        recipeID,
+      ],
     });
 
     return new Response(JSON.stringify({ message: "success", addProduct }), {
@@ -55,6 +64,7 @@ export const GET = async () => {
       title: oneSubscription.title,
       body: oneSubscription.body,
       tag: oneSubscription.tag,
+      recipeID: oneSubscription.recipeID,
     });
     await webpush.sendNotification(subscription, payload);
   });

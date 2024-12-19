@@ -1,27 +1,28 @@
 self.addEventListener("push", async (event) => {
   if (event.data) {
     const eventData = await event.data.json();
-    // if (eventData.isAdmin) {
     showLocalNotification(
       eventData.title,
       eventData.body,
       eventData.tag,
+      eventData.recipeID,
       self.registration
     );
-    // }
   }
 });
 
-const showLocalNotification = (title, body, tag, swRegistration) => {
+const showLocalNotification = (title, body, tag, recipeID, swRegistration) => {
   swRegistration.showNotification(title, {
     body,
     tag,
     icon: "/icon512_rounded.png",
+    data: { recipeID },
   });
 };
 
 self.addEventListener("notificationclick", function (event) {
-  const url = "https://stepkigotuja.netlify.app/";
+  const recipeID = event.notification.data.recipeID;
+  const url = `https://stepkigotuja.netlify.app/${recipeID}`;
   event.notification.close(); // Close the notification
 
   event.waitUntil(
