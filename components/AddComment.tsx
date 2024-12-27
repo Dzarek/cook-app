@@ -34,6 +34,67 @@ const AddComment = ({
   const [activeComments, setActiveComments] = useState(comments);
   const [commentText, setCommentText] = useState("");
 
+  // const handleComment = async () => {
+  //   if (!activeUser) {
+  //     toast("Musisz być zalogowany aby dodać komentarz!", {
+  //       icon: "✖",
+  //       style: {
+  //         borderRadius: "10px",
+  //         background: "#280505",
+  //         color: "#fff",
+  //         textAlign: "center",
+  //       },
+  //     });
+  //     return;
+  //   }
+  //   if (commentText === "") {
+  //     toast("Napisz komentarz przed dodaniem!", {
+  //       icon: "✖",
+  //       style: {
+  //         borderRadius: "10px",
+  //         background: "#280505",
+  //         color: "#fff",
+  //         textAlign: "center",
+  //       },
+  //     });
+  //   } else {
+  //     let currentComments = [...activeComments];
+  //     const uuid = uuidv4();
+  //     currentComments = [
+  //       ...currentComments,
+  //       {
+  //         id: uuid,
+  //         user: {
+  //           uid: activeUser.uid,
+  //           name: activeUser.displayName,
+  //           avatar: activeUser.photoURL,
+  //         },
+  //         text: commentText,
+  //       },
+  //     ];
+  //     const toastId = toast.loading("Dodawanie komentarza...", {
+  //       style: {
+  //         borderRadius: "10px",
+  //         background: "#0c3362",
+  //         color: "#fff",
+  //       },
+  //     });
+  //     setActiveComments(currentComments);
+  //     await editComment(userID, recipeID, currentComments);
+  //     await handleSub(commentText, uuid);
+  //     setCommentText("");
+  //     toast.dismiss(toastId);
+  //     toast("Komentarz został dodany!", {
+  //       icon: "✔",
+  //       style: {
+  //         borderRadius: "10px",
+  //         background: "#052814",
+  //         color: "#fff",
+  //       },
+  //     });
+  //   }
+  // };
+
   const handleComment = async () => {
     if (!activeUser) {
       toast("Musisz być zalogowany aby dodać komentarz!", {
@@ -57,31 +118,36 @@ const AddComment = ({
           textAlign: "center",
         },
       });
-    } else {
-      let currentComments = [...activeComments];
-      const uuid = uuidv4();
-      currentComments = [
-        ...currentComments,
-        {
-          id: uuid,
-          user: {
-            uid: activeUser.uid,
-            name: activeUser.displayName,
-            avatar: activeUser.photoURL,
-          },
-          text: commentText,
+      return;
+    }
+
+    let currentComments = [...activeComments];
+    const uuid = uuidv4();
+    currentComments = [
+      ...currentComments,
+      {
+        id: uuid,
+        user: {
+          uid: activeUser.uid,
+          name: activeUser.displayName,
+          avatar: activeUser.photoURL,
         },
-      ];
-      const toastId = toast.loading("Dodawanie komentarza...", {
-        style: {
-          borderRadius: "10px",
-          background: "#0c3362",
-          color: "#fff",
-        },
-      });
+        text: commentText,
+      },
+    ];
+
+    const toastId = toast.loading("Dodawanie komentarza...", {
+      style: {
+        borderRadius: "10px",
+        background: "#0c3362",
+        color: "#fff",
+      },
+    });
+
+    try {
       setActiveComments(currentComments);
       await editComment(userID, recipeID, currentComments);
-      await handleSub(commentText, uuid);
+      await handleSub(commentText, uuid); // Tylko jeśli editComment zakończy się sukcesem
       setCommentText("");
       toast.dismiss(toastId);
       toast("Komentarz został dodany!", {
@@ -90,6 +156,18 @@ const AddComment = ({
           borderRadius: "10px",
           background: "#052814",
           color: "#fff",
+        },
+      });
+    } catch (error) {
+      console.error("Błąd przy dodawaniu komentarza:", error);
+      toast.dismiss(toastId);
+      toast("Wystąpił błąd przy dodawaniu komentarza!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+          textAlign: "center",
         },
       });
     }
