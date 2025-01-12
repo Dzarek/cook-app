@@ -8,6 +8,8 @@ import {
   updateDoc,
   doc,
   deleteDoc,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import {
   signInWithEmailAndPassword,
@@ -333,21 +335,64 @@ export const editLike = async (
   await updateDoc(recipeDoc, updatedRecipe);
 };
 
-export const editComment = async (
+// export const editComment = async (
+//   userID: string,
+//   recipeID: string,
+//   newComments: {
+//     id: string;
+//     user: {
+//       uid: string;
+//       name: string;
+//       avatar: string;
+//     };
+//     text: string;
+//   }[]
+// ) => {
+//   const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
+//   const updatedRecipe = {
+//     comments: newComments,
+//   };
+//   await updateDoc(recipeDoc, updatedRecipe);
+// };
+
+export const addCommentF = async (
   userID: string,
   recipeID: string,
-  newComments: {
+  newComment: {
+    id: string;
     user: {
       uid: string;
       name: string;
       avatar: string;
     };
     text: string;
-  }[]
+  }
 ) => {
   const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
-  const updatedRecipe = {
-    comments: newComments,
-  };
-  await updateDoc(recipeDoc, updatedRecipe);
+
+  // Dodanie newComment do istniejącej tablicy comments
+  await updateDoc(recipeDoc, {
+    comments: arrayUnion(newComment),
+  });
+};
+
+export const deleteCommentF = async (
+  userID: string,
+  recipeID: string,
+  commentToRemove: {
+    id: string;
+    user: {
+      uid: string;
+      name: string;
+      avatar: string;
+    };
+    text: string;
+  }
+) => {
+  const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
+
+  // Usunięcie commentToRemove z tablicy comments
+  await updateDoc(recipeDoc, {
+    comments: arrayRemove(commentToRemove),
+  });
 };

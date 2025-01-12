@@ -5,7 +5,7 @@ import { MdAddCircle, MdDeleteForever } from "react-icons/md";
 import { useGlobalContext } from "./authContext";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import { editComment } from "@/lib/user.actions";
+import { addCommentF, deleteCommentF } from "@/lib/user.actions";
 import { v4 as uuidv4 } from "uuid";
 import { subscribe } from "@/notification/Comments";
 
@@ -123,18 +123,16 @@ const AddComment = ({
 
     let currentComments = [...activeComments];
     const uuid = uuidv4();
-    currentComments = [
-      ...currentComments,
-      {
-        id: uuid,
-        user: {
-          uid: activeUser.uid,
-          name: activeUser.displayName,
-          avatar: activeUser.photoURL,
-        },
-        text: commentText,
+    const newComment = {
+      id: uuid,
+      user: {
+        uid: activeUser.uid,
+        name: activeUser.displayName,
+        avatar: activeUser.photoURL,
       },
-    ];
+      text: commentText,
+    };
+    currentComments = [...currentComments, newComment];
 
     const toastId = toast.loading("Dodawanie komentarza...", {
       style: {
@@ -146,7 +144,7 @@ const AddComment = ({
 
     try {
       setActiveComments(currentComments);
-      await editComment(userID, recipeID, currentComments);
+      await addCommentF(userID, recipeID, newComment);
       await handleSub(commentText, uuid); // Tylko jeśli editComment zakończy się sukcesem
       setCommentText("");
       toast.dismiss(toastId);
@@ -177,15 +175,29 @@ const AddComment = ({
     let currentComments = [...activeComments];
     currentComments = currentComments.filter((comment) => comment.id !== id);
     setActiveComments(currentComments);
-    await editComment(userID, recipeID, currentComments);
-    toast("Komentarz został usunięty!", {
-      icon: "✔",
-      style: {
-        borderRadius: "10px",
-        background: "#280505",
-        color: "#fff",
-      },
-    });
+    const commentToRemove = currentComments.find(
+      (comment) => comment.id === id
+    );
+    if (commentToRemove) {
+      await deleteCommentF(userID, recipeID, commentToRemove);
+      toast("Komentarz został usunięty!", {
+        icon: "✔",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+        },
+      });
+    } else {
+      toast("Coś poszło nie tak!", {
+        icon: "✖",
+        style: {
+          borderRadius: "10px",
+          background: "#280505",
+          color: "#fff",
+        },
+      });
+    }
   };
 
   useEffect(() => {
