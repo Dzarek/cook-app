@@ -51,7 +51,8 @@ const LoginPage = () => {
           },
         });
       } else {
-        router.push("/");
+        // router.push("/");
+        window.location.href = "/";
       }
     } catch (err) {
       toast("Nieprawidłowy email lub hasło!", {
