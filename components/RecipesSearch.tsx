@@ -38,9 +38,10 @@ const RecipesSearch = ({
       setActiveRecipes(allRecipes);
       setActiveKategory("wszystkie");
     } else {
-      setActiveKategory(tag);
+      const newTag = tag === "sniadanie" ? "śniadanie" : tag;
+      setActiveKategory(newTag);
       setActiveRecipes(
-        allRecipes.filter((recipe) => recipe.category.includes(tag))
+        allRecipes.filter((recipe) => recipe.category.includes(newTag))
       );
     }
     setVisibleRecipesCount(5);
