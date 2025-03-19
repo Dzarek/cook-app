@@ -73,7 +73,7 @@ const AddRecipeComponent = ({
   );
 
   const [newIngredients, setNewIngredients] = useState<CategoryIngredients[]>(
-    loadFromLocalStorage("newIngredients", [])
+    []
   );
   const [editingIngredient, setEditingIngredient] = useState<number>(-1);
   const [newIngredient, setNewIgredient] = useState("");
@@ -144,7 +144,14 @@ const AddRecipeComponent = ({
   }, [newPortion]);
 
   useEffect(() => {
-    saveToLocalStorage("newIngredients", newIngredients);
+    const storedIngredients = loadFromLocalStorage("newIngredients", []);
+    setNewIngredients(storedIngredients);
+  }, []);
+
+  useEffect(() => {
+    if (newIngredients.length > 0) {
+      saveToLocalStorage("newIngredients", newIngredients);
+    }
   }, [newIngredients]);
 
   useEffect(() => {
