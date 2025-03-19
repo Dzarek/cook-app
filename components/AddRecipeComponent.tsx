@@ -41,11 +41,16 @@ const AddRecipeComponent = ({
 }) => {
   // Load data from localStorage if it exists
   const loadFromLocalStorage = (key: string, defaultValue: any) => {
-    if (typeof window !== "undefined") {
+    if (typeof window === "undefined") return defaultValue; // Ensure it's running on the client
+
+    try {
       const savedValue = localStorage.getItem(key);
       return savedValue ? JSON.parse(savedValue) : defaultValue;
+    } catch (error) {
+      console.error(`Error loading ${key} from localStorage:`, error);
+      localStorage.removeItem(key); // Clear corrupted data
+      return defaultValue;
     }
-    return defaultValue;
   };
 
   const [newTitle, setNewTitle] = useState(
