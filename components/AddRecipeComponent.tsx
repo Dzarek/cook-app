@@ -41,8 +41,11 @@ const AddRecipeComponent = ({
 }) => {
   // Load data from localStorage if it exists
   const loadFromLocalStorage = (key: string, defaultValue: any) => {
-    const savedValue = localStorage.getItem(key);
-    return savedValue ? JSON.parse(savedValue) : defaultValue;
+    if (typeof window !== "undefined") {
+      const savedValue = localStorage.getItem(key);
+      return savedValue ? JSON.parse(savedValue) : defaultValue;
+    }
+    return defaultValue;
   };
 
   const [newTitle, setNewTitle] = useState(
@@ -101,7 +104,9 @@ const AddRecipeComponent = ({
 
   // Save data to localStorage whenever any field changes
   const saveToLocalStorage = (key: string, value: any) => {
-    localStorage.setItem(key, JSON.stringify(value));
+    if (typeof window !== "undefined") {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
   };
 
   // useEffect to handle saving to localStorage on change for each field
