@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { useGlobalContext } from "./authContext";
 import { ImCross } from "react-icons/im";
 import RecipesList from "./RecipesList";
+import { FaHeart } from "react-icons/fa6";
 
 type ProfilTypes = {
   currentUser: {
@@ -267,7 +268,7 @@ const ProfilComponent = ({
           <div className="flex justify-center items-center mt-10">
             <button
               onClick={() => setActiveMyRecipes(true)}
-              className={` uppercase mx-10 p-2 rounded-md font-semibold border-red-950 border-2 ${
+              className={` uppercase mx-5 p-2 rounded-md font-semibold border-red-950 border-2 ${
                 activeMyRecipes
                   ? "bg-red-950 text-white"
                   : "bg-white text-black"
@@ -277,13 +278,13 @@ const ProfilComponent = ({
             </button>
             <button
               onClick={() => setActiveMyRecipes(false)}
-              className={` uppercase mx-10 p-2 rounded-md font-semibold border-red-950 border-2 ${
+              className={` uppercase flex items-center justify-center mx-5 p-2 rounded-md font-semibold border-red-950 border-2 ${
                 !activeMyRecipes
                   ? "bg-red-950 text-white"
                   : "bg-white text-black"
               }`}
             >
-              Polubione przepisy
+              Polubione <FaHeart className="text-red-500 ml-3" />
             </button>
           </div>
           <div className="px-[5vw] w-full xl:w-auto">

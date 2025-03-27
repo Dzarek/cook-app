@@ -25,28 +25,32 @@ const RankingModal = async () => {
     );
   }
 
+  const currentYear = new Date().getFullYear(); // Pobieramy aktualny rok
+  const startOfYear = new Date(currentYear, 0, 1).getTime(); // Timestamp początku roku
+  const endOfYear = new Date(currentYear + 1, 0, 1).getTime(); // Timestamp końca roku
+
   const allUsers = await getRankingUsers();
   const userID = session.uid;
 
   // Sortowanie użytkowników według liczby polubień
   const sortedUsers = allUsers.sort((a, b) => {
-    const likesA = a.itemsArray.reduce(
-      (sum, item) => sum + item.likes.length,
-      0
-    );
-    const likesB = b.itemsArray.reduce(
-      (sum, item) => sum + item.likes.length,
-      0
-    );
+    const likesA = a.itemsArray
+      .filter(
+        (item2) =>
+          item2.createdTime >= startOfYear && item2.createdTime < endOfYear
+      )
+      .reduce((sum, item) => sum + item.likes.length, 0);
+    const likesB = b.itemsArray
+      .filter(
+        (item2) =>
+          item2.createdTime >= startOfYear && item2.createdTime < endOfYear
+      )
+      .reduce((sum, item) => sum + item.likes.length, 0);
     return likesB - likesA; // Sortowanie malejące
   });
 
   let currentPosition = 1;
   let previousLikes: any = null;
-
-  const currentYear = new Date().getFullYear(); // Pobieramy aktualny rok
-  const startOfYear = new Date(currentYear, 0, 1).getTime(); // Timestamp początku roku
-  const endOfYear = new Date(currentYear + 1, 0, 1).getTime(); // Timestamp końca roku
 
   return (
     <div className="mt-[10vh] h-auto xl:h-[80vh] w-[93vw] xl:w-[80vw] mx-auto flex flex-col">
@@ -70,8 +74,9 @@ const RankingModal = async () => {
             znajdziesz się w rankingu.
           </p>
           <p className="my-[2vh] xl:my-[3vh] text-base xl:text-lg text-center xl:text-left">
-            Kucharz z największą liczbą smacznych przepisów, oprócz szacunku
-            reszty kucharzy, zdobędzie (lub obroni) tytuł MISTRZA KUCHNI!{" "}
+            Co roku, <span className="text-red-900 font-semibold">Kucharz</span>{" "}
+            z największą liczbą smacznych przepisów, oprócz szacunku reszty
+            kucharzy, zdobędzie (lub obroni) tytuł MISTRZA KUCHNI!{" "}
             <AwardModal />
           </p>
           <div className="my-[2vh] xl:my-[3vh] flex items-center justify-center xl:justify-start ">
@@ -79,8 +84,11 @@ const RankingModal = async () => {
             <RankingDate />
           </div>
         </div>
-
         <ul className="my-10 xl:my-0 rankingList h-full w-full xl:w-[55%] overflow-y-auto flex flex-col items-center justify-start px-0 xl:pl-[2vw] bg-white">
+          <p className="mx-auto w-full xl:w-[90%] mb-2 text-center xl:text-right text-sm 2xl:text-base italic">
+            liczba tegorocznych polubień /
+            <span className="text-zinc-500"> (liczba wszystkich polubień)</span>{" "}
+          </p>
           {sortedUsers.map((user, index) => {
             const numberOfLikes = user.itemsArray.reduce(
               (sum, item) => sum + item.likes.length,
@@ -107,7 +115,7 @@ const RankingModal = async () => {
                 key={user.id}
                 className={`flex items-center justify-start w-full xl:w-[90%] border-b-2 py-3 xl:py-4 rounded-md px-1 xl:px-4 ${
                   userID === user.id && "bg-red-50 "
-                }`}
+                } ${currentPosition === 1 && "bg-yellow-50"}`}
               >
                 <span className="text-xl xl:text-3xl font-bold text-gray-500 mr-2 xl:mr-10">
                   {numberOfLikes === 0 ? sortedUsers.length : currentPosition}.
@@ -123,9 +131,10 @@ const RankingModal = async () => {
                   {user.userName}
                 </h4>
                 <p className="ml-auto flex items-center text-base xl:text-xl border-l-2 border-red-950 pl-3 xl:pl-5">
-                  <span className="text-[14px] xl:text-lg">
-                    smaczne przepisy:
+                  <span className="text-[14px] xl:text-[18px] 2xl:hidden">
+                    smaczne:
                   </span>
+                  <span className="hidden 2xl:inline">smaczne przepisy:</span>
                   <FaHeart className="text-red-900 ml-3 xl:ml-5" />
                   <span className="ml-1 text-xl xl:text-2xl font-bold">
                     {numberOfThisYearLikes}

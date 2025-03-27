@@ -32,7 +32,7 @@ const Profil = async () => {
 
   const allRecipes = await getAllRecipes();
   const favoriteRecipes = allRecipes.filter((recipe) =>
-    recipe.likes.includes("OBdGfYS2hZPU7yXL18WTQ5Ivura2")
+    recipe.likes.includes(userID)
   );
 
   return (
