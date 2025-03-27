@@ -123,7 +123,9 @@ const RankingModal = async () => {
                   {user.userName}
                 </h4>
                 <p className="ml-auto flex items-center text-base xl:text-xl border-l-2 border-red-950 pl-3 xl:pl-5">
-                  <span className="text-[14px]">smaczne przepisy:</span>
+                  <span className="text-[14px] xl:text-lg">
+                    smaczne przepisy:
+                  </span>
                   <FaHeart className="text-red-900 ml-3 xl:ml-5" />
                   <span className="ml-1 text-xl xl:text-2xl font-bold">
                     {numberOfThisYearLikes}
