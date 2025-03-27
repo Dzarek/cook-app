@@ -85,9 +85,12 @@ const RankingModal = async () => {
           </div>
         </div>
         <ul className="my-10 xl:my-0 rankingList h-full w-full xl:w-[55%] overflow-y-auto flex flex-col items-center justify-start px-0 xl:pl-[2vw] bg-white">
-          <p className="mx-auto w-full xl:w-[90%] mb-2 text-center xl:text-right text-sm 2xl:text-base italic">
-            liczba tegorocznych polubień /
-            <span className="text-zinc-500"> (liczba wszystkich polubień)</span>{" "}
+          <p className="mx-auto w-[90%] mb-2 text-center xl:text-right text-sm 2xl:text-base italic">
+            liczba polubień tegorocznych przepisów /
+            <span className="text-zinc-500">
+              {" "}
+              (liczba polubień wszystkich przepisów)
+            </span>{" "}
           </p>
           {sortedUsers.map((user, index) => {
             const numberOfLikes = user.itemsArray.reduce(
