@@ -3,7 +3,7 @@ import { authOptions } from "@/lib/authOptions";
 import Link from "next/link";
 import ProfilComponent from "@/components/ProfilComponent";
 import { GiChefToque } from "react-icons/gi";
-import { getOneUser, getRecipes } from "@/lib/actions";
+import { getOneUser, getRecipes, getAllRecipes } from "@/lib/actions";
 
 const Profil = async () => {
   const session = await getServerSession(authOptions);
@@ -30,6 +30,11 @@ const Profil = async () => {
 
   const userID = session.uid;
 
+  const allRecipes = await getAllRecipes();
+  const favoriteRecipes = allRecipes.filter((recipe) =>
+    recipe.likes.includes("OBdGfYS2hZPU7yXL18WTQ5Ivura2")
+  );
+
   return (
     <div className="page w-screen">
       <header className="text-center w-full py-[10vh] flex justify-center items-center">
@@ -44,6 +49,7 @@ const Profil = async () => {
           userID={userID}
           currentUser={currentUser}
           userRecipes={sortedRecipes}
+          favoriteRecipes={favoriteRecipes}
         />
       )}
     </div>

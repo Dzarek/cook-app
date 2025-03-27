@@ -44,8 +44,12 @@ const RankingModal = async () => {
   let currentPosition = 1;
   let previousLikes: any = null;
 
+  const currentYear = new Date().getFullYear(); // Pobieramy aktualny rok
+  const startOfYear = new Date(currentYear, 0, 1).getTime(); // Timestamp początku roku
+  const endOfYear = new Date(currentYear + 1, 0, 1).getTime(); // Timestamp końca roku
+
   return (
-    <div className="mt-[10vh] h-auto xl:h-[80vh] w-[90vw] xl:w-[80vw] mx-auto flex flex-col">
+    <div className="mt-[10vh] h-auto xl:h-[80vh] w-[93vw] xl:w-[80vw] mx-auto flex flex-col">
       <h2 className="flex justify-center items-center mx-auto text-red-900 w-full text-center mt-[10vh] text-xl xl:text-2xl font-bold  mb-[5vh]">
         <FaStar className="text-xl text-yellow-500 mx-2" />
         <FaStar className="text-xl text-yellow-500 mx-2" />
@@ -82,6 +86,14 @@ const RankingModal = async () => {
               (sum, item) => sum + item.likes.length,
               0
             );
+            const thisYearLikes = user.itemsArray.filter(
+              (item) =>
+                item.createdTime >= startOfYear && item.createdTime < endOfYear
+            );
+            const numberOfThisYearLikes = thisYearLikes.reduce(
+              (sum, item) => sum + item.likes.length,
+              0
+            );
 
             // Sprawdzenie czy obecny użytkownik ma tyle samo polubień co poprzedni
             if (previousLikes !== null && previousLikes !== numberOfLikes) {
@@ -111,10 +123,13 @@ const RankingModal = async () => {
                   {user.userName}
                 </h4>
                 <p className="ml-auto flex items-center text-base xl:text-xl border-l-2 border-red-950 pl-3 xl:pl-5">
-                  smaczne przepisy:{" "}
+                  <span className="text-[14px]">smaczne przepisy:</span>
                   <FaHeart className="text-red-900 ml-3 xl:ml-5" />
                   <span className="ml-1 text-xl xl:text-2xl font-bold">
-                    {numberOfLikes}
+                    {numberOfThisYearLikes}
+                  </span>
+                  <span className="ml-2 text-xl xl:text-2xl text-zinc-500 font-bold">
+                    ({numberOfLikes})
                   </span>
                 </p>
               </li>

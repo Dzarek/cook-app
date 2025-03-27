@@ -18,6 +18,7 @@ import {
 import toast from "react-hot-toast";
 import { useGlobalContext } from "./authContext";
 import { ImCross } from "react-icons/im";
+import RecipesList from "./RecipesList";
 
 type ProfilTypes = {
   currentUser: {
@@ -27,9 +28,15 @@ type ProfilTypes = {
   };
   userRecipes: Recipe[];
   userID: string;
+  favoriteRecipes: Recipe[];
 };
 
-const ProfilComponent = ({ currentUser, userRecipes, userID }: ProfilTypes) => {
+const ProfilComponent = ({
+  currentUser,
+  userRecipes,
+  userID,
+  favoriteRecipes,
+}: ProfilTypes) => {
   const [nick, setNick] = useState(currentUser.userName || "");
   const [email, setEmail] = useState(currentUser.email || "");
   const [avatar, setAvatar] = useState(
@@ -40,6 +47,7 @@ const ProfilComponent = ({ currentUser, userRecipes, userID }: ProfilTypes) => {
   const [openAvatarModal, setOpenAvatarModal] = useState(false);
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
+  const [activeMyRecipes, setActiveMyRecipes] = useState(true);
 
   const { setName, setAvatar: setAvatarContext } = useGlobalContext();
 
@@ -253,11 +261,37 @@ const ProfilComponent = ({ currentUser, userRecipes, userID }: ProfilTypes) => {
           </div>
         </section>
         <section className="w-full xl:w-4/6 border-t-2 border-red-950">
-          <h3 className="uppercase text-xl font-semibold bg-red-900 text-white p-2 text-center ">
-            Moje przepisy:
-          </h3>
+          <h2 className="uppercase text-xl font-semibold bg-red-900 text-white p-2 text-center">
+            Lista Przepisów:
+          </h2>
+          <div className="flex justify-center items-center mt-10">
+            <button
+              onClick={() => setActiveMyRecipes(true)}
+              className={` uppercase mx-10 p-2 rounded-md font-semibold border-red-950 border-2 ${
+                activeMyRecipes
+                  ? "bg-red-950 text-white"
+                  : "bg-white text-black"
+              }`}
+            >
+              Moje przepisy
+            </button>
+            <button
+              onClick={() => setActiveMyRecipes(false)}
+              className={` uppercase mx-10 p-2 rounded-md font-semibold border-red-950 border-2 ${
+                !activeMyRecipes
+                  ? "bg-red-950 text-white"
+                  : "bg-white text-black"
+              }`}
+            >
+              Polubione przepisy
+            </button>
+          </div>
           <div className="px-[5vw] w-full xl:w-auto">
-            <RecipesListProfile recipes={userRecipes} userID={userID} />
+            {activeMyRecipes ? (
+              <RecipesListProfile recipes={userRecipes} userID={userID} />
+            ) : (
+              <RecipesList recipes={favoriteRecipes} />
+            )}
           </div>
         </section>
       </main>

@@ -9,6 +9,8 @@ import LikeControl from "@/components/LikeControl";
 import NativeShareButton from "@/components/ShareBtn";
 import AddComent from "@/components/AddComment";
 import RecipeIngredients from "@/components/RecipeIngredients";
+import Link from "next/link";
+import { MdOutlineKeyboardReturn } from "react-icons/md";
 
 const OneRecipePage = async ({
   params: { id },
@@ -53,6 +55,9 @@ const OneRecipePage = async ({
     return (
       <div className="page w-full">
         <header className="border-b-4 border-red-100 xl:border-b-0 relative text-center bg-red-100  xl:mb-[10vh] w-full pt-[10vh] pb-[15vh] xl:pb-[10vh] flex justify-center items-center">
+          <Link href="/przepisy">
+            <MdOutlineKeyboardReturn className="uppercase text-zinc-400 text-4xl xl:text-4xl font-semibold absolute top-8 left-[5vw] xl:left-[10vw]" />
+          </Link>
           <FaSpoon className="text-2xl xl:text-3xl text-red-900  mr-6 spoonRotate" />
           <h1 className="max-w-[65%] xl:max-w-auto text-lg text-center xl:text-2xl font-bold font-bodyFont uppercase">
             {title}
