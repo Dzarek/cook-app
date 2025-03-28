@@ -1,3 +1,5 @@
+import InfoUpdate from "./InfoUpdate";
+
 const logoJarek = "/assets/images/logoJarek.png";
 
 const Footer = () => {
@@ -12,6 +14,7 @@ const Footer = () => {
           <img src={logoJarek} alt="logo Jarosław Janas" />
         </a>{" "}
       </span>
+      <InfoUpdate />
     </footer>
   );
 };
