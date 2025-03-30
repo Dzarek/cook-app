@@ -23,6 +23,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import toast from "react-hot-toast";
+import { revalidateHome } from "./actions";
 
 const getUser = getAuth();
 
@@ -255,6 +256,7 @@ export const postRecipe = async (
             color: "#fff",
           },
         });
+        revalidateHome();
       })
       .catch((error) => {
         console.error("Error writing document: ", error);
@@ -298,6 +300,7 @@ export const postRecipe = async (
           },
         });
         // window.location.href = "/przepisy";
+        revalidateHome();
       })
       .catch((error) => {
         console.error("Error writing document: ", error);
@@ -325,6 +328,7 @@ export const deleteRecipe = async (userID: string, id: string) => {
       color: "#fff",
     },
   });
+  revalidateHome();
 };
 
 export const editLike = async (

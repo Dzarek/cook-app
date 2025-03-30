@@ -3,6 +3,7 @@
 import { db } from "@/firebase/clientApp";
 import { collection, getDocs } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
+import { revalidatePath } from "next/cache";
 
 export const getAllUsers = async () => {
   const allUsersCollectionRef = collection(db, "usersList");
@@ -196,4 +197,8 @@ export const getRankingUsers = async () => {
     console.log(error);
     return [];
   }
+};
+
+export const revalidateHome = () => {
+  revalidatePath("/");
 };
