@@ -199,6 +199,7 @@ export const getRankingUsers = async () => {
   }
 };
 
+// Revalidate home page cache after adding recipe
 export const revalidateHome = () => {
   revalidatePath("/");
 };
