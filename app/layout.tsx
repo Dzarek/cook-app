@@ -5,6 +5,28 @@ import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 
 import { AppProvider } from "@/components/authContext";
+import { Montserrat, Inconsolata, Dancing_Script } from "next/font/google";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
+
+const inconsolata = Inconsolata({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-inconsolata",
+  display: "swap",
+});
+
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  weight: "variable",
+  variable: "--font-dancing",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Stępki Gotują",
@@ -19,7 +41,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
+    <html
+      lang="pl"
+      className={`${montserrat.variable} ${inconsolata.variable} ${dancingScript.variable}`}
+    >
       <AppProvider>
         <body className="relative">
           <Toaster
