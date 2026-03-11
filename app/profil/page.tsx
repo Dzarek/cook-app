@@ -7,7 +7,7 @@ import { getOneUser, getRecipes, getAllRecipes } from "@/lib/actions";
 
 const Profil = async () => {
   const session = await getServerSession(authOptions);
-  if (!session) {
+  if (!session || !session.uid) {
     return (
       <div className="page flex flex-col items-center justify-center">
         <p className="text-2xl">Odmowa dostępu!</p>
@@ -25,14 +25,14 @@ const Profil = async () => {
   const currentUser = await getOneUser(session.uid);
   const userRecipes = await getRecipes(session.uid);
   const sortedRecipes = userRecipes?.sort(
-    (a, b) => b.createdTime - a.createdTime
+    (a, b) => b.createdTime - a.createdTime,
   );
 
   const userID = session.uid;
 
   const allRecipes = await getAllRecipes();
   const favoriteRecipes = allRecipes.filter((recipe) =>
-    recipe.likes.includes(userID)
+    recipe.likes.includes(userID),
   );
 
   return (

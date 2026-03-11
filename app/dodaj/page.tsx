@@ -10,7 +10,7 @@ const NewRecipePage = async ({
   searchParams: { edycja: string };
 }) => {
   const session = await getServerSession(authOptions);
-  if (!session) {
+  if (!session || !session.uid) {
     return (
       <div className="page flex flex-col items-center justify-center">
         <p className="text-2xl">Odmowa dostępu!</p>
