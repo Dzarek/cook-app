@@ -6,7 +6,7 @@ import { getAllUsers } from "@/lib/actions";
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
-  const allowedUID = process.env.NEXT_PUBLIC_ADMIN_ID;
+  const allowedUID = process.env.ADMIN_ID;
 
   const users = await getAllUsers();
 
@@ -24,7 +24,7 @@ const AdminPage = async () => {
       </div>
     );
   }
-  if (session.uid !== allowedUID) {
+  if (!allowedUID || session.uid !== allowedUID) {
     return (
       <div className="page flex flex-col items-center justify-center">
         <p className="text-2xl">

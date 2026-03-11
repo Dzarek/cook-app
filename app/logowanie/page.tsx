@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { MdKeyboardReturn } from "react-icons/md";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import ConfirmBtn from "@/components/uiverse/ConfirmBtn";
 import { sendNewUserRequest } from "@/lib/api";
@@ -19,42 +18,24 @@ const LoginPage = () => {
   const [newRegistrationSend, setNewRegistrationSend] = useState(false);
   const [openRegistration, setOpenRegistration] = useState(false);
 
-  const router = useRouter();
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!email || !password) {
-      toast("Proszę uzupełnić pola logowania!", {
-        icon: "✖",
-        style: {
-          borderRadius: "10px",
-          background: "#5b0f0f",
-          color: "#fff",
-        },
-      });
-      return;
-    }
+
     try {
+      const token = await login(email, password);
+
+      // 3️⃣ logowanie NextAuth
       const result = await signIn("credentials", {
         redirect: false,
-        email,
-        password,
+        token,
       });
-      await login(email, password);
+
       if (result?.error) {
-        toast("Nieprawidłowy email lub hasło!", {
-          icon: "✖",
-          style: {
-            borderRadius: "10px",
-            background: "#5b0f0f",
-            color: "#fff",
-          },
-        });
-      } else {
-        // router.push("/");
-        window.location.href = "/";
+        throw new Error();
       }
-    } catch (err) {
+
+      window.location.href = "/";
+    } catch {
       toast("Nieprawidłowy email lub hasło!", {
         icon: "✖",
         style: {

@@ -1,47 +1,28 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/firebase/clientApp";
+import { adminAuth } from "@/firebase/firebaseAdmin";
+// import { signInWithEmailAndPassword } from "firebase/auth";
+// import { auth } from "@/firebase/clientApp";
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-        },
+        token: { label: "Firebase ID Token", type: "text" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
+        if (!credentials?.token) return null;
 
-        try {
-          // Sign in using Firebase Authentication
-          const userCredential = await signInWithEmailAndPassword(
-            auth,
-            credentials.email,
-            credentials.password
-          );
-          const user = userCredential.user;
+        const decoded = await adminAuth.verifyIdToken(credentials.token);
 
-          // Return user data to NextAuth
-          return {
-            id: user.uid,
-            email: user.email,
-            name: user.displayName,
-            image: user.photoURL,
-          };
-        } catch (error) {
-          console.error("Firebase sign-in error:", error);
-          return null;
-        }
+        return {
+          id: decoded.uid,
+          email: decoded.email,
+          name: decoded.name,
+          image: decoded.picture,
+          isAdmin: decoded.uid === process.env.ADMIN_ID ? true : false,
+        };
       },
     }),
   ],
@@ -53,12 +34,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.uid = user.id;
+        token.isAdmin = user.isAdmin;
       }
       return token;
     },
-    async session({ session, token }: { session: any; token: any }) {
-      if (token && token.uid) {
+    async session({ session, token }) {
+      if (token?.uid) {
         session.uid = token.uid;
+        session.isAdmin = token.isAdmin;
       }
       return session;
     },

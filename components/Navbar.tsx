@@ -21,16 +21,17 @@ import { useGlobalContext } from "./authContext";
 import { signOut } from "next-auth/react";
 import { CgMenuGridR } from "react-icons/cg";
 import { FaRegArrowAltCircleUp } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const {
-    isLogin,
+    // isLogin,
     activeUser,
     modalName,
     name,
     email,
     avatar,
-    loading,
+    // loading,
     setIsLogin,
     setName,
     setAvatar,
@@ -38,7 +39,7 @@ const Navbar = () => {
   } = useGlobalContext();
   const pathname = usePathname();
   const [showMenu, setShowMenu] = useState(false);
-
+  const { data: session, status } = useSession();
   const links = [
     {
       id: 1,
@@ -87,7 +88,7 @@ const Navbar = () => {
     });
   };
 
-  if (loading) {
+  if (status === "loading") {
     return <Loading />;
   }
 
@@ -107,7 +108,7 @@ const Navbar = () => {
           </h1>
         </div>
         <nav className="flex justify-end items-center font-bodyFont font-bold">
-          {isLogin
+          {status === "authenticated"
             ? links
                 .filter((link) => link.href !== "/logowanie")
                 .map((link) => {
@@ -148,15 +149,10 @@ const Navbar = () => {
                     </Link>
                   );
                 })}
-          {isLogin && (
+          {status === "authenticated" && (
             <>
               <Link
-                href={
-                  activeUser &&
-                  activeUser.uid === process.env.NEXT_PUBLIC_ADMIN_ID
-                    ? "/admin"
-                    : "/profil"
-                }
+                href={session.isAdmin ? "/admin" : "/profil"}
                 className={`ml-12  flex items-center text-md capitalize transition  hover:text-red-900 
                 ${
                   pathname === "/profil" &&
@@ -235,7 +231,7 @@ const Navbar = () => {
               </h1>
             </div>
             <div className="flex flex-wrap items-center justify-around w-[100%] mx-auto">
-              {isLogin
+              {status === "authenticated"
                 ? links
                     .filter((link) => link.href !== "/logowanie")
                     .map((link) => {
@@ -295,15 +291,10 @@ const Navbar = () => {
                         </Link>
                       );
                     })}
-              {isLogin && (
+              {status === "authenticated" && (
                 <>
                   <Link
-                    href={
-                      activeUser &&
-                      activeUser.uid === process.env.NEXT_PUBLIC_ADMIN_ID
-                        ? "/admin"
-                        : "/profil"
-                    }
+                    href={session.isAdmin ? "/admin" : "/profil"}
                     onClick={() => setShowMenu(false)}
                     className={`w-[45%] h-[14vh] bg-[rgba(0,0,0,0.7)] p-2 mt-5 rounded-md flex flex-col items-center justify-center font-bold text-red-800 text-[0.8rem] uppercase transition  hover:text-red-900 
                     ${
@@ -328,10 +319,10 @@ const Navbar = () => {
             </div>
             <div
               className={`flex items-center w-[100%] mb-2 ${
-                isLogin ? "justify-between " : "justify-end"
+                status === "authenticated" ? "justify-between " : "justify-end"
               }`}
             >
-              {isLogin && (
+              {status === "authenticated" && (
                 <button
                   onClick={() => {
                     handleLogout();

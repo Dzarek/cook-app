@@ -3,6 +3,7 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import { auth } from "@/firebase/clientApp";
 import { onAuthStateChanged } from "firebase/auth";
+import { SessionProvider } from "next-auth/react";
 
 const defaultValues: ContextTypes = {
   activeUser: null,
@@ -92,28 +93,30 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   // END NOTIFICATION
 
   return (
-    <AppContext.Provider
-      value={{
-        activeUser,
-        name,
-        isLogin,
-        loading,
-        email,
-        avatar,
-        modalName,
-        editRecipe,
-        file,
-        setFile,
-        setEditRecipe,
-        setIsLogin,
-        setName,
-        setModalName,
-        setAvatar,
-        setLoading,
-      }}
-    >
-      {children}
-    </AppContext.Provider>
+    <SessionProvider>
+      <AppContext.Provider
+        value={{
+          activeUser,
+          name,
+          isLogin,
+          loading,
+          email,
+          avatar,
+          modalName,
+          editRecipe,
+          file,
+          setFile,
+          setEditRecipe,
+          setIsLogin,
+          setName,
+          setModalName,
+          setAvatar,
+          setLoading,
+        }}
+      >
+        {children}
+      </AppContext.Provider>
+    </SessionProvider>
   );
 };
 

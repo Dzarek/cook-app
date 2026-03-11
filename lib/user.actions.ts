@@ -15,7 +15,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
-  getAuth,
+  // getAuth,
   sendPasswordResetEmail,
   updateEmail,
   EmailAuthProvider,
@@ -25,17 +25,17 @@ import {
 import toast from "react-hot-toast";
 import { revalidateHome } from "./actions";
 
-const getUser = getAuth();
+// const getUser = getAuth();
 
 export const login = async (email: string, password: string) => {
   logout();
-  await signInWithEmailAndPassword(auth, email, password);
-  const getData = doc(db, `usersList/${getUser.currentUser!.uid}`);
+  const userCred = await signInWithEmailAndPassword(auth, email, password);
+  const getData = doc(db, `usersList/${userCred.user.uid}`);
   const data2 = await getDoc(getData);
   if (data2.data()) {
     const item = data2.data();
     if (item!.activeAccount === false) {
-      logout();
+      await logout();
       toast("Konto zostało usunięte!", {
         icon: "✖",
         style: {
@@ -44,8 +44,10 @@ export const login = async (email: string, password: string) => {
           color: "#fff",
         },
       });
+      throw new Error("ACCOUNT_DISABLED");
     }
   }
+  return await userCred.user.getIdToken();
 };
 
 export const logout = async () => {
@@ -57,10 +59,10 @@ export const logout = async () => {
 };
 
 export const updateName = async (newName: string) => {
-  await updateProfile(getUser.currentUser!, {
+  await updateProfile(auth.currentUser!, {
     displayName: newName,
   });
-  const userRef = doc(db, "usersList", getUser.currentUser!.uid);
+  const userRef = doc(db, "usersList", auth.currentUser!.uid);
   setDoc(
     userRef,
     {
@@ -68,7 +70,7 @@ export const updateName = async (newName: string) => {
     },
     {
       merge: true,
-    }
+    },
   );
   toast("Nick został zmieniony!", {
     icon: "✔",
@@ -81,36 +83,32 @@ export const updateName = async (newName: string) => {
 };
 
 export const checkPassword = async (password: string, email: string) => {
-  const credential = EmailAuthProvider.credential(
-    getUser.currentUser!.email!,
-    password
-  );
+  try {
+    const credential = EmailAuthProvider.credential(
+      auth.currentUser!.email!,
+      password,
+    );
 
-  reauthenticateWithCredential(getUser.currentUser!, credential)
-    .then(() => {
-      // console.log("User re-authenticated successfully");
-      // Proceed with updating the email
-      updateProfileEmail(email);
-    })
-    .catch((error) => {
-      // console.error("Error re-authenticating:", error);
-      toast("Nieprawidłowe hasło!", {
-        icon: "✖",
-        style: {
-          borderRadius: "10px",
-          background: "#280505",
-          color: "#fff",
-        },
-      });
+    await reauthenticateWithCredential(auth.currentUser!, credential);
+    await updateProfileEmail(email);
+  } catch {
+    toast("Nieprawidłowe hasło!", {
+      icon: "✖",
+      style: {
+        borderRadius: "10px",
+        background: "#280505",
+        color: "#fff",
+      },
     });
+  }
 };
 // };
 
 export const updateProfileEmail = async (newEmail: string) => {
-  await updateEmail(getUser.currentUser!, newEmail)
+  await updateEmail(auth.currentUser!, newEmail)
     .then(() => {
       // console.log("Email updated successfully!");
-      sendEmailVerification(getUser.currentUser!);
+      sendEmailVerification(auth.currentUser!);
       toast("Adres email został zmieniony!", {
         icon: "✔",
         style: {
@@ -142,7 +140,7 @@ export const updateProfileEmail = async (newEmail: string) => {
         });
       }
     });
-  const userRef = doc(db, "usersList", getUser.currentUser!.uid);
+  const userRef = doc(db, "usersList", auth.currentUser!.uid);
   setDoc(
     userRef,
     {
@@ -150,15 +148,15 @@ export const updateProfileEmail = async (newEmail: string) => {
     },
     {
       merge: true,
-    }
+    },
   );
 };
 
 export const updateAvatar = async (avatar: string) => {
-  await updateProfile(getUser.currentUser!, {
+  await updateProfile(auth.currentUser!, {
     photoURL: avatar,
   });
-  const userRef = doc(db, "usersList", getUser.currentUser!.uid);
+  const userRef = doc(db, "usersList", auth.currentUser!.uid);
   setDoc(
     userRef,
     {
@@ -166,7 +164,7 @@ export const updateAvatar = async (avatar: string) => {
     },
     {
       merge: true,
-    }
+    },
   );
   toast("Avatar został zmieniony!", {
     icon: "✔",
@@ -181,13 +179,13 @@ export const updateAvatar = async (avatar: string) => {
 export const updateUser = async (newName: string, avatar: string) => {
   await updateName(newName);
   await updateAvatar(avatar);
-  if (getUser.currentUser!.email) {
+  if (auth.currentUser!.email) {
     changePassword();
   }
 };
 
 export const changePassword = async () => {
-  await sendPasswordResetEmail(getUser, getUser.currentUser!.email!)
+  await sendPasswordResetEmail(auth, auth.currentUser!.email!)
     .then(() => {
       // Password reset email sent!
       // ..
@@ -199,7 +197,7 @@ export const changePassword = async () => {
     });
 };
 export const changePasswordWhenLogin = async (email: string) => {
-  await sendPasswordResetEmail(getUser, email)
+  await sendPasswordResetEmail(auth, email)
     .then(() => {
       // Password reset email sent!
       // ..
@@ -229,7 +227,7 @@ export const postRecipe = async (
   }[],
   newSteps: string[],
   newDescription: string,
-  newSource: string
+  newSource: string,
 ) => {
   if (editing) {
     const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
@@ -272,7 +270,7 @@ export const postRecipe = async (
     // window.location.href = "/profil";
   } else {
     const setDocRecipeCollectionRef = doc(
-      collection(db, `usersList/${userID}/recipes`)
+      collection(db, `usersList/${userID}/recipes`),
     );
     await setDoc(setDocRecipeCollectionRef, {
       createdTime: new Date().getTime(),
@@ -334,7 +332,7 @@ export const deleteRecipe = async (userID: string, id: string) => {
 export const editLike = async (
   userID: string,
   recipeID: string,
-  newLikes: string[]
+  newLikes: string[],
 ) => {
   const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
   const updatedRecipe = {
@@ -374,7 +372,7 @@ export const addCommentF = async (
       avatar: string;
     };
     text: string;
-  }
+  },
 ) => {
   const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
 
@@ -395,7 +393,7 @@ export const deleteCommentF = async (
       avatar: string;
     };
     text: string;
-  }
+  },
 ) => {
   const recipeDoc = doc(db, `usersList/${userID}/recipes`, recipeID);
 
