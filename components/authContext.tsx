@@ -4,6 +4,7 @@ import { useState, useEffect, useContext, createContext } from "react";
 import { auth } from "@/firebase/clientApp";
 import { onAuthStateChanged } from "firebase/auth";
 import { SessionProvider } from "next-auth/react";
+import { subscribePush } from "@/notification/Notification";
 
 const defaultValues: ContextTypes = {
   activeUser: null,
@@ -65,16 +66,21 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   // NOTIFICATION
+  // useEffect(() => {
+  //   if (!activeUser) return;
+
+  //   if ("serviceWorker" in navigator) {
+  //     navigator.serviceWorker.register("/sw.js").catch(console.error);
+  //   }
+
+  //   if ("Notification" in window) {
+  //     Notification.requestPermission();
+  //   }
+  // }, [activeUser]);
   useEffect(() => {
     if (!activeUser) return;
 
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js").catch(console.error);
-    }
-
-    if ("Notification" in window) {
-      Notification.requestPermission();
-    }
+    subscribePush();
   }, [activeUser]);
 
   // END NOTIFICATION
