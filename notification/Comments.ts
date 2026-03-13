@@ -1,12 +1,7 @@
 "use client";
 
 const CONFIG = {
-  PUBLIC_KEY: process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY,
-  PRIVATE_KEY: process.env.NEXT_PUBLIC_WEB_PUSH_PRIVATE_KEY,
-};
-export const unregisterServiceWorkers = async () => {
-  const registrations = await navigator.serviceWorker.getRegistrations();
-  await Promise.all(registrations.map((r) => r.unregister()));
+  PUBLIC_KEY: process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY!,
 };
 
 const registerServiceWorker = async () => {
@@ -14,58 +9,53 @@ const registerServiceWorker = async () => {
 };
 
 const saveSubscription = async (
-  subscription: any,
+  subscription: PushSubscription,
   title: string,
   body: string,
   tag: string,
-  recipeID: string
+  recipeID: string,
 ) => {
   const ORIGIN = window.location.origin;
   const BACKEND_URL = `${ORIGIN}/api/comment`;
 
-  const response = await fetch(BACKEND_URL, {
+  return fetch(BACKEND_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      subscription,
-      title,
-      body,
-      tag,
-      recipeID,
-    }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ subscription, title, body, tag, recipeID }),
   });
-  return response.json();
 };
 
 export const subscribe = async (
   title: string,
   body: string,
   tag: string,
-  userID: string,
-  recipeID: string
+  userID: string | undefined,
+  recipeID: string,
 ) => {
-  const ORIGIN = window.location.origin;
-  const BACKEND_URL = `${ORIGIN}/api/comment`;
-
-  const swRegistration = await registerServiceWorker();
-  await Notification.requestPermission();
+  if (!userID) return; // tylko zalogowani
 
   try {
-    const options = {
-      applicationServerKey: CONFIG.PUBLIC_KEY,
-      userVisibleOnly: true,
-    };
+    const permission = await Notification.requestPermission();
+    if (permission !== "granted") return;
+
     const swRegistration = await registerServiceWorker();
-    await Notification.requestPermission();
-    const subscription = await swRegistration.pushManager.subscribe(options);
-    await saveSubscription(subscription, title, body, tag, recipeID);
-    if (!userID || userID === undefined) {
-      await unregisterServiceWorkers();
+    const existingSub = await swRegistration.pushManager.getSubscription();
+
+    let subscription = existingSub;
+    if (!subscription) {
+      subscription = await swRegistration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: CONFIG.PUBLIC_KEY,
+      });
     }
-    await fetch(BACKEND_URL);
+
+    await saveSubscription(subscription, title, body, tag, recipeID);
   } catch (err) {
-    console.error("Error", err);
+    console.error("Błąd subskrypcji push:", err);
   }
+};
+
+export const unregisterServiceWorkers = async () => {
+  const registrations = await navigator.serviceWorker.getRegistrations();
+  await Promise.all(registrations.map((r) => r.unregister()));
 };

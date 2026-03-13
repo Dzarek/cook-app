@@ -4,10 +4,9 @@ import Image from "next/image";
 import { MdAddCircle, MdDeleteForever } from "react-icons/md";
 import { useGlobalContext } from "./authContext";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { addCommentF, deleteCommentF } from "@/lib/user.actions";
 import { v4 as uuidv4 } from "uuid";
-import { subscribe } from "@/notification/Comments";
 
 type CommentProps = {
   comments: {
@@ -176,7 +175,7 @@ const AddComment = ({
     currentComments = currentComments.filter((comment) => comment.id !== id);
     setActiveComments(currentComments);
     const commentToRemove = currentComments.find(
-      (comment) => comment.id === id
+      (comment) => comment.id === id,
     );
     if (commentToRemove) {
       await deleteCommentF(userID, recipeID, commentToRemove);
@@ -200,38 +199,24 @@ const AddComment = ({
     }
   };
 
-  useEffect(() => {
-    if (userID && userID !== undefined) {
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/sw.js")
-          .then(function (registration) {
-            console.log(
-              "Service Worker registered with scope:",
-              registration.scope
-            );
-          })
-          .catch(function (error) {
-            console.error("Service Worker registration failed:", error);
-          });
-      }
-      if ("Notification" in window && "PushManager" in window) {
-        Notification.requestPermission().then(function (permission) {
-          if (permission === "granted") {
-            console.log("Notification permission granted.");
-          }
-        });
-      }
-    }
-  }, [userID]);
-
   const handleSub = async (newTitle: string, uuid: any) => {
     const cookerName = name.toUpperCase();
     const recipeNameBig = recipeName.toUpperCase();
     const title = `${cookerName} komentuje ${recipeNameBig}.`;
     const body = newTitle;
     const tag = uuid;
-    await subscribe(title, body, tag, userID, recipeID);
+    await fetch("/api/push", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "notify",
+        type: "comment",
+        title,
+        body,
+        tag,
+        recipeID,
+      }),
+    });
   };
 
   return (

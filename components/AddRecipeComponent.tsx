@@ -21,7 +21,6 @@ import { useGlobalContext } from "./authContext";
 import VoiceIngredient from "./voice/VoiceIngredient";
 import VoiceLongText from "./voice/VoiceLongText";
 import ConfirmBtn from "./uiverse/ConfirmBtn";
-import { subscribe } from "@/notification/Notification";
 import { v4 as uuidv4 } from "uuid";
 
 type CategoryIngredients = {
@@ -54,42 +53,42 @@ const AddRecipeComponent = ({
   };
 
   const [newTitle, setNewTitle] = useState(
-    loadFromLocalStorage("newTitle", "")
+    loadFromLocalStorage("newTitle", ""),
   );
   const [newShortInfo, setNewShortInfo] = useState(
-    loadFromLocalStorage("newShortInfo", "")
+    loadFromLocalStorage("newShortInfo", ""),
   );
   const [newCategory, setNewCategory] = useState<string[]>(
-    loadFromLocalStorage("newCategory", [])
+    loadFromLocalStorage("newCategory", []),
   );
   const [newPrepTime, setNewPrepTime] = useState(
-    loadFromLocalStorage("newPrepTime", 0)
+    loadFromLocalStorage("newPrepTime", 0),
   );
   const [newLevel, setNewLevel] = useState(
-    loadFromLocalStorage("newLevel", levels[0])
+    loadFromLocalStorage("newLevel", levels[0]),
   );
   const [newPortion, setNewPortion] = useState(
-    loadFromLocalStorage("newPortion", 0)
+    loadFromLocalStorage("newPortion", 0),
   );
 
   const [newIngredients, setNewIngredients] = useState<CategoryIngredients[]>(
-    []
+    [],
   );
   const [editingIngredient, setEditingIngredient] = useState<number>(-1);
   const [newIngredient, setNewIgredient] = useState("");
   const [newSteps, setNewSteps] = useState<string[]>(
-    loadFromLocalStorage("newSteps", [])
+    loadFromLocalStorage("newSteps", []),
   );
   const [editingStep, setEditingStep] = useState<number>(-1);
   const [newStep, setNewStep] = useState("");
   const [newDescription, setNewDescription] = useState(
-    loadFromLocalStorage("newDescription", "")
+    loadFromLocalStorage("newDescription", ""),
   );
   const [newSource, setNewSource] = useState(
-    loadFromLocalStorage("newSource", "")
+    loadFromLocalStorage("newSource", ""),
   );
   const [newImage, setNewImage] = useState(
-    loadFromLocalStorage("newImage", "")
+    loadFromLocalStorage("newImage", ""),
   );
   const [activeVoice, setActiveVoice] = useState("");
   const [disableBtn, setDisableBtn] = useState(true);
@@ -248,7 +247,7 @@ const AddRecipeComponent = ({
       const updatedItems = newIngredients.map((ingredient) =>
         ingredient.cate === "inne"
           ? { ...ingredient, names: [...ingredient.names, newIngredient] }
-          : ingredient
+          : ingredient,
       );
 
       setNewIngredients(updatedItems);
@@ -257,7 +256,7 @@ const AddRecipeComponent = ({
       const updatedItems = newIngredients.map((ingredient) =>
         ingredient.cate === activeCategoryIngredientsBtn
           ? { ...ingredient, names: [...ingredient.names, newIngredient] }
-          : ingredient
+          : ingredient,
       );
 
       setNewIngredients(updatedItems);
@@ -284,7 +283,7 @@ const AddRecipeComponent = ({
   const handleEditIngredient = (index: number) => {
     const updatedItems = [...newIngredients];
     const updatedItems2 = updatedItems.filter(
-      (item) => item.cate === activeCategoryIngredientsBtn
+      (item) => item.cate === activeCategoryIngredientsBtn,
     );
 
     updatedItems2[0].names[index] = newIngredient;
@@ -303,11 +302,11 @@ const AddRecipeComponent = ({
   const handleDeleteIngedient = (index: number) => {
     const updatedItems = [...newIngredients];
     const updatedItems2 = updatedItems.filter(
-      (item) => item.cate === activeCategoryIngredientsBtn
+      (item) => item.cate === activeCategoryIngredientsBtn,
     );
     const deletedItem = updatedItems2[0].names.splice(index, 1);
     const updatedItems3 = updatedItems.filter(
-      (item) => item.cate !== activeCategoryIngredientsBtn
+      (item) => item.cate !== activeCategoryIngredientsBtn,
     );
     setNewIngredients([...updatedItems3, ...updatedItems2]);
   };
@@ -335,7 +334,7 @@ const AddRecipeComponent = ({
 
   const handleDeleteCategoryIgredient = (category: string) => {
     setNewIngredients(
-      newIngredients.filter((igredients) => igredients.cate !== category)
+      newIngredients.filter((igredients) => igredients.cate !== category),
     );
     setActiveCategoryIngredientsBtn("");
   };
@@ -392,7 +391,7 @@ const AddRecipeComponent = ({
         newIngredients,
         newSteps,
         newDescription,
-        newSource
+        newSource,
       );
       if (!editing) {
         const uuid = uuidv4();
@@ -417,31 +416,6 @@ const AddRecipeComponent = ({
     }
   };
 
-  useEffect(() => {
-    if (userID && userID !== undefined) {
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/sw.js")
-          .then(function (registration) {
-            console.log(
-              "Service Worker registered with scope:",
-              registration.scope
-            );
-          })
-          .catch(function (error) {
-            console.error("Service Worker registration failed:", error);
-          });
-      }
-      if ("Notification" in window && "PushManager" in window) {
-        Notification.requestPermission().then(function (permission) {
-          if (permission === "granted") {
-            console.log("Notification permission granted.");
-          }
-        });
-      }
-    }
-  }, [userID]);
-
   const handleSub = async (newTitle: string, uuid: any) => {
     // const cookerName = userName.toUpperCase();
     const cookerName = name.toUpperCase();
@@ -449,7 +423,18 @@ const AddRecipeComponent = ({
     const body = newTitle;
     const tag = uuid;
     const recipeID = "";
-    await subscribe(title, body, tag, userID, recipeID);
+    await fetch("/api/push", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "notify",
+        type: "recipe",
+        title,
+        body,
+        tag,
+        recipeID,
+      }),
+    });
   };
 
   return (
@@ -737,7 +722,7 @@ const AddRecipeComponent = ({
                 {newIngredients.length > 0 &&
                   newIngredients
                     .filter(
-                      (item) => item.cate === activeCategoryIngredientsBtn
+                      (item) => item.cate === activeCategoryIngredientsBtn,
                     )
                     .map((item, index) => {
                       return (

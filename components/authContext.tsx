@@ -66,27 +66,14 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   // NOTIFICATION
   useEffect(() => {
-    if (activeUser) {
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/sw.js")
-          .then(function (registration) {
-            console.log(
-              "Service Worker registered with scope:",
-              registration.scope
-            );
-          })
-          .catch(function (error) {
-            console.error("Service Worker registration failed:", error);
-          });
-      }
-      if ("Notification" in window && "PushManager" in window) {
-        Notification.requestPermission().then(function (permission) {
-          if (permission === "granted") {
-            console.log("Notification permission granted.");
-          }
-        });
-      }
+    if (!activeUser) return;
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(console.error);
+    }
+
+    if ("Notification" in window) {
+      Notification.requestPermission();
     }
   }, [activeUser]);
 
