@@ -78,10 +78,10 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   //   }
   // }, [activeUser]);
   useEffect(() => {
-    if (!activeUser) return;
+    if (!activeUser?.uid) return;
 
     subscribePush();
-  }, [activeUser]);
+  }, [activeUser?.uid]);
 
   // END NOTIFICATION
 
