@@ -417,7 +417,6 @@ const AddRecipeComponent = ({
   };
 
   const handleSub = async (newTitle: string, uuid: any) => {
-    // const cookerName = userName.toUpperCase();
     const cookerName = name.toUpperCase();
     const title = `Kucharz ${cookerName} dodał(a) nowy przepis!`;
     const body = newTitle;

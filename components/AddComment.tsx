@@ -33,67 +33,6 @@ const AddComment = ({
   const [activeComments, setActiveComments] = useState(comments);
   const [commentText, setCommentText] = useState("");
 
-  // const handleComment = async () => {
-  //   if (!activeUser) {
-  //     toast("Musisz być zalogowany aby dodać komentarz!", {
-  //       icon: "✖",
-  //       style: {
-  //         borderRadius: "10px",
-  //         background: "#280505",
-  //         color: "#fff",
-  //         textAlign: "center",
-  //       },
-  //     });
-  //     return;
-  //   }
-  //   if (commentText === "") {
-  //     toast("Napisz komentarz przed dodaniem!", {
-  //       icon: "✖",
-  //       style: {
-  //         borderRadius: "10px",
-  //         background: "#280505",
-  //         color: "#fff",
-  //         textAlign: "center",
-  //       },
-  //     });
-  //   } else {
-  //     let currentComments = [...activeComments];
-  //     const uuid = uuidv4();
-  //     currentComments = [
-  //       ...currentComments,
-  //       {
-  //         id: uuid,
-  //         user: {
-  //           uid: activeUser.uid,
-  //           name: activeUser.displayName,
-  //           avatar: activeUser.photoURL,
-  //         },
-  //         text: commentText,
-  //       },
-  //     ];
-  //     const toastId = toast.loading("Dodawanie komentarza...", {
-  //       style: {
-  //         borderRadius: "10px",
-  //         background: "#0c3362",
-  //         color: "#fff",
-  //       },
-  //     });
-  //     setActiveComments(currentComments);
-  //     await editComment(userID, recipeID, currentComments);
-  //     await handleSub(commentText, uuid);
-  //     setCommentText("");
-  //     toast.dismiss(toastId);
-  //     toast("Komentarz został dodany!", {
-  //       icon: "✔",
-  //       style: {
-  //         borderRadius: "10px",
-  //         background: "#052814",
-  //         color: "#fff",
-  //       },
-  //     });
-  //   }
-  // };
-
   const handleComment = async () => {
     if (!activeUser) {
       toast("Musisz być zalogowany aby dodać komentarz!", {
