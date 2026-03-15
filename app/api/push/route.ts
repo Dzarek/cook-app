@@ -16,29 +16,31 @@ type PushSubscriptionDB = {
 };
 
 export const POST = async (request: Request) => {
-  const body = await request.json();
-
   try {
-    // zapis subskrypcji
+    const body = await request.json();
+
+    // =============================
+    // ZAPIS SUBSKRYPCJI
+    // =============================
     if (body.action === "subscribe") {
       const { endpoint, expirationTime, keys } = body.subscription;
       const { p256dh, auth } = keys;
 
       await query({
-        query: "DELETE FROM push_subscriptions WHERE endpoint = ?",
-        values: [endpoint] as any[],
-      });
-
-      await query({
-        query:
-          "INSERT INTO push_subscriptions (endpoint, expirationTime, p256dh, auth) VALUES (?, ?, ?, ?)",
+        query: `
+          INSERT IGNORE INTO push_subscriptions
+          (endpoint, expirationTime, p256dh, auth)
+          VALUES (?, ?, ?, ?)
+        `,
         values: [endpoint, expirationTime, p256dh, auth] as any[],
       });
 
       return Response.json({ success: true });
     }
 
-    // wysyłanie powiadomień
+    // =============================
+    // WYSYŁANIE POWIADOMIEŃ
+    // =============================
     if (body.action === "notify") {
       const { title, body: text, tag, recipeID, type } = body;
 
@@ -47,12 +49,12 @@ export const POST = async (request: Request) => {
         values: [],
       })) as PushSubscriptionDB[];
 
-      if (!subscriptions.length) {
+      if (!subscriptions || subscriptions.length === 0) {
         return Response.json({ message: "Brak subskrypcji" });
       }
 
       await Promise.all(
-        subscriptions.map(async (s: any) => {
+        subscriptions.map(async (s: PushSubscriptionDB) => {
           try {
             await webpush.sendNotification(
               {
@@ -72,11 +74,14 @@ export const POST = async (request: Request) => {
               }),
             );
           } catch (err: any) {
+            // usuń wygasłe subskrypcje
             if (err.statusCode === 404 || err.statusCode === 410) {
               await query({
                 query: "DELETE FROM push_subscriptions WHERE id = ?",
                 values: [s.id] as any[],
               });
+            } else {
+              console.error("Push error:", err);
             }
           }
         }),
@@ -84,8 +89,10 @@ export const POST = async (request: Request) => {
 
       return Response.json({ success: true });
     }
+
+    return Response.json({ error: "Unknown action" }, { status: 400 });
   } catch (err) {
-    console.error(err);
+    console.error("Push API error:", err);
     return Response.json({ error: "push error" }, { status: 500 });
   }
 };
