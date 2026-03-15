@@ -110,23 +110,9 @@ const AddComment = ({
   };
 
   const deleteComment = async (id: string) => {
-    let currentComments = [...activeComments];
-    currentComments = currentComments.filter((comment) => comment.id !== id);
-    setActiveComments(currentComments);
-    const commentToRemove = currentComments.find(
-      (comment) => comment.id === id,
-    );
-    if (commentToRemove) {
-      await deleteCommentF(userID, recipeID, commentToRemove);
-      toast("Komentarz został usunięty!", {
-        icon: "✔",
-        style: {
-          borderRadius: "10px",
-          background: "#280505",
-          color: "#fff",
-        },
-      });
-    } else {
+    const commentToRemove = activeComments.find((comment) => comment.id === id);
+
+    if (!commentToRemove) {
       toast("Coś poszło nie tak!", {
         icon: "✖",
         style: {
@@ -135,7 +121,25 @@ const AddComment = ({
           color: "#fff",
         },
       });
+      return;
     }
+
+    const updatedComments = activeComments.filter(
+      (comment) => comment.id !== id,
+    );
+
+    setActiveComments(updatedComments);
+
+    await deleteCommentF(userID, recipeID, commentToRemove);
+
+    toast("Komentarz został usunięty!", {
+      icon: "✔",
+      style: {
+        borderRadius: "10px",
+        background: "#280505",
+        color: "#fff",
+      },
+    });
   };
 
   const handleSub = async (newTitle: string, uuid: any) => {
