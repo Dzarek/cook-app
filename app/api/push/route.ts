@@ -24,10 +24,10 @@ export const POST = async (request: Request) => {
       const { endpoint, expirationTime, keys } = body.subscription;
       const { p256dh, auth } = keys;
 
-      await query({
-        query: "DELETE FROM push_subscriptions WHERE endpoint = ?",
-        values: [endpoint] as any[],
-      });
+      // await query({
+      //   query: "DELETE FROM push_subscriptions WHERE endpoint = ?",
+      //   values: [endpoint] as any[],
+      // });
 
       await query({
         query:
