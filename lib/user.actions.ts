@@ -24,6 +24,7 @@ import {
 } from "firebase/auth";
 import toast from "react-hot-toast";
 import { revalidateHome } from "./actions";
+import { unsubscribePush } from "@/notification/Notification";
 
 // const getUser = getAuth();
 
@@ -52,6 +53,7 @@ export const login = async (email: string, password: string) => {
 
 export const logout = async () => {
   try {
+    await unsubscribePush();
     await signOut(auth);
   } catch (error) {
     console.error("Błąd podczas wylogowywania", error);

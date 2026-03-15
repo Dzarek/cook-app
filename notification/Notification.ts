@@ -46,3 +46,24 @@ export const subscribePush = async () => {
     }),
   });
 };
+
+export const unsubscribePush = async () => {
+  const swRegistration = await navigator.serviceWorker.getRegistration();
+
+  if (!swRegistration) return;
+
+  const subscription = await swRegistration.pushManager.getSubscription();
+
+  if (!subscription) return;
+
+  await fetch("/api/push", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "unsubscribe",
+      endpoint: subscription.endpoint,
+    }),
+  });
+
+  await subscription.unsubscribe();
+};

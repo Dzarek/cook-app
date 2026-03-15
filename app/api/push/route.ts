@@ -37,6 +37,19 @@ export const POST = async (request: Request) => {
 
       return Response.json({ success: true });
     }
+    // =============================
+    // ANULOWANIE SUBSKRYPCJI
+    // =============================
+    if (body.action === "unsubscribe") {
+      const { endpoint } = body;
+
+      await query({
+        query: "DELETE FROM push_subscriptions WHERE endpoint = ?",
+        values: [endpoint] as any[],
+      });
+
+      return Response.json({ success: true });
+    }
 
     // =============================
     // WYSYŁANIE POWIADOMIEŃ
